@@ -491,7 +491,7 @@ function t(key){
    1) FOYDALANUVCHI — keyin API'dan keladi, faqat shu joy o'zgaradi
    ========================================================= */
 const USER = {
-  name:"Talaba Ismi Sharifi",
+  name:"Dusmurodov Lazizjon Naimjon o‘g‘li",
   group:"ATTS-06-24",
   faculty:"Axborot tizimlari va texnologiyalari",
   form:"Sirtqi",
