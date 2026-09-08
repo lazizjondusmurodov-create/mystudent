@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#F8FAFA">
+<title>MyStudent</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ================= KIRISH SAHIFASI ================= -->
+<section class="auth" id="auth" aria-label="Kirish">
+
+  <!-- 1-qadam: telefon -->
+  <div id="step1">
+    <div class="auth__top">
+      <div class="auth__logo">MS</div>
+      <div class="auth__name">MyStudent</div>
+      <p class="auth__sub" data-i18n="authSub1">Davom etish uchun telefon raqamingizni kiriting</p>
+    </div>
+
+    <div class="auth__form">
+      <label class="field" style="margin-bottom:6px">
+        <span style="display:block;font-size:12.5px;font-weight:600;color:var(--ink-3);margin-bottom:7px"
+              data-i18n="phoneLabel">Telefon raqam</span>
+      </label>
+      <div class="phone" id="phoneBox">
+        <span class="phone__pre">+998</span>
+        <input id="phoneInp" type="tel" inputmode="numeric" autocomplete="tel-national"
+               placeholder="90 123 45 67" maxlength="12">
+      </div>
+      <div class="auth__err" id="err1"></div>
+
+      <button class="btn btn--primary" id="sendCode" data-i18n="sendCode">Kod yuborish</button>
+
+      <div class="auth__demo" data-i18n="demoNote">
+        Namuna rejimi: istalgan raqam qabul qilinadi
+      </div>
+    </div>
+  </div>
+
+  <!-- 2-qadam: SMS kod -->
+  <div id="step2" hidden>
+    <div class="auth__top">
+      <div class="auth__logo">MS</div>
+      <div class="auth__name" data-i18n="codeTitle">Kodni kiriting</div>
+      <p class="auth__sub">
+        <span data-i18n="codeSent">SMS kod yuborildi</span><br>
+        <b id="shownPhone" style="color:var(--ink-2)"></b>
+      </p>
+    </div>
+
+    <div class="auth__form">
+      <div class="code" id="codeBox">
+        <input type="tel" inputmode="numeric" maxlength="1" aria-label="1">
+        <input type="tel" inputmode="numeric" maxlength="1" aria-label="2">
+        <input type="tel" inputmode="numeric" maxlength="1" aria-label="3">
+        <input type="tel" inputmode="numeric" maxlength="1" aria-label="4">
+      </div>
+      <div class="auth__err" id="err2"></div>
+
+      <button class="btn btn--primary" id="doLogin" data-i18n="enter">Kirish</button>
+
+      <div class="auth__hint">
+        <button class="linkbtn" id="resend" disabled></button>
+      </div>
+      <div class="auth__hint" style="margin-top:2px">
+        <button class="linkbtn" id="backPhone" data-i18n="changeNumber">Raqamni o'zgartirish</button>
+      </div>
+
+      <div class="auth__demo" id="demoBox"></div>
+    </div>
+  </div>
+
+  <div class="auth__foot" data-i18n="authFoot">
+    Kirish orqali siz ommaviy oferta shartlariga rozilik bildirasiz
+  </div>
+</section>
+
+<header class="appbar">
+  <button class="iconbtn" id="openBtn" aria-label="Menyuni ochish" aria-controls="drawer" aria-expanded="false">
+    <svg viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+  </button>
+  <h1 class="appbar__title" id="pageTitle">Bosh sahifa</h1>
+  <button class="langbtn" id="langBtn" aria-label="Tilni almashtirish">UZ</button>
+  <button class="iconbtn" id="bellBtn" aria-label="Bildirishnomalar">
+    <svg viewBox="0 0 24 24"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 0 1-3.4 0"/></svg>
+    <span class="dot" id="bellDot"></span>
+  </button>
+</header>
+
+<!-- ================= ASOSIY (FEED) ================= -->
+<main class="view is-active" id="view-home">
+
+  <div class="feedhead">
+    <div class="feedhead__hi" id="feedDate">—</div>
+    <div class="feedhead__name" id="helloName">Talaba</div>
+  </div>
+
+  <div class="strip" id="strip"></div>
+
+  <div class="feed">
+
+    <section class="sec">
+      <div class="sec__head">
+        <div class="sec__title" id="todayTitle">Bugungi darslar</div>
+        <button class="sec__more" data-key="jadval" data-i18n="all">Barchasi</button>
+      </div>
+      <div id="todayList"></div>
+    </section>
+
+    <section class="sec">
+      <div class="sec__head"><div class="sec__title" data-i18n="metrics">Ko'rsatkichlar</div></div>
+      <div class="stats">
+        <button class="stat" data-key="davomat">
+          <div class="stat__label" data-i18n="attendance">Davomat</div>
+          <div class="stat__val" id="statAtt">0<small>%</small></div>
+          <div class="stat__bar"><i id="statAttBar"></i></div>
+          <div class="stat__note" id="statAttNote">—</div>
+        </button>
+        <div class="stat" style="cursor:default">
+          <div class="stat__label" data-i18n="avgGrade">O'rtacha baho</div>
+          <div class="stat__val" style="color:var(--ink-4)">—</div>
+          <div class="stat__note" style="margin-top:18px" data-i18n="soon">Tez orada</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="sec">
+      <div class="sec__head"><div class="sec__title" data-i18n="news">E'lonlar</div></div>
+      <div id="newsList"></div>
+    </section>
+
+  </div>
+</main>
+
+<!-- ================= KUTUBXONA ================= -->
+<main class="view" id="view-kutubxona">
+  <h2 class="eyebrow" data-i18n="libTitle">Elektron kutubxona</h2>
+  <div class="list" id="libList"></div>
+</main>
+
+<!-- ================= KARYERA ================= -->
+<main class="view" id="view-karyera">
+  <h2 class="eyebrow" data-i18n="careerTitle">Karyera markazi</h2>
+
+  <div class="menu">
+    <!-- Shaxsiy ma'lumotlar — yoyiladi -->
+    <button class="mrow" id="accBtn" aria-expanded="false" aria-controls="accBox">
+      <span class="mrow__ic"><svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><circle cx="12" cy="10" r="2.6"/><path d="M8 17c.9-1.6 2.3-2.4 4-2.4s3.1.8 4 2.4"/></svg></span>
+      <span class="mrow__label" data-i18n="personalData">Shaxsiy ma'lumotlar</span>
+      <svg class="mrow__caret" viewBox="0 0 14 9"><path d="M1 1l6 6 6-6"/></svg>
+    </button>
+    <div class="acc" id="accBox"><div class="acc__in" id="accInfo"></div></div>
+
+    <button class="mrow mrow--blue" data-key="rezyume">
+      <span class="mrow__ic"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 13h6M9 17h4"/></svg></span>
+      <span class="mrow__label" data-i18n="resume">Rezyume</span>
+      <svg class="mrow__chev" viewBox="0 0 8 14"><path d="M1 1l6 6-6 6"/></svg>
+    </button>
+
+    <button class="mrow" data-key="ishlar">
+      <span class="mrow__ic"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></span>
+      <span class="mrow__label" data-i18n="jobs">Ish takliflari</span>
+      <span class="mrow__count" id="cntJobs">0</span>
+      <svg class="mrow__chev" viewBox="0 0 8 14"><path d="M1 1l6 6-6 6"/></svg>
+    </button>
+
+    <button class="mrow mrow--warn" data-key="yutuq">
+      <span class="mrow__ic"><svg viewBox="0 0 24 24"><path d="M12 2 4 5v6c0 5 3.4 9.2 8 10.5 4.6-1.3 8-5.5 8-10.5V5z"/><path d="m12 8 1.2 2.4 2.6.4-1.9 1.8.5 2.6L12 14l-2.4 1.2.5-2.6-1.9-1.8 2.6-.4z"/></svg></span>
+      <span class="mrow__label" data-i18n="awards">Yutuqlar</span>
+      <span class="mrow__count" id="cntWin">0</span>
+      <svg class="mrow__chev" viewBox="0 0 8 14"><path d="M1 1l6 6-6 6"/></svg>
+    </button>
+
+    <button class="mrow mrow--ok" data-key="mahorat">
+      <span class="mrow__ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m10 8.5 6 3.5-6 3.5z"/></svg></span>
+      <span class="mrow__label" data-i18n="masterclass">Mahorat darslari</span>
+      <span class="mrow__count" id="cntLes">0</span>
+      <svg class="mrow__chev" viewBox="0 0 8 14"><path d="M1 1l6 6-6 6"/></svg>
+    </button>
+
+    <button class="mrow" data-key="maqola">
+      <span class="mrow__ic"><svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.1 2.1 0 0 1 3 3L12 15l-4 1 1-4z"/></svg></span>
+      <span class="mrow__label" data-i18n="articles">Ilmiy maqolalar</span>
+      <span class="mrow__count" id="cntArt">0</span>
+      <svg class="mrow__chev" viewBox="0 0 8 14"><path d="M1 1l6 6-6 6"/></svg>
+    </button>
+
+    <button class="mrow mrow--blue" data-key="blog">
+      <span class="mrow__ic"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M8 9h8M8 13h5"/></svg></span>
+      <span class="mrow__label" data-i18n="blogs">Bloglar</span>
+      <span class="mrow__count" id="cntBlog">0</span>
+      <svg class="mrow__chev" viewBox="0 0 8 14"><path d="M1 1l6 6-6 6"/></svg>
+    </button>
+
+    <button class="mrow mrow--warn" data-key="foto">
+      <span class="mrow__ic"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="15" rx="2"/><circle cx="9" cy="10.5" r="1.8"/><path d="m4 18 5-4.5 3.5 3 3-2.5L20 18"/></svg></span>
+      <span class="mrow__label" data-i18n="gallery">Fotogalereya</span>
+      <svg class="mrow__chev" viewBox="0 0 8 14"><path d="M1 1l6 6-6 6"/></svg>
+    </button>
+  </div>
+</main>
+
+<!-- ================= KABINET ================= -->
+<main class="view" id="view-kabinet">
+  <section class="profile">
+    <div class="profile__ava" id="profAva">—</div>
+    <div class="profile__name" id="profName">Talaba</div>
+    <div class="profile__group">
+      <span class="chip" id="profGroup"></span>
+      <span class="chip" id="profStatus"></span>
+    </div>
+  </section>
+
+  <h2 class="eyebrow" data-i18n="infoTitle">Ma'lumotlar</h2>
+  <div class="info" id="infoBox"></div>
+
+  <h2 class="eyebrow" data-i18n="settings">Sozlamalar</h2>
+  <div class="list">
+    <button class="action" id="btnEdit">
+      <span class="action__ic"><svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.1 2.1 0 0 1 3 3L12 15l-4 1 1-4z"/></svg></span>
+      <span data-i18n="personalData">Shaxsiy ma'lumotlar</span>
+      <svg class="chev" viewBox="0 0 8 14"><path d="M1 1l6 6-6 6"/></svg>
+    </button>
+    <button class="action" id="btnPass">
+      <span class="action__ic"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span>
+      <span data-i18n="changePass">Parolni o'zgartirish</span>
+      <svg class="chev" viewBox="0 0 8 14"><path d="M1 1l6 6-6 6"/></svg>
+    </button>
+    <button class="action action--exit" id="btnExit">
+      <span class="action__ic"><svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg></span>
+      <span data-i18n="logout">Tizimdan chiqish</span>
+      <svg class="chev" viewBox="0 0 8 14"><path d="M1 1l6 6-6 6"/></svg>
+    </button>
+  </div>
+</main>
+
+<!-- ================= ICHKI SAHIFA ================= -->
+<section class="detail" id="detail" aria-hidden="true">
+  <div class="detail__bar">
+    <button class="iconbtn" id="backBtn" aria-label="Orqaga">
+      <svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
+    </button>
+    <h2 class="detail__title" id="detailTitle"></h2>
+    <button class="refbtn" id="refBtn" hidden aria-label="Yangilash">
+      <svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-2.6-6.4M21 3v6h-6"/></svg>
+    </button>
+  </div>
+  <div class="detail__body" id="detailBody"></div>
+</section>
+
+<!-- ================= PASTKI NAVIGATSIYA ================= -->
+<nav class="tabbar">
+  <button class="tab is-active" data-tab="home" data-i18n-title="titleHome">
+    <svg viewBox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg><span data-i18n="tabHome">Asosiy</span>
+  </button>
+  <button class="tab" data-tab="kutubxona" data-i18n-title="titleLib">
+    <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg><span data-i18n="tabLib">Kutubxona</span>
+  </button>
+  <button class="tab" data-tab="karyera" data-i18n-title="titleCareer">
+    <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg><span data-i18n="tabCareer">Karyera</span>
+  </button>
+  <button class="tab" data-tab="kabinet" data-i18n-title="titleProfile">
+    <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span data-i18n="tabProfile">Kabinet</span>
+  </button>
+</nav>
+
+<div class="scrim" id="scrim"></div>
+
+<!-- ================= MODAL OYNA ================= -->
+<div class="modal" id="modal" aria-hidden="true" role="dialog" aria-modal="true">
+  <div class="modal__scrim" id="modalScrim"></div>
+  <div class="modal__card">
+    <div class="modal__grip"></div>
+    <div class="modal__title" id="modalTitle"></div>
+    <div class="modal__sub" id="modalSub"></div>
+    <div id="modalBody"></div>
+  </div>
+</div>
+
+<!-- pull-to-refresh indikatori -->
+<div class="ptr" id="ptr" aria-hidden="true">
+  <svg class="ptr__arrow" viewBox="0 0 24 24"><path d="M12 5v14M6 13l6 6 6-6"/></svg>
+  <svg class="ptr__spin" viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-6.2-8.6"/></svg>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<aside class="drawer" id="drawer" aria-label="Asosiy menyu">
+  <div class="drawer__head">
+    <div class="avatar" id="drawerAva">—</div>
+    <div class="who">
+      <div class="who__name" id="drawerName">Talaba</div>
+      <div class="who__group"><span class="chip" id="drawerGroup"></span></div>
+    </div>
+  </div>
+  <div class="drawer__body">
+    <button class="item" data-menu="sozlama">
+      <svg class="item__icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-2.9 1.2v.2a2 2 0 1 1-4 0v-.1A1.7 1.7 0 0 0 8.9 19a1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0-1.2-2.9H2.9a2 2 0 1 1 0-4H3a1.7 1.7 0 0 0 1.5-2.6 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1A1.7 1.7 0 0 0 9 4.6a1.7 1.7 0 0 0 1-1.5V2.9a2 2 0 1 1 4 0V3a1.7 1.7 0 0 0 2.9 1.2l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0 1.2 2.9h.2a2 2 0 1 1 0 4H21a1.7 1.7 0 0 0-1.6 1z"/></svg>
+      <span class="item__label" data-i18n="settings">Sozlamalar</span>
+      <svg class="item__arrow" viewBox="0 0 8 14"><path d="M1 1l6 6-6 6"/></svg>
+    </button>
+
+    <div class="divider"></div>
+
+    <button class="item" data-menu="haqida">
+      <svg class="item__icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+      <span class="item__label" data-i18n="about">Ilova haqida</span>
+      <svg class="item__arrow" viewBox="0 0 8 14"><path d="M1 1l6 6-6 6"/></svg>
+    </button>
+    <button class="item" id="shareBtn">
+      <svg class="item__icon" viewBox="0 0 24 24"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8M16 6l-4-4-4 4M12 2v13"/></svg>
+      <span class="item__label" data-i18n="share">Ulashish</span>
+      <svg class="item__arrow" viewBox="0 0 8 14"><path d="M1 1l6 6-6 6"/></svg>
+    </button>
+
+    <div class="divider"></div>
+
+    <button class="item" data-menu="yordam">
+      <svg class="item__icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3M12 17h.01"/></svg>
+      <span class="item__label" data-i18n="help">Yordam</span>
+      <svg class="item__arrow" viewBox="0 0 8 14"><path d="M1 1l6 6-6 6"/></svg>
+    </button>
+    <button class="item" data-menu="oferta">
+      <svg class="item__icon" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+      <span class="item__label" data-i18n="offer">Ommaviy oferta</span>
+      <svg class="item__arrow" viewBox="0 0 8 14"><path d="M1 1l6 6-6 6"/></svg>
+    </button>
+    <button class="item" data-menu="maxfiylik">
+      <svg class="item__icon" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      <span class="item__label" data-i18n="privacy">Maxfiylik siyosati</span>
+      <svg class="item__arrow" viewBox="0 0 8 14"><path d="M1 1l6 6-6 6"/></svg>
+    </button>
+
+    <div class="divider"></div>
+
+    <div class="version"><span data-i18n="version">Ilova versiyasi</span><b>3.0.0</b></div>
+
+    <button class="promo" id="promoBtn">
+      <div class="promo__title">MyStudent Pro</div>
+      <p class="promo__text" data-i18n="promoText">Barcha ma'lumotlaringiz yagona ilovada</p>
+    </button>
+  </div>
+</aside>
+
+<script src="app.js"></script>
+</body>
+</html>
