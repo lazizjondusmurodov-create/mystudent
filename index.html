@@ -11,66 +11,24 @@
 
 <!-- ================= KIRISH SAHIFASI ================= -->
 <section class="auth" id="auth" aria-label="Kirish">
-
-  <!-- 1-qadam: telefon -->
-  <div id="step1">
-    <div class="auth__top">
-      <div class="auth__logo">MS</div>
-      <div class="auth__name">MyStudent</div>
-      <p class="auth__sub" data-i18n="authSub1">Davom etish uchun telefon raqamingizni kiriting</p>
-    </div>
-
-    <div class="auth__form">
-      <label class="field" style="margin-bottom:6px">
-        <span style="display:block;font-size:12.5px;font-weight:600;color:var(--ink-3);margin-bottom:7px"
-              data-i18n="phoneLabel">Telefon raqam</span>
-      </label>
-      <div class="phone" id="phoneBox">
-        <span class="phone__pre">+998</span>
-        <input id="phoneInp" type="tel" inputmode="numeric" autocomplete="tel-national"
-               placeholder="90 123 45 67" maxlength="12">
-      </div>
-      <div class="auth__err" id="err1"></div>
-
-      <button class="btn btn--primary" id="sendCode" data-i18n="sendCode">Kod yuborish</button>
-
-      <div class="auth__demo" data-i18n="demoNote">
-        Namuna rejimi: istalgan raqam qabul qilinadi
-      </div>
-    </div>
+  <div class="auth__top">
+    <div class="auth__logo">MS</div>
+    <div class="auth__name">MyStudent</div>
+    <p class="auth__sub" data-i18n="authSub">Davom etish uchun kirish kodini kiriting</p>
   </div>
 
-  <!-- 2-qadam: SMS kod -->
-  <div id="step2" hidden>
-    <div class="auth__top">
-      <div class="auth__logo">MS</div>
-      <div class="auth__name" data-i18n="codeTitle">Kodni kiriting</div>
-      <p class="auth__sub">
-        <span data-i18n="codeSent">SMS kod yuborildi</span><br>
-        <b id="shownPhone" style="color:var(--ink-2)"></b>
-      </p>
+  <div class="auth__form">
+    <div class="code" id="codeBox">
+      <input type="tel" inputmode="numeric" maxlength="1" aria-label="1">
+      <input type="tel" inputmode="numeric" maxlength="1" aria-label="2">
+      <input type="tel" inputmode="numeric" maxlength="1" aria-label="3">
+      <input type="tel" inputmode="numeric" maxlength="1" aria-label="4">
     </div>
+    <div class="auth__err" id="err2"></div>
 
-    <div class="auth__form">
-      <div class="code" id="codeBox">
-        <input type="tel" inputmode="numeric" maxlength="1" aria-label="1">
-        <input type="tel" inputmode="numeric" maxlength="1" aria-label="2">
-        <input type="tel" inputmode="numeric" maxlength="1" aria-label="3">
-        <input type="tel" inputmode="numeric" maxlength="1" aria-label="4">
-      </div>
-      <div class="auth__err" id="err2"></div>
+    <button class="btn btn--primary" id="doLogin" data-i18n="enter">Kirish</button>
 
-      <button class="btn btn--primary" id="doLogin" data-i18n="enter">Kirish</button>
-
-      <div class="auth__hint">
-        <button class="linkbtn" id="resend" disabled></button>
-      </div>
-      <div class="auth__hint" style="margin-top:2px">
-        <button class="linkbtn" id="backPhone" data-i18n="changeNumber">Raqamni o'zgartirish</button>
-      </div>
-
-      <div class="auth__demo" id="demoBox"></div>
-    </div>
+    <div class="auth__demo" id="demoBox"></div>
   </div>
 
   <div class="auth__foot" data-i18n="authFoot">

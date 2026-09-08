@@ -113,17 +113,12 @@ const I18N = {
     noToday:"Bugun dars yo'q",
 
     /* kirish */
-    authSub1:"Davom etish uchun telefon raqamingizni kiriting",
-    phoneLabel:"Telefon raqam", sendCode:"Kod yuborish", sending:"Yuborilmoqda...",
-    codeTitle:"Kodni kiriting", codeSent:"SMS kod yuborildi",
+    authSub:"Davom etish uchun kirish kodini kiriting",
     enter:"Kirish", checking:"Tekshirilmoqda...",
-    resend:"Kodni qayta yuborish", resendIn:"Qayta yuborish",
-    changeNumber:"Raqamni o'zgartirish",
-    badPhone:"Raqamni to'liq kiriting", badCode:"4 xonali kodni kiriting",
-    wrongCode:"Kod noto'g'ri", welcome:"Xush kelibsiz!", codeResent:"Kod qayta yuborildi",
+    badCode:"4 xonali kodni kiriting",
+    wrongCode:"Kod noto'g'ri", welcome:"Xush kelibsiz!",
     authFoot:"Kirish orqali siz ommaviy oferta shartlariga rozilik bildirasiz",
-    demoNote:"Namuna rejimi: istalgan raqam qabul qilinadi",
-    demoYourCode:"Namuna rejimi — kodingiz:", demoFill:"Qo'yish",
+    demoYourCode:"Namuna rejimi — kirish kodi:", demoFill:"Qo'yish",
 
     /* batafsil oyna */
     author:"Muallif", year:"Yil", format:"Format", pages:"Betlar soni",
@@ -260,17 +255,12 @@ const I18N = {
     noLessons:"На выбранную неделю расписание не загружено.",
     noToday:"Сегодня занятий нет",
 
-    authSub1:"Введите номер телефона, чтобы продолжить",
-    phoneLabel:"Номер телефона", sendCode:"Отправить код", sending:"Отправка...",
-    codeTitle:"Введите код", codeSent:"Код отправлен по SMS",
+    authSub:"Введите код доступа, чтобы продолжить",
     enter:"Войти", checking:"Проверка...",
-    resend:"Отправить код снова", resendIn:"Повтор через",
-    changeNumber:"Изменить номер",
-    badPhone:"Введите номер полностью", badCode:"Введите 4-значный код",
-    wrongCode:"Неверный код", welcome:"Добро пожаловать!", codeResent:"Код отправлен снова",
+    badCode:"Введите 4-значный код",
+    wrongCode:"Неверный код", welcome:"Добро пожаловать!",
     authFoot:"Входя, вы соглашаетесь с условиями публичной оферты",
-    demoNote:"Демо-режим: подойдёт любой номер",
-    demoYourCode:"Демо-режим — ваш код:", demoFill:"Вставить",
+    demoYourCode:"Демо-режим — код доступа:", demoFill:"Вставить",
 
     author:"Автор", year:"Год", format:"Формат", pages:"Страниц",
     bookLang:"Язык", backOn:"Вернётся",
@@ -399,17 +389,12 @@ const I18N = {
     noLessons:"No schedule has been published for the selected week.",
     noToday:"No classes today",
 
-    authSub1:"Enter your phone number to continue",
-    phoneLabel:"Phone number", sendCode:"Send code", sending:"Sending...",
-    codeTitle:"Enter the code", codeSent:"A code was sent by SMS",
+    authSub:"Enter the access code to continue",
     enter:"Log in", checking:"Checking...",
-    resend:"Send the code again", resendIn:"Resend in",
-    changeNumber:"Change number",
-    badPhone:"Enter the full number", badCode:"Enter the 4-digit code",
-    wrongCode:"Wrong code", welcome:"Welcome!", codeResent:"Code sent again",
+    badCode:"Enter the 4-digit code",
+    wrongCode:"Wrong code", welcome:"Welcome!",
     authFoot:"By logging in you accept the terms of the public offer",
-    demoNote:"Demo mode: any number is accepted",
-    demoYourCode:"Demo mode — your code:", demoFill:"Fill in",
+    demoYourCode:"Demo mode — access code:", demoFill:"Fill in",
 
     author:"Author", year:"Year", format:"Format", pages:"Pages",
     bookLang:"Language", backOn:"Available from",
@@ -1459,9 +1444,7 @@ function applyLang(){
   /* sana */
   $('feedDate').textContent = L.dateFmt(new Date(), L);
 
-  /* kirish sahifasidagi qayta-yuborish tugmasi */
-  const rs = $('resend');
-  if(rs && !rs.disabled) rs.textContent = t('resend');
+
 
   /* qayta chiziladigan qismlar */
   fillUserUI();
@@ -2114,122 +2097,15 @@ document.addEventListener('click', function(e){
 /* =========================================================
    26) KIRISH (login)
 
-   DIQQAT: bu NAMUNA. Brauzerdagi tekshiruv haqiqiy himoya emas —
-   kodni F12 orqali o'qish mumkin. Backend tayyor bo'lganda:
-     1) telefon serverga yuboriladi  -> server SMS jo'natadi
-     2) kod serverga yuboriladi      -> server token qaytaradi
-     3) token saqlanadi va har so'rovda Authorization sarlavhasida ketadi
-   Quyidagi sendSMS() va checkCode() funksiyalarini fetch bilan almashtirasiz.
+   DIQQAT: bu NAMUNA himoya. Kod brauzer faylida turadi \u2014
+   F12 orqali o'qish mumkin. Haqiqiy himoya faqat server bilan bo'ladi:
+     kod serverga yuboriladi -> server tekshiradi -> token qaytaradi
    ========================================================= */
-const auth  = $('auth');
-const step1 = $('step1'), step2 = $('step2');
-const phoneInp = $('phoneInp'), phoneBox = $('phoneBox');
+const KIRISH_KODI = '2024';        /* kirish kodi shu yerda */
+
+const auth     = $('auth');
 const codeBox  = $('codeBox');
 const codeInps = Array.prototype.slice.call(codeBox.querySelectorAll('input'));
-
-let authPhone = '';
-let resendTimer = null, resendLeft = 0;
-
-/* --- telefon formati: 90 123 45 67 --- */
-function fmtPhone(raw){
-  const d = raw.replace(/\D/g, '').slice(0, 9);
-  let out = d.slice(0, 2);
-  if(d.length > 2) out += ' ' + d.slice(2, 5);
-  if(d.length > 5) out += ' ' + d.slice(5, 7);
-  if(d.length > 7) out += ' ' + d.slice(7, 9);
-  return out;
-}
-function phoneDigits(){ return phoneInp.value.replace(/\D/g, ''); }
-
-phoneInp.addEventListener('input', function(){
-  const pos = phoneInp.selectionStart;
-  const oldLen = phoneInp.value.length;
-  phoneInp.value = fmtPhone(phoneInp.value);
-  phoneBox.classList.remove('is-bad');
-  $('err1').textContent = '';
-  /* kursorni oxirida ushlab turamiz (oddiy holat) */
-  if(pos === oldLen) phoneInp.setSelectionRange(phoneInp.value.length, phoneInp.value.length);
-});
-phoneInp.addEventListener('focus', function(){ phoneBox.classList.add('is-on'); });
-phoneInp.addEventListener('blur',  function(){ phoneBox.classList.remove('is-on'); });
-phoneInp.addEventListener('keydown', function(e){
-  if(e.key === 'Enter') $('sendCode').click();
-});
-
-/* --- SMS yuborish (namuna) --- */
-let demoCode = '';
-
-function sendSMS(phone){
-  /* BACKEND: return fetch('/api/auth/send', {method:'POST', body:...})
-     Haqiqiy SMS server tomonidan yuboriladi (Eskiz.uz, Play Mobile va h.k.).
-     Namunada kodni o'zimiz yaratamiz va ekranda ko'rsatamiz. */
-  demoCode = String(Math.floor(1000 + Math.random() * 9000));
-  return new Promise(function(res){ setTimeout(res, 700); });
-}
-
-/* namunaviy kodni ekranda ko'rsatish */
-function showDemoCode(){
-  const box = $('demoBox');
-  if(!box) return;
-  box.innerHTML = esc(t('demoYourCode')) + ' <b id="demoNum">' + esc(demoCode) + '</b>' +
-                  ' <button class="linkbtn" id="fillCode" style="padding:2px 6px">' +
-                  esc(t('demoFill')) + '</button>';
-
-  const f = $('fillCode');
-  if(f) f.addEventListener('click', function(){
-    codeInps.forEach(function(x, i){ x.value = demoCode[i] || ''; });
-    haptic(8);
-    $('doLogin').click();
-  });
-}
-
-function startResend(){
-  resendLeft = 45;
-  const btn = $('resend');
-  btn.disabled = true;
-  clearInterval(resendTimer);
-
-  function tick(){
-    btn.textContent = t('resendIn') + ' 0:' + (resendLeft < 10 ? '0' : '') + resendLeft;
-    if(resendLeft <= 0){
-      clearInterval(resendTimer);
-      btn.disabled = false;
-      btn.textContent = t('resend');
-      return;
-    }
-    resendLeft--;
-  }
-  tick();
-  resendTimer = setInterval(tick, 1000);
-}
-
-$('sendCode').addEventListener('click', function(){
-  const d = phoneDigits();
-  if(d.length !== 9){
-    phoneBox.classList.add('is-bad');
-    $('err1').textContent = t('badPhone');
-    haptic(20);
-    return;
-  }
-
-  const btn = this;
-  btn.classList.add('is-busy');
-  btn.textContent = t('sending');
-  authPhone = '+998 ' + fmtPhone(d);
-
-  sendSMS(d).then(function(){
-    btn.classList.remove('is-busy');
-    btn.textContent = t('sendCode');
-
-    $('shownPhone').textContent = authPhone;
-    step1.hidden = true;
-    step2.hidden = false;
-    showDemoCode();
-    startResend();
-    haptic(12);
-    setTimeout(function(){ codeInps[0].focus(); }, 120);
-  });
-});
 
 /* --- kod maydonlari --- */
 codeInps.forEach(function(inp, i){
@@ -2264,15 +2140,7 @@ codeInps.forEach(function(inp, i){
   });
 });
 
-/* --- kodni tekshirish (namuna) --- */
-function checkCode(code){
-  /* BACKEND: fetch('/api/auth/verify') -> {token: '...'}
-     Namunada yuborilgan kod bilan taqqoslaymiz. */
-  return new Promise(function(res){
-    setTimeout(function(){ res(code === demoCode); }, 600);
-  });
-}
-
+/* --- kirish --- */
 let loginBusy = false;
 $('doLogin').addEventListener('click', function(){
   if(loginBusy) return;
@@ -2290,57 +2158,25 @@ $('doLogin').addEventListener('click', function(){
   btn.classList.add('is-busy');
   btn.textContent = t('checking');
 
-  checkCode(code).then(function(ok){
+  setTimeout(function(){
     loginBusy = false;
     btn.classList.remove('is-busy');
     btn.textContent = t('enter');
 
-    if(!ok){
+    if(code !== KIRISH_KODI){
       codeBox.classList.add('is-bad');
       $('err2').textContent = t('wrongCode');
+      codeInps.forEach(function(x){ x.value = ''; });
+      codeInps[0].focus();
       haptic(20);
       return;
     }
 
-    /* BACKEND: bu yerda tokenni saqlaysiz */
-    try{
-      localStorage.setItem('ms.auth', JSON.stringify({phone:authPhone, at:Date.now()}));
-    }catch(e){}
-
-    if(!USER.phone){
-      USER.phone = authPhone;
-      try{
-        const u = JSON.parse(localStorage.getItem('ms.user') || '{}');
-        u.phone = authPhone;
-        localStorage.setItem('ms.user', JSON.stringify(u));
-      }catch(e){}
-      fillUserUI();
-    }
-
-    clearInterval(resendTimer);
+    try{ localStorage.setItem('ms.auth', JSON.stringify({at:Date.now()})); }catch(e){}
     hideAuth();
     haptic(16);
     toast(t('welcome'));
-  });
-});
-
-$('resend').addEventListener('click', function(){
-  if(this.disabled) return;
-  sendSMS(phoneDigits()).then(function(){
-    showDemoCode();
-    startResend();
-    toast(t('codeResent'));
-  });
-});
-
-$('backPhone').addEventListener('click', function(){
-  clearInterval(resendTimer);
-  codeInps.forEach(function(x){ x.value = ''; });
-  codeBox.classList.remove('is-bad');
-  $('err2').textContent = '';
-  step2.hidden = true;
-  step1.hidden = false;
-  setTimeout(function(){ phoneInp.focus(); }, 120);
+  }, 450);
 });
 
 /* --- kirish sahifasini ko'rsatish / yashirish --- */
@@ -2350,157 +2186,37 @@ function hideAuth(){
 }
 function showAuth(){
   auth.classList.remove('is-gone');
-  step2.hidden = true;
-  step1.hidden = false;
-  phoneInp.value = '';
   codeInps.forEach(function(x){ x.value = ''; });
-  $('err1').textContent = '';
+  codeBox.classList.remove('is-bad');
   $('err2').textContent = '';
   document.body.style.overflow = 'hidden';
+  setTimeout(function(){ codeInps[0].focus(); }, 300);
+}
+
+/* kodni ekranda ko'rsatish (namuna rejimi) */
+function showDemoCode(){
+  const box = $('demoBox');
+  if(!box) return;
+  box.innerHTML = esc(t('demoYourCode')) + ' <b>' + esc(KIRISH_KODI) + '</b>' +
+                  ' <button class="linkbtn" id="fillCode" style="padding:2px 6px">' +
+                  esc(t('demoFill')) + '</button>';
+  const f = $('fillCode');
+  if(f) f.addEventListener('click', function(){
+    codeInps.forEach(function(x, i){ x.value = KIRISH_KODI[i] || ''; });
+    haptic(8);
+    $('doLogin').click();
+  });
 }
 
 /* sahifa ochilganda: kirganmi? */
 (function checkAuth(){
   let kirgan = false;
   try{ kirgan = !!localStorage.getItem('ms.auth'); }catch(e){}
-  if(kirgan) hideAuth();
-  else{
-    document.body.style.overflow = 'hidden';
-    setTimeout(function(){ phoneInp.focus(); }, 300);
-  }
+  if(kirgan){ hideAuth(); return; }
+  document.body.style.overflow = 'hidden';
+  showDemoCode();
+  setTimeout(function(){ codeInps[0].focus(); }, 300);
 })();
-
-/* =========================================================
-   27) DARS JADVALI — semestr va hafta tanlash
-   ========================================================= */
-
-/* haftaning dushanbasini topish */
-function mondayOf(d){
-  const x = new Date(d);
-  const wd = (x.getDay() + 6) % 7;      /* 0 = dushanba */
-  x.setDate(x.getDate() - wd);
-  x.setHours(0, 0, 0, 0);
-  return x;
-}
-function addDays(d, n){
-  const x = new Date(d);
-  x.setDate(x.getDate() + n);
-  return x;
-}
-function dmy(d){
-  const p = function(n){ return (n < 10 ? '0' : '') + n; };
-  return p(d.getDate()) + '.' + p(d.getMonth() + 1) + '.' + d.getFullYear();
-}
-function iso(d){
-  const p = function(n){ return (n < 10 ? '0' : '') + n; };
-  return d.getFullYear() + '-' + p(d.getMonth() + 1) + '-' + p(d.getDate());
-}
-function sameDay(a, b){ return iso(a) === iso(b); }
-
-/* jadval sahifasi HTML */
-function scheduleHTML(){
-  const L = I18N[LANG];
-  const oxiri = addDays(weekStart, 5);      /* dushanba–shanba */
-
-  /* semestr lentasi */
-  let h = '<div class="sem">' + SEMESTERS.map(function(n){
-    return '<button class="'+(n === curSem ? 'is-on' : '')+'" data-sem="'+n+'">'+
-      (n === curSem ? n + ' - ' + t('semester') : n)+'</button>';
-  }).join('') + '</div>';
-
-  /* hafta tanlagich */
-  h += '<div class="week">'+
-    '<button class="week__nav" id="wPrev" aria-label="'+esc(t('prevWeek'))+'">'+
-      '<svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></button>'+
-    '<button class="week__now" id="wNow">'+esc(dmy(weekStart) + ' / ' + dmy(oxiri))+'</button>'+
-    '<button class="week__nav" id="wNext" aria-label="'+esc(t('nextWeek'))+'">'+
-      '<svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg></button>'+
-  '</div>';
-
-  /* shu haftadagi darslar */
-  const hafta = SCHEDULE.filter(function(l){
-    if(l.sem !== undefined && l.sem !== curSem) return false;
-    const d = new Date(l.date);
-    return d >= weekStart && d <= addDays(weekStart, 6);
-  });
-
-  if(!hafta.length){
-    h += noResultHTML(t('notFound'), t('noLessons'));
-    return h;
-  }
-
-  /* kunlar bo'yicha guruhlash */
-  const bugun = new Date();
-  for(let i = 0; i < 6; i++){
-    const kun = addDays(weekStart, i);
-    const darslar = hafta.filter(function(l){ return sameDay(new Date(l.date), kun); });
-    if(!darslar.length) continue;
-
-    const today = sameDay(kun, bugun);
-    h += '<div class="dayhead'+(today ? ' dayhead--today' : '')+'">'+
-      esc(L.days[kun.getDay()] + ', ' + kun.getDate() + '-' + L.months[kun.getMonth()])+
-      (today ? ' \u00b7 ' + esc(t('todayWord')) : '')+
-    '</div>';
-
-    h += '<div class="list">' + darslar
-      .sort(function(a, b){ return toMin(a.from) - toMin(b.from); })
-      .map(function(l){
-        return rowHTML({t:l.t, m:l.from+'\u2013'+l.to+' \u00b7 '+l.room+' \u00b7 '+l.teacher,
-                        b:l.type, mute:true});
-      }).join('') + '</div>';
-  }
-
-  return h;
-}
-
-/* jadvalni ochish */
-function openSchedule(){
-  haptic();
-  if(!weekStart) weekStart = mondayOf(new Date());
-  $('refBtn').hidden = true;
-  detailTitle.textContent = t('schedule');
-  renderSchedule();
-
-  detail.classList.add('is-open');
-  detail.setAttribute('aria-hidden','false');
-  detail.scrollTop = 0;
-
-  if(!detailOpen){
-    detailOpen = true;
-    history.pushState({detail:true}, '');
-  }
-}
-
-/* ichini qayta chizish */
-function renderSchedule(){
-  detailBody.innerHTML = scheduleHTML();
-
-  detailBody.querySelectorAll('[data-sem]').forEach(function(b){
-    b.addEventListener('click', function(){
-      curSem = +b.dataset.sem;
-      haptic();
-      renderSchedule();
-    });
-  });
-
-  const prev = $('wPrev'), next = $('wNext'), now = $('wNow');
-  if(prev) prev.addEventListener('click', function(){
-    weekStart = addDays(weekStart, -7);
-    haptic();
-    renderSchedule();
-  });
-  if(next) next.addEventListener('click', function(){
-    weekStart = addDays(weekStart, 7);
-    haptic();
-    renderSchedule();
-  });
-  if(now) now.addEventListener('click', function(){
-    weekStart = mondayOf(new Date());
-    haptic();
-    renderSchedule();
-    toast(t('thisWeek'));
-  });
-}
 
 /* =========================================================
    19) OXIRGI OCHILGAN TABNI TIKLASH
