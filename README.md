@@ -66,7 +66,21 @@ robots.txt      — qidiruv tizimlari uchun
 sitemap.xml     — sayt xaritasi
 docs/           — README uchun skrinshotlar
 tools_shot.js   — skrinshotlarni avtomatik yangilash vositasi
+tools_check.js  — loyihani tekshirish vositasi
 ```
+
+## Chiqarishdan oldin
+
+```bash
+node tools_check.js
+```
+
+Versiya raqamlari, kesh ro'yxati, manifest va tarjimalarni tekshiradi.
+
+**Muhim:** `style.css` yoki `app.js` o'zgarsa, `?v=` raqamini
+[index.html](index.html) **va** [sw.js](sw.js) da bir xil qilib yangilang,
+hamda `sw.js` dagi `VERSIYA` ni ko'taring — aks holda foydalanuvchida
+eski nusxa qolib ketadi. `tools_check.js` shuni tekshiradi.
 
 ## Mavzu (yorug'/qorong'i)
 
