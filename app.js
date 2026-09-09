@@ -4720,6 +4720,9 @@ function showDemoCode(){
   });
 }
 
+/* sessiya shuncha kundan keyin eskiradi — qayta kirish so'raladi */
+const SESSIYA_KUN = 30;
+
 /* sahifa ochilganda: kirganmi? */
 (function checkAuth(){
   let kirgan = false;
@@ -4727,9 +4730,17 @@ function showDemoCode(){
   try{
     const saqlangan = JSON.parse(localStorage.getItem('ms.auth') || 'null');
     if(saqlangan){
-      const talaba = talabaTop(saqlangan.kod) || TALABALAR[0];
-      userYukla(talaba);
-      kirgan = true;
+      /* muddati o'tganmi? (eski yozuvlarda 'at' bo'lmasligi mumkin) */
+      const yosh = Date.now() - (saqlangan.at || 0);
+      const eskirgan = yosh > SESSIYA_KUN * 24 * 60 * 60 * 1000;
+
+      if(eskirgan){
+        localStorage.removeItem('ms.auth');
+      }else{
+        const talaba = talabaTop(saqlangan.kod) || TALABALAR[0];
+        userYukla(talaba);
+        kirgan = true;
+      }
     }
   }catch(e){}
 

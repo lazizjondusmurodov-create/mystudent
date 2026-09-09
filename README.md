@@ -30,6 +30,8 @@ kutubxona va karyera bo'limlari bitta joyda. O'zbek, rus va ingliz tillarida.
 - **Kutubxona** — kitoblar ro'yxati va qidiruv
 - **Karyera** — rezyume, ish takliflari, yutuqlar, mahorat darslari, maqolalar, bloglar, fotogalereya
 - **Uch til** — o'zbek, rus, ingliz (yuqori o'ngdagi tugmadan almashtiriladi)
+- **Qorong'i rejim** — telefon sozlamasiga qarab avtomatik
+- **Internetsiz ishlaydi** — telefon ekraniga o'rnatiladi (PWA)
 
 ## Ishga tushirish
 
@@ -56,9 +58,21 @@ Kirish ekranida talabani tanlash mumkin yoki kodni qo'lda kiritish:
 ```
 index.html      — sahifa tuzilmasi va meta teglar
 app.js          — butun mantiq: tillar, ma'lumotlar, sahifalar
-style.css       — uslublar
+style.css       — uslublar (ranglar CSS o'zgaruvchilarida)
+manifest.json   — PWA sozlamalari
+sw.js           — service worker: internetsiz ishlash
 docs/           — README uchun skrinshotlar
 tools_shot.js   — skrinshotlarni avtomatik yangilash vositasi
+```
+
+## Mavzu (yorug'/qorong'i)
+
+Ranglar `style.css` boshidagi CSS o'zgaruvchilarida yig'ilgan. Qorong'i rejim
+telefon sozlamasiga qarab o'zi yoqiladi. Majburiy qilish uchun `<html>` ga
+atribut qo'yiladi:
+
+```html
+<html lang="uz" data-theme="dark">   <!-- yoki data-theme="light" -->
 ```
 
 ## Skrinshotlarni yangilash

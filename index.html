@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#FAF8F8">
+<meta name="theme-color" content="#FAF8F8" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#171314" media="(prefers-color-scheme: dark)">
 <title>MyStudent — talaba kabineti</title>
 
 <!-- sayt tavsifi -->
@@ -11,7 +12,13 @@
 
 <!-- brauzer yorlig'i belgisi -->
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
-<link rel="apple-touch-icon" href="favicon.svg">
+<link rel="apple-touch-icon" href="icon-192.png">
+
+<!-- telefon ekraniga o'rnatish (PWA) -->
+<link rel="manifest" href="manifest.json">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="MyStudent">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
 
 <!-- havola ulashilganda ko'rinadigan karta (Telegram, Facebook, ...) -->
 <meta property="og:type" content="website">
@@ -22,7 +29,7 @@
 <meta property="og:url" content="https://lazizjondusmurodov-create.github.io/mystudent/">
 <meta name="twitter:card" content="summary_large_image">
 
-<link rel="stylesheet" href="style.css?v=4.7">
+<link rel="stylesheet" href="style.css?v=4.9">
 </head>
 <body>
 
@@ -321,6 +328,16 @@
   </div>
 </aside>
 
-<script src="app.js?v=4.6"></script>
+<script src="app.js?v=4.9"></script>
+
+<!-- internetsiz ishlash uchun service worker.
+     file:// orqali ochilganda ro'yxatdan o'tkazilmaydi. -->
+<script>
+if('serviceWorker' in navigator && location.protocol.startsWith('http')){
+  window.addEventListener('load', function(){
+    navigator.serviceWorker.register('sw.js').catch(function(){ /* jim: majburiy emas */ });
+  });
+}
+</script>
 </body>
 </html>
