@@ -1,0 +1,73 @@
+{
+  "davomat": [
+    {
+      "t": "Mobil ilovalar ishlab chiqish",
+      "jami": 26,
+      "qoldi": [
+        {
+          "d": "12.09.2026",
+          "s": "sababsiz"
+        }
+      ]
+    },
+    {
+      "t": "Dasturiy ta'minot arxitekturasi",
+      "jami": 24,
+      "qoldi": [
+        {
+          "d": "03.09.2026",
+          "s": "sababli"
+        },
+        {
+          "d": "17.09.2026",
+          "s": "sababsiz"
+        },
+        {
+          "d": "01.10.2026",
+          "s": "sababli"
+        }
+      ]
+    },
+    {
+      "t": "Axborot xavfsizligi",
+      "jami": 24,
+      "qoldi": [
+        {
+          "d": "10.09.2026",
+          "s": "sababli"
+        },
+        {
+          "d": "24.09.2026",
+          "s": "sababli"
+        }
+      ]
+    },
+    {
+      "t": "Ingliz tili",
+      "jami": 20,
+      "qoldi": []
+    },
+    {
+      "t": "Loyihalarni boshqarish",
+      "jami": 16,
+      "qoldi": [
+        {
+          "d": "05.09.2026",
+          "s": "sababsiz"
+        },
+        {
+          "d": "12.09.2026",
+          "s": "sababsiz"
+        },
+        {
+          "d": "19.09.2026",
+          "s": "sababli"
+        },
+        {
+          "d": "26.09.2026",
+          "s": "sababsiz"
+        }
+      ]
+    }
+  ]
+}

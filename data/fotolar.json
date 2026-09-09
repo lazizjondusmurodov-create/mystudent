@@ -1,0 +1,52 @@
+{
+  "fotolar": [
+    {
+      "id": "ph1",
+      "t": "Bilimlar kuni",
+      "sana": "02.09.2026",
+      "soni": 24,
+      "ton": "brand",
+      "ic": "<path d=\"M22 10 12 5 2 10l10 5 10-5z\"/><path d=\"M6 12v5c0 1 3 3 6 3s6-2 6-3v-5\"/>"
+    },
+    {
+      "id": "ph2",
+      "t": "IT-olimpiada",
+      "sana": "15.03.2026",
+      "soni": 38,
+      "ton": "warn",
+      "ic": "<path d=\"M12 2 4 5v6c0 5 3.4 9.2 8 10.5 4.6-1.3 8-5.5 8-10.5V5z\"/><path d=\"m12 8 1.2 2.4 2.6.4-1.9 1.8.5 2.6L12 14l-2.4 1.2.5-2.6-1.9-1.8 2.6-.4z\"/>"
+    },
+    {
+      "id": "ph3",
+      "t": "Talabalar bahori",
+      "sana": "20.04.2026",
+      "soni": 52,
+      "ton": "ok",
+      "ic": "<path d=\"M9 18V5l12-2v13\"/><circle cx=\"6\" cy=\"18\" r=\"3\"/><circle cx=\"18\" cy=\"16\" r=\"3\"/>"
+    },
+    {
+      "id": "ph4",
+      "t": "Hackathon \"Smart City\"",
+      "sana": "08.12.2025",
+      "soni": 31,
+      "ton": "good",
+      "ic": "<rect x=\"2\" y=\"3\" width=\"20\" height=\"14\" rx=\"2\"/><path d=\"M8 21h8M12 17v4\"/>"
+    },
+    {
+      "id": "ph5",
+      "t": "Kutubxona ochilishi",
+      "sana": "10.10.2025",
+      "soni": 17,
+      "ton": "brand",
+      "ic": "<path d=\"M4 19.5A2.5 2.5 0 0 1 6.5 17H20\"/><path d=\"M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z\"/>"
+    },
+    {
+      "id": "ph6",
+      "t": "Sport musobaqalari",
+      "sana": "25.09.2025",
+      "soni": 45,
+      "ton": "warn",
+      "ic": "<circle cx=\"12\" cy=\"12\" r=\"10\"/><path d=\"M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20M2 12h20\"/>"
+    }
+  ]
+}

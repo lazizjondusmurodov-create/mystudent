@@ -1,0 +1,56 @@
+{
+  "talabalar": [
+    {
+      "kod": "2024",
+      "name": "Aliyev Jasur Bekzod o‘g‘li",
+      "group": "ATT-06-24",
+      "faculty": "Axborot tizimlari va texnologiyalari",
+      "form": "Sirtqi",
+      "course": "3-kurs",
+      "studentId": "ATT-06-24",
+      "status": "O'qimoqda",
+      "phone": "+998 90 123 45 67",
+      "email": "j.aliyev@student.uz",
+      "sem": 5
+    },
+    {
+      "kod": "3050",
+      "name": "Yusupova Nilufar Bahodir qizi",
+      "group": "KIF-04-25",
+      "faculty": "Kompyuter injiniringi",
+      "form": "Kunduzgi",
+      "course": "2-kurs",
+      "studentId": "KIF-04-25",
+      "status": "O'qimoqda",
+      "phone": "+998 91 234 56 78",
+      "email": "n.yusupova@student.uz",
+      "sem": 3
+    },
+    {
+      "kod": "7788",
+      "name": "Rahmonov Sardor Alisher o‘g‘li",
+      "group": "IQT-02-23",
+      "faculty": "Iqtisodiyot va menejment",
+      "form": "Kunduzgi",
+      "course": "4-kurs",
+      "studentId": "IQT-02-23",
+      "status": "O'qimoqda",
+      "phone": "+998 93 777 88 99",
+      "email": "s.rahmonov@student.uz",
+      "sem": 7
+    },
+    {
+      "kod": "1111",
+      "name": "Dusmurodov Lazizjon",
+      "group": "ATT-06-24",
+      "faculty": "Axborot tizimlari va texnologiyalari",
+      "form": "Sirtqi",
+      "course": "3-kurs",
+      "studentId": "ATT-06-24",
+      "status": "O'qimoqda",
+      "phone": "+998 50 581 66 67",
+      "email": "lazizjondusmurodov26@gmail.com",
+      "sem": 5
+    }
+  ]
+}

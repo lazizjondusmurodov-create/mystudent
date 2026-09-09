@@ -57,7 +57,9 @@ Kirish ekranida talabani tanlash mumkin yoki kodni qo'lda kiritish:
 
 ```
 index.html      — sahifa tuzilmasi va meta teglar
-app.js          — butun mantiq: tillar, ma'lumotlar, sahifalar
+api.js          — API qatlami: ma'lumot shu yerdan olinadi
+data/           — ma'lumotlar (JSON) — hozircha statik "server"
+app.js          — butun mantiq: tillar, sahifalar, ko'rinish
 style.css       — uslublar (ranglar CSS o'zgaruvchilarida)
 manifest.json   — PWA sozlamalari
 sw.js           — service worker: internetsiz ishlash
@@ -81,6 +83,39 @@ Versiya raqamlari, kesh ro'yxati, manifest va tarjimalarni tekshiradi.
 [index.html](index.html) **va** [sw.js](sw.js) da bir xil qilib yangilang,
 hamda `sw.js` dagi `VERSIYA` ni ko'taring — aks holda foydalanuvchida
 eski nusxa qolib ketadi. `tools_check.js` shuni tekshiradi.
+
+## Ma'lumotlar va API
+
+Ilova ma'lumotlarni `api.js` orqali oladi — kod ichida qotib qolgan
+massivlar yo'q. Hozir ular `data/*.json` fayllaridan `fetch()` bilan
+yuklanadi (statik "server").
+
+**Haqiqiy backend ulanganda** [api.js](api.js) ning boshidagi ikki
+qatorni o'zgartirish kifoya, qolgan kod umuman tegilmaydi:
+
+```js
+const API_BASE   = 'https://api.mystudent.uz';
+const API_STATIK = false;
+```
+
+Endpointlar:
+
+| Manzil | Qaytaradi |
+|---|---|
+| `GET /talabalar` | `{talabalar:[...]}` |
+| `GET /jadval` | `{semestrlar:[...], darslar:[...]}` |
+| `GET /imtihonlar` | `{imtihonlar:[...]}` |
+| `GET /davomat` | `{davomat:[...]}` |
+| `GET /baholar` | `{baholar:[...]}` |
+| `GET /yangiliklar` | `{yangiliklar:[...]}` |
+| `GET /kutubxona` | `{kitoblar:[...]}` |
+| `GET /ishlar` | `{ishlar:[...]}` |
+| `GET /qarzdorlik` | `{yillar, akademik, arizalar, shartnoma}` |
+| `GET /fotolar` | `{fotolar:[...]}` |
+| `GET /yotoqxona` | `{yotoqxona:{...}}` |
+
+Barcha so'rovlar parallel ketadi. Ma'lumot kelguncha yuklanish ekrani
+turadi; xato bo'lsa — sabab va "Qayta urinish" tugmasi ko'rsatiladi.
 
 ## Mavzu (yorug'/qorong'i)
 

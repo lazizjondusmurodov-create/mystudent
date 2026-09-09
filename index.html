@@ -16,6 +16,7 @@
 
 <!-- telefon ekraniga o'rnatish (PWA) -->
 <link rel="manifest" href="manifest.json">
+<meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="MyStudent">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -29,9 +30,19 @@
 <meta property="og:url" content="https://lazizjondusmurodov-create.github.io/mystudent/">
 <meta name="twitter:card" content="summary_large_image">
 
-<link rel="stylesheet" href="style.css?v=5.1">
+<link rel="stylesheet" href="style.css?v=5.2">
 </head>
 <body>
+
+<!-- ma'lumotlar yuklanguncha ko'rinadi, keyin app.js uni o'chiradi -->
+<div id="boot" class="boot">
+  <div class="boot__box">
+    <div class="boot__spin" aria-hidden="true"></div>
+    <div class="boot__t">MyStudent</div>
+    <div class="boot__s">Ma'lumotlar yuklanmoqda…</div>
+  </div>
+</div>
+
 
 <!-- ================= KIRISH SAHIFASI ================= -->
 <section class="auth" id="auth" aria-label="Kirish">
@@ -328,7 +339,8 @@
   </div>
 </aside>
 
-<script src="app.js?v=5.1"></script>
+<script src="api.js?v=5.2"></script>
+<script src="app.js?v=5.2"></script>
 
 <!-- internetsiz ishlash uchun service worker.
      file:// orqali ochilganda ro'yxatdan o'tkazilmaydi. -->

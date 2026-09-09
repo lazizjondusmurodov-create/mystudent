@@ -10,15 +10,27 @@
 
    Versiyani o'zgartirsangiz — eski kesh o'chiriladi.
    ========================================================= */
-const VERSIYA = 'mystudent-v2';
+const VERSIYA = 'mystudent-v3';
 /* index.html qanday so'rasa — shunday keshlaymiz.
    ?v= raqami index.html dagi bilan bir xil bo'lishi shart,
    aks holda brauzer boshqa URL deb biladi va kesh ishlamaydi. */
 const ASOSIY = [
   './',
   './index.html',
-  './style.css?v=5.1',
-  './app.js?v=5.1',
+  './style.css?v=5.2',
+  './api.js?v=5.2',
+  './app.js?v=5.2',
+  './data/talabalar.json',
+  './data/jadval.json',
+  './data/imtihonlar.json',
+  './data/davomat.json',
+  './data/baholar.json',
+  './data/yangiliklar.json',
+  './data/kutubxona.json',
+  './data/ishlar.json',
+  './data/qarzdorlik.json',
+  './data/fotolar.json',
+  './data/yotoqxona.json',
   './manifest.json',
   './favicon.svg',
   './icon-192.png',

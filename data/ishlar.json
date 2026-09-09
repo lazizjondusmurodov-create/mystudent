@@ -1,0 +1,60 @@
+{
+  "ishlar": [
+    {
+      "id": "job1",
+      "t": "Frontend dasturchi (intern)",
+      "m": "Samarqand · To'liq bo'lmagan ish kuni · HTML, CSS, JS",
+      "b": "Ochiq",
+      "ok": true,
+      "company": "Digital Solutions",
+      "place": "Samarqand",
+      "mode": "To'liq bo'lmagan ish kuni",
+      "salary": "3 000 000 so'm dan",
+      "x": "Mavjud veb-ilovalar interfeysini ishlab chiqish va qo'llab-quvvatlash. Tajribali dasturchi rahbarligida.",
+      "skills": [
+        "HTML",
+        "CSS",
+        "JavaScript",
+        "Git"
+      ],
+      "act": "apply"
+    },
+    {
+      "id": "job2",
+      "t": "Backend dasturchi (junior)",
+      "m": "Masofaviy · Python, Django, PostgreSQL",
+      "b": "Ochiq",
+      "ok": true,
+      "company": "IT Park Samarqand",
+      "place": "Masofaviy",
+      "mode": "To'liq ish kuni",
+      "salary": "5 000 000 so'm dan",
+      "x": "REST API yaratish, ma'lumotlar bazasi bilan ishlash va mavjud tizimlarni integratsiya qilish.",
+      "skills": [
+        "Python",
+        "Django",
+        "PostgreSQL",
+        "Docker"
+      ],
+      "act": "apply"
+    },
+    {
+      "id": "job3",
+      "t": "Texnik yordam mutaxassisi",
+      "m": "Samarqand · To'liq ish kuni",
+      "b": "Yopilgan",
+      "mute": true,
+      "company": "Universitet IT bo'limi",
+      "place": "Samarqand",
+      "mode": "To'liq ish kuni",
+      "salary": "2 500 000 so'm",
+      "x": "Kompyuter texnikasi va tarmoq uskunalariga xizmat ko'rsatish, foydalanuvchilarga yordam.",
+      "skills": [
+        "Windows",
+        "Tarmoq",
+        "Texnik xizmat"
+      ],
+      "act": "closed"
+    }
+  ]
+}

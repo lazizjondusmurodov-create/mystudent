@@ -1,0 +1,37 @@
+{
+  "yangiliklar": [
+    {
+      "id": "n1",
+      "who": "Dekanat",
+      "when": "2 soat oldin",
+      "t": "Qishki sessiya jadvali e'lon qilindi",
+      "x": "Imtihonlar 10-yanvardan boshlanadi. Batafsil jadval kabinetdan yuklab olinadi.",
+      "ic": "cal",
+      "tone": "",
+      "isNew": true,
+      "full": "Hurmatli talabalar!\n\n2026-2027 o'quv yili qishki imtihon sessiyasi jadvali tasdiqlandi. Imtihonlar 10-yanvardan 28-yanvarga qadar davom etadi.\n\nHar bir fan bo'yicha imtihon sanasi, vaqti va xonasi \"Imtihonlar\" bo'limida ko'rsatilgan. Imtihonga kirish uchun talaba guvohnomasi majburiy.\n\nAkademik qarzdorligi bo'lgan talabalar sessiya boshlanishidan oldin dekanatga murojaat qilishlari shart."
+    },
+    {
+      "id": "n2",
+      "who": "Kutubxona",
+      "when": "Kecha",
+      "t": "Yangi elektron kitoblar qo'shildi",
+      "x": "Dasturlash va ma'lumotlar bazasi bo'yicha 12 ta yangi nashr.",
+      "ic": "book",
+      "tone": "ok",
+      "isNew": true,
+      "full": "Elektron kutubxona fondi yangilandi.\n\nDasturlash, ma'lumotlar bazasi va axborot xavfsizligi yo'nalishlari bo'yicha 12 ta yangi nashr qo'shildi. Ular orasida 2025-2026 yillarda chop etilgan darsliklar va o'quv qo'llanmalari bor.\n\nKitoblarni \"Kutubxona\" bo'limidan yuklab olishingiz mumkin. Bosma nashrlar uchun kutubxonaga shaxsan murojaat qiling."
+    },
+    {
+      "id": "n3",
+      "who": "O'quv bo'limi",
+      "when": "3 kun oldin",
+      "t": "Amaliyot hisobotini topshirish muddati",
+      "x": "Hisobotlar 20-sentabrgacha qabul qilinadi.",
+      "ic": "warn",
+      "tone": "warn",
+      "isNew": false,
+      "full": "Ishlab chiqarish amaliyoti hisobotlarini topshirish muddati — 20-sentabr.\n\nHisobot quyidagilarni o'z ichiga olishi kerak:\n• Amaliyot o'tagan tashkilot haqida ma'lumot\n• Bajarilgan ishlar tavsifi\n• Rahbar tomonidan tasdiqlangan tavsifnoma\n• Kundalik daftar\n\nBelgilangan muddatda topshirilmagan hisobotlar qabul qilinmaydi."
+    }
+  ]
+}

@@ -1,0 +1,61 @@
+{
+  "kitoblar": [
+    {
+      "id": "lib1",
+      "t": "Ma'lumotlar bazasi asoslari",
+      "m": "A. Karimov · 2024 · PDF, 312 bet",
+      "b": "Mavjud",
+      "ok": true,
+      "author": "A. Karimov",
+      "year": "2024",
+      "fmt": "PDF",
+      "pages": 312,
+      "lang": "O'zbek",
+      "x": "Relatsion ma'lumotlar bazalari nazariyasi, SQL tili va normallashtirish qoidalari. Amaliy misollar bilan.",
+      "act": "download"
+    },
+    {
+      "id": "lib2",
+      "t": "Veb-dasturlash: HTML, CSS, JS",
+      "m": "N. Yusupova · 2025 · PDF, 248 bet",
+      "b": "Mavjud",
+      "ok": true,
+      "author": "N. Yusupova",
+      "year": "2025",
+      "fmt": "PDF",
+      "pages": 248,
+      "lang": "O'zbek",
+      "x": "Zamonaviy veb-sahifa yaratish: semantik HTML, moslashuvchan CSS va JavaScript asoslari.",
+      "act": "download"
+    },
+    {
+      "id": "lib3",
+      "t": "Python dasturlash tili",
+      "m": "M. To'xtayev · 2023 · Bosma nashr",
+      "b": "Band",
+      "no": true,
+      "author": "M. To'xtayev",
+      "year": "2023",
+      "fmt": "Bosma nashr",
+      "pages": 280,
+      "lang": "O'zbek",
+      "x": "Python sintaksisi, ma'lumot tuzilmalari va standart kutubxona. Boshlang'ich daraja uchun.",
+      "act": "busy",
+      "back": "18.09.2026"
+    },
+    {
+      "id": "lib4",
+      "t": "Operatsion tizimlar",
+      "m": "S. Rahmonov · 2022 · PDF, 190 bet",
+      "b": "Mavjud",
+      "ok": true,
+      "author": "S. Rahmonov",
+      "year": "2022",
+      "fmt": "PDF",
+      "pages": 190,
+      "lang": "O'zbek",
+      "x": "Jarayonlar, xotira boshqaruvi, fayl tizimlari va ko'p vazifali ishlash tamoyillari.",
+      "act": "download"
+    }
+  ]
+}

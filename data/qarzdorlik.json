@@ -1,0 +1,61 @@
+{
+  "yillar": [
+    "2025-2026",
+    "2024-2025"
+  ],
+  "akademik": [
+    {
+      "fan": "Operatsion tizimlar",
+      "year": "2025-2026",
+      "sem": "4-semestr",
+      "ball": 48,
+      "kerak": 60,
+      "tur": "Yakuniy nazorat",
+      "sabab": "Ball yetarli emas"
+    },
+    {
+      "fan": "Ingliz tili",
+      "year": "2024-2025",
+      "sem": "2-semestr",
+      "ball": 0,
+      "kerak": 60,
+      "tur": "Yakuniy nazorat",
+      "sabab": "Imtihonga kelmagan"
+    }
+  ],
+  "arizalar": [
+    {
+      "id": "ar1",
+      "turi": "yakuniy",
+      "t": "Yakuniy nazorat qayta topshirish",
+      "fanlar": 2,
+      "kredit": 10,
+      "holat": "ok",
+      "holatT": "Shartnoma yaratildi",
+      "vaqt": "14:17 18.07.2026",
+      "x": "Ariza bo‘yicha shartnoma yaratildi. Shartnomani yuklab oling va to‘lovni amalga oshiring.",
+      "files": [
+        "ariza",
+        "shartnoma"
+      ],
+      "fanlarRoyxat": [
+        {
+          "t": "Operatsion tizimlar",
+          "m": "4-semestr · 5 kredit · 48/60 ball"
+        },
+        {
+          "t": "Ingliz tili",
+          "m": "2-semestr · 5 kredit · imtihonga kelmagan"
+        }
+      ]
+    }
+  ],
+  "shartnoma": [
+    {
+      "year": "2025-2026",
+      "tur": "Kontrakt to'lovi",
+      "summa": 0,
+      "muddat": "01.07.2026"
+    }
+  ]
+}

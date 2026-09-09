@@ -1,0 +1,204 @@
+{
+  "semestrlar": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+  ],
+  "darslar": [
+    {
+      "sem": 5,
+      "date": "2026-09-07",
+      "t": "Mobil ilovalar ishlab chiqish",
+      "from": "08:30",
+      "to": "09:50",
+      "room": "214-xona",
+      "type": "Ma'ruza",
+      "teacher": "A. Karimov"
+    },
+    {
+      "sem": 5,
+      "date": "2026-09-07",
+      "t": "Axborot xavfsizligi",
+      "from": "10:00",
+      "to": "11:20",
+      "room": "305-xona",
+      "type": "Amaliyot",
+      "teacher": "S. Rahmonov"
+    },
+    {
+      "sem": 5,
+      "date": "2026-09-07",
+      "t": "Ingliz tili",
+      "from": "11:30",
+      "to": "12:50",
+      "room": "108-xona",
+      "type": "Amaliyot",
+      "teacher": "N. Yusupova"
+    },
+    {
+      "sem": 5,
+      "date": "2026-09-08",
+      "t": "Dasturiy ta'minot arxitekturasi",
+      "from": "08:30",
+      "to": "09:50",
+      "room": "210-xona",
+      "type": "Ma'ruza",
+      "teacher": "M. To'xtayev"
+    },
+    {
+      "sem": 5,
+      "date": "2026-09-08",
+      "t": "Loyihalarni boshqarish",
+      "from": "10:00",
+      "to": "11:20",
+      "room": "402-xona",
+      "type": "Ma'ruza",
+      "teacher": "D. Sobirova"
+    },
+    {
+      "sem": 5,
+      "date": "2026-09-09",
+      "t": "Mobil ilovalar ishlab chiqish",
+      "from": "08:30",
+      "to": "09:50",
+      "room": "312-xona",
+      "type": "Amaliyot",
+      "teacher": "A. Karimov"
+    },
+    {
+      "sem": 5,
+      "date": "2026-09-09",
+      "t": "Axborot xavfsizligi",
+      "from": "10:00",
+      "to": "11:20",
+      "room": "305-xona",
+      "type": "Ma'ruza",
+      "teacher": "S. Rahmonov"
+    },
+    {
+      "sem": 5,
+      "date": "2026-09-09",
+      "t": "Dasturiy ta'minot arxitekturasi",
+      "from": "13:00",
+      "to": "14:20",
+      "room": "210-xona",
+      "type": "Amaliyot",
+      "teacher": "M. To'xtayev"
+    },
+    {
+      "sem": 5,
+      "date": "2026-09-10",
+      "t": "Ingliz tili",
+      "from": "08:30",
+      "to": "09:50",
+      "room": "108-xona",
+      "type": "Amaliyot",
+      "teacher": "N. Yusupova"
+    },
+    {
+      "sem": 5,
+      "date": "2026-09-10",
+      "t": "Loyihalarni boshqarish",
+      "from": "10:00",
+      "to": "11:20",
+      "room": "402-xona",
+      "type": "Amaliyot",
+      "teacher": "D. Sobirova"
+    },
+    {
+      "sem": 5,
+      "date": "2026-09-11",
+      "t": "Mobil ilovalar ishlab chiqish",
+      "from": "08:30",
+      "to": "09:50",
+      "room": "214-xona",
+      "type": "Ma'ruza",
+      "teacher": "A. Karimov"
+    },
+    {
+      "sem": 5,
+      "date": "2026-09-11",
+      "t": "Axborot xavfsizligi",
+      "from": "10:00",
+      "to": "11:20",
+      "room": "305-xona",
+      "type": "Amaliyot",
+      "teacher": "S. Rahmonov"
+    },
+    {
+      "sem": 5,
+      "date": "2026-09-14",
+      "t": "Mobil ilovalar ishlab chiqish",
+      "from": "08:30",
+      "to": "09:50",
+      "room": "214-xona",
+      "type": "Ma'ruza",
+      "teacher": "A. Karimov"
+    },
+    {
+      "sem": 5,
+      "date": "2026-09-14",
+      "t": "Axborot xavfsizligi",
+      "from": "10:00",
+      "to": "11:20",
+      "room": "305-xona",
+      "type": "Amaliyot",
+      "teacher": "S. Rahmonov"
+    },
+    {
+      "sem": 5,
+      "date": "2026-09-14",
+      "t": "Ingliz tili",
+      "from": "11:30",
+      "to": "12:50",
+      "room": "108-xona",
+      "type": "Amaliyot",
+      "teacher": "N. Yusupova"
+    },
+    {
+      "sem": 5,
+      "date": "2026-09-15",
+      "t": "Dasturiy ta'minot arxitekturasi",
+      "from": "08:30",
+      "to": "09:50",
+      "room": "210-xona",
+      "type": "Ma'ruza",
+      "teacher": "M. To'xtayev"
+    },
+    {
+      "sem": 5,
+      "date": "2026-09-15",
+      "t": "Loyihalarni boshqarish",
+      "from": "10:00",
+      "to": "11:20",
+      "room": "402-xona",
+      "type": "Ma'ruza",
+      "teacher": "D. Sobirova"
+    },
+    {
+      "sem": 5,
+      "date": "2026-09-16",
+      "t": "Mobil ilovalar ishlab chiqish",
+      "from": "08:30",
+      "to": "09:50",
+      "room": "312-xona",
+      "type": "Amaliyot",
+      "teacher": "A. Karimov"
+    },
+    {
+      "sem": 5,
+      "date": "2026-09-16",
+      "t": "Axborot xavfsizligi",
+      "from": "10:00",
+      "to": "11:20",
+      "room": "305-xona",
+      "type": "Ma'ruza",
+      "teacher": "S. Rahmonov"
+    }
+  ]
+}

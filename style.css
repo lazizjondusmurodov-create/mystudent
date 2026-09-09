@@ -1862,3 +1862,20 @@ button.row:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
 .refbtn:focus-visible{outline:2px solid var(--warn);outline-offset:2px}
 .refbtn svg{width:19px;height:19px;fill:none;stroke:var(--on-brand);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
 .refbtn.is-spin svg{animation:spin .8s linear infinite}
+
+/* ---------- YUKLANISH EKRANI ----------
+   Ma'lumotlar API'dan kelguncha ko'rinadi (app.js uni o'chiradi). */
+.boot{
+  position:fixed;inset:0;z-index:60;
+  background:var(--bg);display:grid;place-items:center;padding:24px;
+}
+.boot__box{text-align:center;max-width:300px}
+.boot__spin{
+  width:34px;height:34px;margin:0 auto 18px;border-radius:50%;
+  border:3px solid var(--line);border-top-color:var(--brand);
+  animation:bootSpin .8s linear infinite;
+}
+@keyframes bootSpin{to{transform:rotate(360deg)}}
+.boot__t{font-size:19px;font-weight:750;letter-spacing:-.03em;color:var(--ink)}
+.boot__s{margin-top:8px;font-size:13.5px;color:var(--ink-3);line-height:1.5}
+.boot__box .btn{margin-top:20px}

@@ -933,60 +933,7 @@ function qavatText(n){
      POST /api/login  {kod}  ->  {token, talaba}
      GET  /api/talaba (token bilan)
    qolgan kod o'zgarmaydi — USER obyekti to'ldirilsa kifoya. */
-const TALABALAR = [
-  {
-    kod:"2024",
-    name:"Aliyev Jasur Bekzod o‘g‘li",
-    group:"ATT-06-24",
-    faculty:"Axborot tizimlari va texnologiyalari",
-    form:"Sirtqi",
-    course:"3-kurs",
-    studentId:"ATT-06-24",
-    status:"O'qimoqda",
-    phone:"+998 90 123 45 67",
-    email:"j.aliyev@student.uz",
-    sem:5
-  },
-  {
-    kod:"3050",
-    name:"Yusupova Nilufar Bahodir qizi",
-    group:"KIF-04-25",
-    faculty:"Kompyuter injiniringi",
-    form:"Kunduzgi",
-    course:"2-kurs",
-    studentId:"KIF-04-25",
-    status:"O'qimoqda",
-    phone:"+998 91 234 56 78",
-    email:"n.yusupova@student.uz",
-    sem:3
-  },
-  {
-    kod:"7788",
-    name:"Rahmonov Sardor Alisher o‘g‘li",
-    group:"IQT-02-23",
-    faculty:"Iqtisodiyot va menejment",
-    form:"Kunduzgi",
-    course:"4-kurs",
-    studentId:"IQT-02-23",
-    status:"O'qimoqda",
-    phone:"+998 93 777 88 99",
-    email:"s.rahmonov@student.uz",
-    sem:7
-  },
-  {
-    kod:"1111",
-    name:"Dusmurodov Lazizjon",
-    group:"ATT-06-24",
-    faculty:"Axborot tizimlari va texnologiyalari",
-    form:"Sirtqi",
-    course:"3-kurs",
-    studentId:"ATT-06-24",
-    status:"O'qimoqda",
-    phone:"+998 50 581 66 67",
-    email:"lazizjondusmurodov26@gmail.com",
-    sem:5
-  }
-];
+let TALABALAR = [];   /* data/*.json dan yuklanadi */
 
 /* Joriy talaba. Login vaqtida to'ldiriladi. */
 const USER = {
@@ -1068,61 +1015,7 @@ fillUserUI();
      {sem:5, date:"2026-09-07", t:"Fan nomi", from:"08:30", to:"09:50",
       room:"214-xona", type:"Amaliyot", teacher:"A. Karimov"}
    date — ISO ko'rinishda "YYYY-MM-DD". */
-const SCHEDULE = [
-  /* --- 7-sentabr, dushanba --- */
-  {sem:5, date:"2026-09-07", t:"Mobil ilovalar ishlab chiqish", from:"08:30", to:"09:50",
-   room:"214-xona", type:"Ma'ruza",  teacher:"A. Karimov"},
-  {sem:5, date:"2026-09-07", t:"Axborot xavfsizligi",           from:"10:00", to:"11:20",
-   room:"305-xona", type:"Amaliyot", teacher:"S. Rahmonov"},
-  {sem:5, date:"2026-09-07", t:"Ingliz tili",                   from:"11:30", to:"12:50",
-   room:"108-xona", type:"Amaliyot", teacher:"N. Yusupova"},
-
-  /* --- 8-sentabr, seshanba --- */
-  {sem:5, date:"2026-09-08", t:"Dasturiy ta'minot arxitekturasi", from:"08:30", to:"09:50",
-   room:"210-xona", type:"Ma'ruza",  teacher:"M. To'xtayev"},
-  {sem:5, date:"2026-09-08", t:"Loyihalarni boshqarish",          from:"10:00", to:"11:20",
-   room:"402-xona", type:"Ma'ruza",  teacher:"D. Sobirova"},
-
-  /* --- 9-sentabr, chorshanba --- */
-  {sem:5, date:"2026-09-09", t:"Mobil ilovalar ishlab chiqish", from:"08:30", to:"09:50",
-   room:"312-xona", type:"Amaliyot", teacher:"A. Karimov"},
-  {sem:5, date:"2026-09-09", t:"Axborot xavfsizligi",           from:"10:00", to:"11:20",
-   room:"305-xona", type:"Ma'ruza",  teacher:"S. Rahmonov"},
-  {sem:5, date:"2026-09-09", t:"Dasturiy ta'minot arxitekturasi", from:"13:00", to:"14:20",
-   room:"210-xona", type:"Amaliyot", teacher:"M. To'xtayev"},
-
-  /* --- 10-sentabr, payshanba --- */
-  {sem:5, date:"2026-09-10", t:"Ingliz tili",                   from:"08:30", to:"09:50",
-   room:"108-xona", type:"Amaliyot", teacher:"N. Yusupova"},
-  {sem:5, date:"2026-09-10", t:"Loyihalarni boshqarish",        from:"10:00", to:"11:20",
-   room:"402-xona", type:"Amaliyot", teacher:"D. Sobirova"},
-
-  /* --- 11-sentabr, juma --- */
-  {sem:5, date:"2026-09-11", t:"Mobil ilovalar ishlab chiqish", from:"08:30", to:"09:50",
-   room:"214-xona", type:"Ma'ruza",  teacher:"A. Karimov"},
-  {sem:5, date:"2026-09-11", t:"Axborot xavfsizligi",           from:"10:00", to:"11:20",
-   room:"305-xona", type:"Amaliyot", teacher:"S. Rahmonov"},
-
-  /* --- 14-sentabr, dushanba (keyingi hafta) --- */
-  {sem:5, date:"2026-09-14", t:"Mobil ilovalar ishlab chiqish", from:"08:30", to:"09:50",
-   room:"214-xona", type:"Ma'ruza",  teacher:"A. Karimov"},
-  {sem:5, date:"2026-09-14", t:"Axborot xavfsizligi",           from:"10:00", to:"11:20",
-   room:"305-xona", type:"Amaliyot", teacher:"S. Rahmonov"},
-  {sem:5, date:"2026-09-14", t:"Ingliz tili",                   from:"11:30", to:"12:50",
-   room:"108-xona", type:"Amaliyot", teacher:"N. Yusupova"},
-
-  /* --- 15-sentabr, seshanba --- */
-  {sem:5, date:"2026-09-15", t:"Dasturiy ta'minot arxitekturasi", from:"08:30", to:"09:50",
-   room:"210-xona", type:"Ma'ruza",  teacher:"M. To'xtayev"},
-  {sem:5, date:"2026-09-15", t:"Loyihalarni boshqarish",          from:"10:00", to:"11:20",
-   room:"402-xona", type:"Ma'ruza",  teacher:"D. Sobirova"},
-
-  /* --- 16-sentabr, chorshanba --- */
-  {sem:5, date:"2026-09-16", t:"Mobil ilovalar ishlab chiqish", from:"08:30", to:"09:50",
-   room:"312-xona", type:"Amaliyot", teacher:"A. Karimov"},
-  {sem:5, date:"2026-09-16", t:"Axborot xavfsizligi",           from:"10:00", to:"11:20",
-   room:"305-xona", type:"Ma'ruza",  teacher:"S. Rahmonov"}
-];
+let SCHEDULE = [];   /* data/*.json dan yuklanadi */
 
 /* ---------- SANA YORDAMCHILARI ---------- */
 /* Date -> "YYYY-MM-DD" */
@@ -1149,7 +1042,7 @@ function lessonsOn(iso){
 }
 
 /* joriy semestr va ko'rilayotgan hafta */
-const SEMESTERS = [1, 2, 3, 4, 5, 6, 7, 8];
+let SEMESTERS = [];   /* data/*.json dan yuklanadi */
 let curSem = 5;
 let weekStart = null;   /* dushanba, Date */
 
@@ -1158,24 +1051,7 @@ let weekStart = null;   /* dushanba, Date */
    tur   — nazorat turi
    ball  — o'tgan imtihon natijasi (bo'lmasa hali topshirilmagan)
    Backend: GET /api/imtihonlar */
-const EXAMS = [
-  {sem:5, date:"2026-09-11", from:"09:00", to:"11:00", t:"Axborot xavfsizligi",
-   room:"305-xona", tur:"Oraliq nazorat", teacher:"S. Rahmonov"},
-  {sem:5, date:"2026-09-14", from:"09:00", to:"11:00", t:"Mobil ilovalar ishlab chiqish",
-   room:"214-xona", tur:"Oraliq nazorat", teacher:"A. Karimov"},
-  {sem:5, date:"2026-09-18", from:"11:00", to:"13:00", t:"Dasturiy ta'minot arxitekturasi",
-   room:"210-xona", tur:"Oraliq nazorat", teacher:"M. To'xtayev"},
-  {sem:5, date:"2026-09-22", from:"09:00", to:"11:00", t:"Ingliz tili",
-   room:"108-xona", tur:"Oraliq nazorat", teacher:"N. Yusupova"},
-  {sem:5, date:"2026-09-25", from:"13:00", to:"15:00", t:"Loyihalarni boshqarish",
-   room:"402-xona", tur:"Oraliq nazorat", teacher:"D. Sobirova"},
-
-  /* o'tgan imtihonlar — natijasi bilan */
-  {sem:5, date:"2026-09-04", from:"09:00", to:"11:00", t:"Mobil ilovalar ishlab chiqish",
-   room:"214-xona", tur:"Joriy nazorat", teacher:"A. Karimov", ball:27, maks:30},
-  {sem:5, date:"2026-09-02", from:"11:00", to:"13:00", t:"Axborot xavfsizligi",
-   room:"305-xona", tur:"Joriy nazorat", teacher:"S. Rahmonov", ball:26, maks:30}
-];
+let EXAMS = [];   /* data/*.json dan yuklanadi */
 
 /* imtihongacha qolgan vaqt (millisekund; manfiy — o'tib ketgan) */
 function examLeftMs(x){
@@ -1225,27 +1101,7 @@ function examNext(){
    kelgan — qatnashgan soat
    qoldi  — qoldirilgan darslar: sana + sabab ('sababli' | 'sababsiz')
    Foiz avtomatik hisoblanadi. Backend: GET /api/davomat */
-const ATTENDANCE = [
-  {t:"Mobil ilovalar ishlab chiqish",   jami:26, qoldi:[
-    {d:"12.09.2026", s:"sababsiz"}
-  ]},
-  {t:"Dasturiy ta'minot arxitekturasi", jami:24, qoldi:[
-    {d:"03.09.2026", s:"sababli"},
-    {d:"17.09.2026", s:"sababsiz"},
-    {d:"01.10.2026", s:"sababli"}
-  ]},
-  {t:"Axborot xavfsizligi",             jami:24, qoldi:[
-    {d:"10.09.2026", s:"sababli"},
-    {d:"24.09.2026", s:"sababli"}
-  ]},
-  {t:"Ingliz tili",                     jami:20, qoldi:[]},
-  {t:"Loyihalarni boshqarish",          jami:16, qoldi:[
-    {d:"05.09.2026", s:"sababsiz"},
-    {d:"12.09.2026", s:"sababsiz"},
-    {d:"19.09.2026", s:"sababli"},
-    {d:"26.09.2026", s:"sababsiz"}
-  ]}
-];
+let ATTENDANCE = [];   /* data/*.json dan yuklanadi */
 
 /* har bir fan uchun hisob-kitob */
 function attCalc(x){
@@ -1282,32 +1138,7 @@ function attTone(v){
 /* ---------- BAHOLAR ----------
    Har bir fan: jn (joriy, maks 30), on (oraliq, maks 30), yn (yakuniy, maks 40).
    jami = jn + on + yn (100 ballik tizim). Backend ulanganda GET /api/baholar. */
-const GRADES = [
-  {sem:5, t:"Mobil ilovalar ishlab chiqish", kredit:6, jn:27, on:26, yn:34},
-  {sem:5, t:"Dasturiy ta'minot arxitekturasi", kredit:5, jn:25, on:24, yn:31},
-  {sem:5, t:"Axborot xavfsizligi",  kredit:5, jn:26, on:25, yn:33},
-  {sem:5, t:"Ingliz tili",          kredit:4, jn:29, on:28, yn:37},
-  {sem:5, t:"Loyihalarni boshqarish", kredit:3, jn:24, on:23, yn:30},
-
-  {sem:4, t:"Veb-dasturlash",       kredit:6, jn:28, on:27, yn:35},
-  {sem:4, t:"Ma'lumotlar bazasi",   kredit:5, jn:26, on:24, yn:32},
-  {sem:4, t:"Operatsion tizimlar",  kredit:5, jn:18, on:16, yn:24},
-  {sem:4, t:"Ingliz tili",          kredit:4, jn:29, on:28, yn:38},
-  {sem:4, t:"Falsafa",              kredit:3, jn:24, on:22, yn:28},
-
-  {sem:3, t:"Algoritmlar",          kredit:6, jn:27, on:26, yn:34},
-  {sem:3, t:"Diskret matematika",   kredit:5, jn:22, on:20, yn:26},
-  {sem:3, t:"Kompyuter tarmoqlari", kredit:5, jn:25, on:24, yn:31},
-  {sem:3, t:"Ingliz tili",          kredit:4, jn:28, on:27, yn:36},
-
-  {sem:2, t:"Dasturlash asoslari",  kredit:6, jn:29, on:28, yn:37},
-  {sem:2, t:"Oliy matematika",      kredit:5, jn:20, on:19, yn:25},
-  {sem:2, t:"Fizika",               kredit:4, jn:23, on:21, yn:29},
-
-  {sem:1, t:"Informatika",          kredit:5, jn:27, on:26, yn:35},
-  {sem:1, t:"Oliy matematika",      kredit:5, jn:21, on:20, yn:27},
-  {sem:1, t:"O'zbekiston tarixi",   kredit:3, jn:26, on:25, yn:33}
-];
+let GRADES = [];   /* data/*.json dan yuklanadi */
 
 /* nazorat turlarining maksimal ballari */
 const G_MAX = {jn:30, on:30, yn:40};
@@ -1346,37 +1177,7 @@ function gpaOf(rows){
 
 /* E'lonlar. full — bosilganda ochiladigan to'liq matn.
    Backend: GET /api/elonlar */
-const NEWS = [
-  {id:"n1", who:"Dekanat", when:"2 soat oldin", t:"Qishki sessiya jadvali e'lon qilindi",
-   x:"Imtihonlar 10-yanvardan boshlanadi. Batafsil jadval kabinetdan yuklab olinadi.",
-   ic:"cal", tone:"", isNew:true,
-   full:"Hurmatli talabalar!\n\n"+
-        "2026-2027 o'quv yili qishki imtihon sessiyasi jadvali tasdiqlandi. "+
-        "Imtihonlar 10-yanvardan 28-yanvarga qadar davom etadi.\n\n"+
-        "Har bir fan bo'yicha imtihon sanasi, vaqti va xonasi \"Imtihonlar\" bo'limida ko'rsatilgan. "+
-        "Imtihonga kirish uchun talaba guvohnomasi majburiy.\n\n"+
-        "Akademik qarzdorligi bo'lgan talabalar sessiya boshlanishidan oldin dekanatga murojaat qilishlari shart."},
-
-  {id:"n2", who:"Kutubxona", when:"Kecha", t:"Yangi elektron kitoblar qo'shildi",
-   x:"Dasturlash va ma'lumotlar bazasi bo'yicha 12 ta yangi nashr.",
-   ic:"book", tone:"ok", isNew:true,
-   full:"Elektron kutubxona fondi yangilandi.\n\n"+
-        "Dasturlash, ma'lumotlar bazasi va axborot xavfsizligi yo'nalishlari bo'yicha 12 ta yangi nashr qo'shildi. "+
-        "Ular orasida 2025-2026 yillarda chop etilgan darsliklar va o'quv qo'llanmalari bor.\n\n"+
-        "Kitoblarni \"Kutubxona\" bo'limidan yuklab olishingiz mumkin. "+
-        "Bosma nashrlar uchun kutubxonaga shaxsan murojaat qiling."},
-
-  {id:"n3", who:"O'quv bo'limi", when:"3 kun oldin", t:"Amaliyot hisobotini topshirish muddati",
-   x:"Hisobotlar 20-sentabrgacha qabul qilinadi.",
-   ic:"warn", tone:"warn", isNew:false,
-   full:"Ishlab chiqarish amaliyoti hisobotlarini topshirish muddati \u2014 20-sentabr.\n\n"+
-        "Hisobot quyidagilarni o'z ichiga olishi kerak:\n"+
-        "\u2022 Amaliyot o'tagan tashkilot haqida ma'lumot\n"+
-        "\u2022 Bajarilgan ishlar tavsifi\n"+
-        "\u2022 Rahbar tomonidan tasdiqlangan tavsifnoma\n"+
-        "\u2022 Kundalik daftar\n\n"+
-        "Belgilangan muddatda topshirilmagan hisobotlar qabul qilinmaydi."}
-];
+let NEWS = [];   /* data/*.json dan yuklanadi */
 
 const DATA = {
   chaqiruv:{title:"Chaqiruv xatlari", items:[
@@ -1384,71 +1185,20 @@ const DATA = {
   ]}
 };
 
-const LIBRARY = [
-  {id:"lib1", t:"Ma'lumotlar bazasi asoslari",   m:"A. Karimov · 2024 · PDF, 312 bet",  b:"Mavjud", ok:true,
-   author:"A. Karimov", year:"2024", fmt:"PDF", pages:312, lang:"O'zbek",
-   x:"Relatsion ma'lumotlar bazalari nazariyasi, SQL tili va normallashtirish qoidalari. Amaliy misollar bilan.",
-   act:"download"},
-  {id:"lib2", t:"Veb-dasturlash: HTML, CSS, JS", m:"N. Yusupova · 2025 · PDF, 248 bet", b:"Mavjud", ok:true,
-   author:"N. Yusupova", year:"2025", fmt:"PDF", pages:248, lang:"O'zbek",
-   x:"Zamonaviy veb-sahifa yaratish: semantik HTML, moslashuvchan CSS va JavaScript asoslari.",
-   act:"download"},
-  {id:"lib3", t:"Python dasturlash tili",        m:"M. To'xtayev · 2023 · Bosma nashr", b:"Band",   no:true,
-   author:"M. To'xtayev", year:"2023", fmt:"Bosma nashr", pages:280, lang:"O'zbek",
-   x:"Python sintaksisi, ma'lumot tuzilmalari va standart kutubxona. Boshlang'ich daraja uchun.",
-   act:"busy", back:"18.09.2026"},
-  {id:"lib4", t:"Operatsion tizimlar",           m:"S. Rahmonov · 2022 · PDF, 190 bet", b:"Mavjud", ok:true,
-   author:"S. Rahmonov", year:"2022", fmt:"PDF", pages:190, lang:"O'zbek",
-   x:"Jarayonlar, xotira boshqaruvi, fayl tizimlari va ko'p vazifali ishlash tamoyillari.",
-   act:"download"}
-];
+let LIBRARY = [];   /* data/*.json dan yuklanadi */
 
-const JOBS = [
-  {id:"job1", t:"Frontend dasturchi (intern)", m:"Samarqand · To'liq bo'lmagan ish kuni · HTML, CSS, JS", b:"Ochiq", ok:true,
-   company:"Digital Solutions", place:"Samarqand", mode:"To'liq bo'lmagan ish kuni", salary:"3 000 000 so'm dan",
-   x:"Mavjud veb-ilovalar interfeysini ishlab chiqish va qo'llab-quvvatlash. Tajribali dasturchi rahbarligida.",
-   skills:["HTML", "CSS", "JavaScript", "Git"], act:"apply"},
-  {id:"job2", t:"Backend dasturchi (junior)",  m:"Masofaviy · Python, Django, PostgreSQL", b:"Ochiq", ok:true,
-   company:"IT Park Samarqand", place:"Masofaviy", mode:"To'liq ish kuni", salary:"5 000 000 so'm dan",
-   x:"REST API yaratish, ma'lumotlar bazasi bilan ishlash va mavjud tizimlarni integratsiya qilish.",
-   skills:["Python", "Django", "PostgreSQL", "Docker"], act:"apply"},
-  {id:"job3", t:"Texnik yordam mutaxassisi",   m:"Samarqand · To'liq ish kuni", b:"Yopilgan", mute:true,
-   company:"Universitet IT bo'limi", place:"Samarqand", mode:"To'liq ish kuni", salary:"2 500 000 so'm",
-   x:"Kompyuter texnikasi va tarmoq uskunalariga xizmat ko'rsatish, foydalanuvchilarga yordam.",
-   skills:["Windows", "Tarmoq", "Texnik xizmat"], act:"closed"}
-];
+let JOBS = [];   /* data/*.json dan yuklanadi */
 
 /* ---------- QARZDORLIK ---------- */
-const YEARS = ["2025-2026", "2024-2025"];
+let YEARS = [];   /* data/*.json dan yuklanadi */
 
 /* akademik qarzdorlik — fandan o'ta olmaganlik */
-const AKADEMIK = [
-  {fan:"Operatsion tizimlar", year:"2025-2026", sem:"4-semestr",
-   ball:48, kerak:60, tur:"Yakuniy nazorat", sabab:"Ball yetarli emas"},
-  {fan:"Ingliz tili",         year:"2024-2025", sem:"2-semestr",
-   ball:0,  kerak:60, tur:"Yakuniy nazorat", sabab:"Imtihonga kelmagan"}
-];
+let AKADEMIK = [];   /* data/*.json dan yuklanadi */
 
 /* Akademik qarzdorlik arizalari.
    Backend ulanganda serverdan keladi. Namuna uchun bittasi qoldirilgan —
    bo'sh ro'yxat kerak bo'lsa, massivni [] qilib qo'ying. */
-const ARIZALAR = [
-  {
-    id:"ar1",
-    turi:"yakuniy",                 /* ariza | qayta | yakuniy */
-    t:"Yakuniy nazorat qayta topshirish",
-    fanlar:2, kredit:10,
-    holat:"ok",                     /* ok | wait | no */
-    holatT:"Shartnoma yaratildi",
-    vaqt:"14:17 18.07.2026",
-    x:"Ariza bo‘yicha shartnoma yaratildi. Shartnomani yuklab oling va to‘lovni amalga oshiring.",
-    files:["ariza", "shartnoma"],
-    fanlarRoyxat:[
-      {t:"Operatsion tizimlar", m:"4-semestr · 5 kredit · 48/60 ball"},
-      {t:"Ingliz tili",         m:"2-semestr · 5 kredit · imtihonga kelmagan"}
-    ]
-  }
-];
+let ARIZALAR = [];   /* data/*.json dan yuklanadi */
 
 /* ---------- ARIZA SAQLASH (localStorage) ----------
    Imtihon namunasi uchun arizalar brauzer xotirasida saqlanadi.
@@ -1489,54 +1239,19 @@ function hozirVaqt(){
 }
 
 /* shartnoma bo'yicha qarzdorlik — pul */
-const SHARTNOMA_QARZ = [
-  {year:"2025-2026", tur:"Kontrakt to'lovi", summa:0, muddat:"01.07.2026"}
-];
+let SHARTNOMA_QARZ = [];   /* data/*.json dan yuklanadi */
 
 function money(n){ return n.toLocaleString('ru-RU').replace(/ /g, ' '); }
 
 /* ---------- FOTOGALEREYA ----------
    Suratlar o'rniga rangli gradient va ikonka ishlatiladi (rasm fayllari yo'q).
    Backend ulanganda: {id, t, sana, soni, rasm:"url"} */
-const PHOTOS = [
-  {id:"ph1", t:"Bilimlar kuni", sana:"02.09.2026", soni:24, ton:"brand",
-   ic:'<path d="M22 10 12 5 2 10l10 5 10-5z"/><path d="M6 12v5c0 1 3 3 6 3s6-2 6-3v-5"/>'},
-  {id:"ph2", t:"IT-olimpiada", sana:"15.03.2026", soni:38, ton:"warn",
-   ic:'<path d="M12 2 4 5v6c0 5 3.4 9.2 8 10.5 4.6-1.3 8-5.5 8-10.5V5z"/><path d="m12 8 1.2 2.4 2.6.4-1.9 1.8.5 2.6L12 14l-2.4 1.2.5-2.6-1.9-1.8 2.6-.4z"/>'},
-  {id:"ph3", t:"Talabalar bahori", sana:"20.04.2026", soni:52, ton:"ok",
-   ic:'<path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/>'},
-  {id:"ph4", t:"Hackathon \"Smart City\"", sana:"08.12.2025", soni:31, ton:"good",
-   ic:'<rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/>'},
-  {id:"ph5", t:"Kutubxona ochilishi", sana:"10.10.2025", soni:17, ton:"brand",
-   ic:'<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>'},
-  {id:"ph6", t:"Sport musobaqalari", sana:"25.09.2025", soni:45, ton:"warn",
-   ic:'<circle cx="12" cy="12" r="10"/><path d="M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20M2 12h20"/>'}
-];
+let PHOTOS = [];   /* data/*.json dan yuklanadi */
 
 /* ---------- YOTOQXONA ----------
    holat: 'yashaydi' | 'navbat' | 'yoq'
    Backend: GET /api/yotoqxona */
-const DORM = {
-  holat:"yashaydi",
-  bino:"2-bino",
-  xona:"312",
-  orin:"3",
-  qavat:4,
-  kishi:4,
-  sana:"01.09.2026",
-  oylik:250000,
-  tolangan:250000,
-  komendant:"G. Ismoilova",
-  tel:"+998 66 233 45 67",
-  navbat:0,
-  qoidalar:[
-    "Kirish-chiqish: 06:00 \u2013 23:00",
-    "Xonani toza saqlash va navbatchilik tartibiga rioya qilish",
-    "Elektr isitgich va ochiq olov ishlatish taqiqlanadi",
-    "Begona shaxslarni tunab qoldirish mumkin emas",
-    "To'lov har oyning 10-sanasigacha amalga oshiriladi"
-  ]
-};
+let DORM = {};   /* data/*.json dan yuklanadi */
 
 /* yotoqxona to'lov qoldig'i */
 function dormLeft(){
@@ -1635,7 +1350,7 @@ function emptyHTML(e){
     '</div><b>'+esc(e.t)+'</b><p>'+esc(e.m)+'</p></div>';
 }
 
-$('libList').innerHTML = LIBRARY.map(rowHTML).join('');
+/* kutubxona API kelgandan keyin chiziladi (ilovaniBoshla) */
 
 /* karyera bo'limlarini DATA ga qo'shish — openDetail ular bilan ham ishlaydi */
 Object.keys(CAREER).forEach(function(k){ DATA[k] = CAREER[k]; });
@@ -1653,7 +1368,7 @@ function fillCareerCounts(){
     if(n) el.textContent = n; else el.remove();
   });
 }
-fillCareerCounts();
+/* fillCareerCounts() ham API'dan keyin chaqiriladi */
 
 /* Shaxsiy ma'lumotlar — yoyiladigan blok */
 function fillCareerInfo(){
@@ -4675,7 +4390,8 @@ document.addEventListener('click', function(e){
    ========================================================= */
 /* Talaba kirish kodlari TALABALAR massivida (har birida o'z kodi).
    Namuna rejimi uchun birinchi talabaning kodi ko'rsatiladi. */
-const DEMO_KOD     = TALABALAR[0].kod;
+/* funksiya, chunki TALABALAR API'dan keyin to'ladi */
+function demoKod(){ return TALABALAR.length ? TALABALAR[0].kod : ''; }
 const DEKANAT_KODI = '9999';        /* dekanat (admin) kirish kodi */
 
 const auth     = $('auth');
@@ -4819,7 +4535,7 @@ function showDemoCode(){
 const SESSIYA_KUN = 30;
 
 /* sahifa ochilganda: kirganmi? */
-(function checkAuth(){
+function checkAuth(){
   let kirgan = false;
   /* saqlangan sessiyani tiklash: qaysi talaba kirgan edi */
   try{
@@ -4848,7 +4564,67 @@ const SESSIYA_KUN = 30;
   document.body.style.overflow = 'hidden';
   showDemoCode();
   setTimeout(function(){ codeInps[0].focus(); }, 300);
-})();
+}
+
+/* =========================================================
+   ILOVANI ISHGA TUSHIRISH
+   Avval ma'lumotlar API'dan yuklanadi, keyin ekran chiziladi.
+   ========================================================= */
+async function ilovaniBoshla(){
+  try{
+    const d = await apiHammasi();
+
+    /* kelgan ma'lumotlarni o'z joyiga qo'yamiz */
+    TALABALAR      = d.talabalar   || [];
+    SEMESTERS      = d.semestrlar  || [];
+    SCHEDULE       = d.darslar     || [];
+    EXAMS          = d.imtihonlar  || [];
+    ATTENDANCE     = d.davomat     || [];
+    GRADES         = d.baholar     || [];
+    NEWS           = d.yangiliklar || [];
+    LIBRARY        = d.kitoblar    || [];
+    JOBS           = d.ishlar      || [];
+    YEARS          = d.yillar      || [];
+    AKADEMIK       = d.akademik    || [];
+    ARIZALAR       = d.arizalar    || [];
+    SHARTNOMA_QARZ = d.shartnoma   || [];
+    PHOTOS         = d.fotolar     || [];
+    DORM           = d.yotoqxona   || DORM;
+
+    /* CAREER.ishlar JOBS ga tayanadi — endi to'ldiramiz */
+    if(CAREER.ishlar) CAREER.ishlar.items = JOBS;
+    if(typeof DATA !== 'undefined') DATA.ishlar = CAREER.ishlar;
+
+    /* ma'lumotga tayanadigan qismlarni endi chizamiz */
+    const lib = document.getElementById('libList');
+    if(lib) lib.innerHTML = LIBRARY.map(rowHTML).join('');
+    fillCareerCounts();
+
+    yuklanmoqdaYop();
+    checkAuth();
+  }catch(e){
+    yuklashXatosi(e && e.message ? e.message : 'Noma\'lum xato');
+  }
+}
+
+/* yuklanish paytida ko'rinadigan holat */
+function yuklanmoqdaYop(){
+  const el = document.getElementById('boot');
+  if(el) el.remove();
+}
+
+function yuklashXatosi(xabar){
+  const el = document.getElementById('boot');
+  if(!el) return;
+  el.innerHTML =
+    '<div class="boot__box">'+
+      '<div class="boot__t">Ma\'lumotlar yuklanmadi</div>'+
+      '<div class="boot__s">'+esc(xabar)+'</div>'+
+      '<button class="btn btn--primary" onclick="location.reload()">Qayta urinish</button>'+
+    '</div>';
+}
+
+ilovaniBoshla();
 
 /* =========================================================
    19) OXIRGI OCHILGAN TABNI TIKLASH

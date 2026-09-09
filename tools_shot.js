@@ -44,6 +44,9 @@ const kut = ms => new Promise(r => setTimeout(r, ms));
     try {
       await page.goto(`${BASE}/index.html`, { waitUntil: 'networkidle2', timeout: 30000 });
 
+      /* ma'lumotlar API'dan yuklanishini kutamiz */
+      await page.waitForFunction(() => !document.getElementById('boot'), { timeout: 15000 });
+
       /* hali kirmagan bo'lsa — namuna kodi bilan kiramiz.
          Kirgandan keyin sessiya localStorage'da qoladi, shuning uchun shartli. */
       const kirishKerak = await page.$('[data-demo]');

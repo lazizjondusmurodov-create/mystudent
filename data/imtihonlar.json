@@ -1,0 +1,78 @@
+{
+  "imtihonlar": [
+    {
+      "sem": 5,
+      "date": "2026-09-11",
+      "from": "09:00",
+      "to": "11:00",
+      "t": "Axborot xavfsizligi",
+      "room": "305-xona",
+      "tur": "Oraliq nazorat",
+      "teacher": "S. Rahmonov"
+    },
+    {
+      "sem": 5,
+      "date": "2026-09-14",
+      "from": "09:00",
+      "to": "11:00",
+      "t": "Mobil ilovalar ishlab chiqish",
+      "room": "214-xona",
+      "tur": "Oraliq nazorat",
+      "teacher": "A. Karimov"
+    },
+    {
+      "sem": 5,
+      "date": "2026-09-18",
+      "from": "11:00",
+      "to": "13:00",
+      "t": "Dasturiy ta'minot arxitekturasi",
+      "room": "210-xona",
+      "tur": "Oraliq nazorat",
+      "teacher": "M. To'xtayev"
+    },
+    {
+      "sem": 5,
+      "date": "2026-09-22",
+      "from": "09:00",
+      "to": "11:00",
+      "t": "Ingliz tili",
+      "room": "108-xona",
+      "tur": "Oraliq nazorat",
+      "teacher": "N. Yusupova"
+    },
+    {
+      "sem": 5,
+      "date": "2026-09-25",
+      "from": "13:00",
+      "to": "15:00",
+      "t": "Loyihalarni boshqarish",
+      "room": "402-xona",
+      "tur": "Oraliq nazorat",
+      "teacher": "D. Sobirova"
+    },
+    {
+      "sem": 5,
+      "date": "2026-09-04",
+      "from": "09:00",
+      "to": "11:00",
+      "t": "Mobil ilovalar ishlab chiqish",
+      "room": "214-xona",
+      "tur": "Joriy nazorat",
+      "teacher": "A. Karimov",
+      "ball": 27,
+      "maks": 30
+    },
+    {
+      "sem": 5,
+      "date": "2026-09-02",
+      "from": "11:00",
+      "to": "13:00",
+      "t": "Axborot xavfsizligi",
+      "room": "305-xona",
+      "tur": "Joriy nazorat",
+      "teacher": "S. Rahmonov",
+      "ball": 26,
+      "maks": 30
+    }
+  ]
+}
