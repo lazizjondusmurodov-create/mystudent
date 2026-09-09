@@ -30,7 +30,7 @@ kutubxona va karyera bo'limlari bitta joyda. O'zbek, rus va ingliz tillarida.
 - **Kutubxona** — kitoblar ro'yxati va qidiruv
 - **Karyera** — rezyume, ish takliflari, yutuqlar, mahorat darslari, maqolalar, bloglar, fotogalereya
 - **Uch til** — o'zbek, rus, ingliz (yuqori o'ngdagi tugmadan almashtiriladi)
-- **Qorong'i rejim** — telefon sozlamasiga qarab avtomatik
+- **Qorong'i rejim** — Sozlamalar → Ko'rinish: tizim bo'yicha, yorug' yoki qorong'i
 - **Internetsiz ishlaydi** — telefon ekraniga o'rnatiladi (PWA)
 
 ## Ishga tushirish
@@ -70,13 +70,17 @@ tools_shot.js   — skrinshotlarni avtomatik yangilash vositasi
 
 ## Mavzu (yorug'/qorong'i)
 
-Ranglar `style.css` boshidagi CSS o'zgaruvchilarida yig'ilgan. Qorong'i rejim
-telefon sozlamasiga qarab o'zi yoqiladi. Majburiy qilish uchun `<html>` ga
-atribut qo'yiladi:
+Ilova ichida: **Sozlamalar → Ko'rinish** — uch variant bor:
 
-```html
-<html lang="uz" data-theme="dark">   <!-- yoki data-theme="light" -->
-```
+| Variant | Nima qiladi |
+|---|---|
+| Tizim bo'yicha | telefon sozlamasiga moslashadi (standart) |
+| Yorug' | doim yorug' |
+| Qorong'i | doim qorong'i |
+
+Tanlov `localStorage` da (`ms.theme`) saqlanadi. Ranglar `style.css`
+boshidagi CSS o'zgaruvchilarida yig'ilgan — mavzu shu tokenlarni
+almashtirish orqali ishlaydi.
 
 ## Skrinshotlarni yangilash
 

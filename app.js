@@ -105,6 +105,9 @@ const I18N = {
     notifications:"Bildirishnomalar", unread:"ta o'qilmagan xabar",
     noNew:"Yangi xabar yo'q", allRead:"Barcha bildirishnomalar o'qilgan.",
     langTitle:"Til", langSub:"Ilova tilini tanlang",
+    themeTitle:"Ko'rinish", themeSub:"Yorug' yoki qorong'i rejim",
+    themeAuto:"Tizim bo'yicha", themeAutoSub:"Telefon sozlamasiga moslashadi",
+    themeLight:"Yorug'", themeDark:"Qorong'i",
 
     /* formalar */
     editSub:"O'zgartirilgan ma'lumotlar shu qurilmada saqlanadi.",
@@ -353,6 +356,9 @@ const I18N = {
     notifications:"Уведомления", unread:"непрочитанных",
     noNew:"Новых сообщений нет", allRead:"Все уведомления прочитаны.",
     langTitle:"Язык", langSub:"Выберите язык приложения",
+    themeTitle:"Оформление", themeSub:"Светлый или тёмный режим",
+    themeAuto:"Как в системе", themeAutoSub:"Подстраивается под настройки телефона",
+    themeLight:"Светлое", themeDark:"Тёмное",
 
     editSub:"Изменённые данные сохраняются на этом устройстве.",
     currentPass:"Текущий пароль", newPass:"Новый пароль", repeatPass:"Повторите пароль",
@@ -586,6 +592,9 @@ const I18N = {
     notifications:"Notifications", unread:"unread",
     noNew:"No new messages", allRead:"All notifications have been read.",
     langTitle:"Language", langSub:"Choose the app language",
+    themeTitle:"Appearance", themeSub:"Light or dark mode",
+    themeAuto:"System default", themeAutoSub:"Follows your phone settings",
+    themeLight:"Light", themeDark:"Dark",
 
     editSub:"Changes are saved on this device.",
     currentPass:"Current password", newPass:"New password", repeatPass:"Repeat new password",
@@ -762,6 +771,45 @@ let LANG = 'uz';
 try{
   const sv = localStorage.getItem('ms.lang');
   if(sv && I18N[sv]) LANG = sv;
+}catch(e){}
+
+/* =========================================================
+   MAVZU (yorug' / qorong'i)
+   'auto'  — telefon sozlamasiga qarab (standart)
+   'light' | 'dark' — foydalanuvchi majburiy tanlagan
+
+   'auto' da <html> da atribut turmaydi, shunda CSS dagi
+   @media (prefers-color-scheme) o'zi ishlaydi.
+   ========================================================= */
+let THEME = 'auto';
+try{
+  const sv = localStorage.getItem('ms.theme');
+  if(sv === 'light' || sv === 'dark' || sv === 'auto') THEME = sv;
+}catch(e){}
+
+function applyTheme(){
+  const el = document.documentElement;
+  if(THEME === 'auto') el.removeAttribute('data-theme');
+  else el.setAttribute('data-theme', THEME);
+
+  /* brauzer manzil qatori rangi ham mos bo'lsin */
+  const qorongi = THEME === 'dark' ||
+    (THEME === 'auto' && window.matchMedia('(prefers-color-scheme:dark)').matches);
+  document.querySelectorAll('meta[name="theme-color"]').forEach(function(m){
+    m.remove();
+  });
+  const m = document.createElement('meta');
+  m.name = 'theme-color';
+  m.content = qorongi ? '#171314' : '#FAF8F8';
+  document.head.appendChild(m);
+}
+applyTheme();
+
+/* 'auto' rejimda tizim sozlamasi o'zgarsa — darhol moslashamiz */
+try{
+  window.matchMedia('(prefers-color-scheme:dark)').addEventListener('change', function(){
+    if(THEME === 'auto') applyTheme();
+  });
 }catch(e){}
 
 /* t('kalit') — joriy tildagi matnni qaytaradi */
@@ -4277,6 +4325,50 @@ function openPage(title, html){
 }
 
 /* --- SOZLAMALAR --- */
+/* mavzu tanlash oynasi — til tanlash bilan bir xil ko'rinishda */
+function openThemePicker(){
+  const VAR = [
+    { k:'auto',  nom:t('themeAuto'),  izoh:t('themeAutoSub'),
+      ic:'<circle cx="12" cy="12" r="9"/><path d="M12 3v18" /><path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor" stroke="none"/>' },
+    { k:'light', nom:t('themeLight'), izoh:'',
+      ic:'<circle cx="12" cy="12" r="4.6"/><path d="M12 2v2.4M12 19.6V22M4.2 4.2l1.7 1.7M18.1 18.1l1.7 1.7M2 12h2.4M19.6 12H22M4.2 19.8l1.7-1.7M18.1 5.9l1.7-1.7"/>' },
+    { k:'dark',  nom:t('themeDark'),  izoh:'',
+      ic:'<path d="M20 13.4A8.5 8.5 0 1 1 10.6 4a6.8 6.8 0 0 0 9.4 9.4z"/>' }
+  ];
+
+  const html = '<div class="langlist">' + VAR.map(function(v){
+    return '<button class="langopt'+(v.k === THEME ? ' is-on' : '')+'" data-theme-opt="'+v.k+'">'+
+      '<span class="langopt__ic"><svg viewBox="0 0 24 24">'+v.ic+'</svg></span>'+
+      '<span class="langopt__name">'+esc(v.nom)+
+        (v.izoh ? '<small>'+esc(v.izoh)+'</small>' : '')+
+      '</span>'+
+      '<svg class="langopt__tick" viewBox="0 0 18 18"><path d="M3 9.5l4 4 8-9"/></svg>'+
+    '</button>';
+  }).join('') + '</div>';
+
+  openModal(t('themeTitle'), t('themeSub'), html);
+
+  modalBody.querySelectorAll('[data-theme-opt]').forEach(function(b){
+    b.addEventListener('click', function(){
+      THEME = b.dataset.themeOpt;
+      try{ localStorage.setItem('ms.theme', THEME); }catch(e){}
+      applyTheme();
+      closeModal();
+      haptic(14);
+      /* sozlamalar ochiq bo'lsa — qatordagi nomni yangilaymiz */
+      const val = detailBody.querySelector('[data-act="theme"] .set__val');
+      if(val) val.textContent = themeNomi();
+    });
+  });
+}
+
+/* sozlamalar qatorida ko'rinadigan mavzu nomi */
+function themeNomi(){
+  if(THEME === 'light') return t('themeLight');
+  if(THEME === 'dark')  return t('themeDark');
+  return t('themeAuto');
+}
+
 function setRow(o){
   const ic = '<span class="set__ic'+(o.tone ? ' set__ic--'+o.tone : '')+'">'+
              '<svg viewBox="0 0 24 24">'+o.ic+'</svg></span>';
@@ -4301,6 +4393,8 @@ function settingsHTML(){
       '<div class="set__cap">'+esc(t('general'))+'</div>'+
       setRow({t:t('langTitle'), s:t('langSub'), val:L._name, act:'lang',
         ic:'<circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20 15 15 0 0 1 0-20"/>'})+
+      setRow({t:t('themeTitle'), s:t('themeSub'), val:themeNomi(), act:'theme',
+        ic:'<circle cx="12" cy="12" r="4.6"/><path d="M12 2v2.4M12 19.6V22M4.2 4.2l1.7 1.7M18.1 18.1l1.7 1.7M2 12h2.4M19.6 12H22M4.2 19.8l1.7-1.7M18.1 5.9l1.7-1.7"/>'})+
     '</div>'+
 
     '<div class="set__group">'+
@@ -4344,6 +4438,7 @@ function openSettings(){
     b.addEventListener('click', function(){
       const a = b.dataset.act;
       if(a === 'lang'){ $('langBtn').click(); }
+      else if(a === 'theme'){ openThemePicker(); }
       else if(a === 'clear'){
         openModal(t('clearCache'), t('clearCacheAsk'),
           '<button class="btn btn--danger" id="doClear">'+esc(t('clearYes'))+'</button>'+
