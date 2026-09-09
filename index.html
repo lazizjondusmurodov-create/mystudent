@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#F8FAFA">
+<meta name="theme-color" content="#FAF8F8">
 <title>MyStudent</title>
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="style.css?v=4.6">
 </head>
 <body>
 
@@ -77,11 +77,12 @@
           <div class="stat__bar"><i id="statAttBar"></i></div>
           <div class="stat__note" id="statAttNote">—</div>
         </button>
-        <div class="stat" style="cursor:default">
+        <button class="stat" data-key="_grades">
           <div class="stat__label" data-i18n="avgGrade">O'rtacha baho</div>
-          <div class="stat__val" style="color:var(--ink-4)">—</div>
-          <div class="stat__note" style="margin-top:18px" data-i18n="soon">Tez orada</div>
-        </div>
+          <div class="stat__val" id="statGpa">0<small>/5</small></div>
+          <div class="stat__bar"><i id="statGpaBar"></i></div>
+          <div class="stat__note" id="statGpaNote">—</div>
+        </button>
       </div>
     </section>
 
@@ -303,6 +304,6 @@
   </div>
 </aside>
 
-<script src="app.js"></script>
+<script src="app.js?v=4.6"></script>
 </body>
 </html>

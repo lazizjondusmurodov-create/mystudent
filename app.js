@@ -49,6 +49,15 @@ const I18N = {
     metrics:"Ko'rsatkichlar", news:"E'lonlar",
     attendance:"Davomat", avgGrade:"O'rtacha baho", soon:"Tez orada",
     now:"Hozir", allGood:"Barcha fanlar yaxshi", lowSubj:"ta fan past",
+
+    /* davomat */
+    attTitle:"Davomat", attTotal:"Umumiy davomat", attHours:"soat",
+    attAll:"Jami", attCame:"Qatnashgan", attMissed:"Qoldirilgan",
+    attExcused:"Sababli", attUnexcused:"Sababsiz",
+    attMissedDays:"Qoldirilgan darslar", attNoMiss:"Bitta ham dars qoldirilmagan",
+    attOf:"dan", attWarn:"Davomat past — dekanatga murojaat qiling",
+    attRisk:"ta fandan davomat past", attFine:"Davomat yaxshi",
+    attNoData:"Ma'lumot yo'q", attNoDataX:"Davomat ma'lumotlari hali kiritilmagan.",
     newTag:"YANGI",
 
     /* lenta */
@@ -78,6 +87,18 @@ const I18N = {
     totalDebt:"Umumiy qarzdorlik", payBy:"To'lash muddati:",
     points:"ball", pointsShort:"ball yetishmayapti",
 
+    /* baholar */
+    gradesTitle:"Baholarim", gpaLabel:"O'rtacha ball", gpaOf:"5 dan",
+    semLabel:"semestr", allSem:"Barcha semestrlar",
+    gCredits:"kredit", gTotal:"Jami", gPassed:"O'zlashtirildi", gFailed:"O'zlashtirilmadi",
+    gJN:"JN", gON:"ON", gYN:"YN",
+    gJNFull:"Joriy nazorat", gONFull:"Oraliq nazorat", gYNFull:"Yakuniy nazorat",
+    gA5:"A'lo", gB4:"Yaxshi", gC3:"Qoniqarli", gD2:"Qoniqarsiz",
+    gNoData:"Baholar kiritilmagan", gNoDataX:"Tanlangan semestr uchun baholar hali qo'yilmagan.",
+    gSubjCount:"ta fan", gBest:"Eng yuqori", gWorst:"Eng past",
+    gDebtSubj:"ta fandan qarz",
+    gDetail:"Nazorat turlari bo'yicha", gMax:"maks",
+
     /* modal / tugmalar */
     save:"Saqlash", cancel:"Bekor qilish", change:"O'zgartirish",
     yesExit:"Ha, chiqish", markRead:"O'qildi deb belgilash",
@@ -106,9 +127,88 @@ const I18N = {
     dlSoon:"Yuklash tez orada ishga tushadi",
     noApps:"Tanlangan bo'lim bo'yicha ariza topilmadi.",
 
+    /* ariza yuborish */
+    newApp:"Yangi ariza", sendApp:"Ariza yuborish", appType:"Ariza turi",
+    appSubjects:"Fanlarni tanlang", appNote:"Izoh", appNoteHint:"Ariza sababini qisqacha yozing",
+    appNotePh:"Masalan: kasallik sababli imtihonga kelolmadim",
+    pickSubject:"Kamida bitta fan tanlang", writeNote:"Izoh yozing",
+    appSent:"Ariza yuborildi", appSentX:"Arizangiz dekanatga yuborildi. Javobni shu yerda kuzatib boring.",
+    stWait:"Ko'rib chiqilmoqda", stOk:"Qabul qilindi", stNo:"Rad etildi",
+    stWaitX:"Ariza dekanatga yuborildi. Javob 3 ish kuni ichida beriladi.",
+    appApproved:"Ariza qabul qilindi. Hujjatlarni yuklab oling va to'lovni amalga oshiring.",
+    appRejected:"Ariza rad etildi. Batafsil ma'lumot uchun dekanatga murojaat qiling.",
+    noDebtForApp:"Akademik qarzdorlik yo'q — ariza yuborish shart emas.",
+
+    /* dekanat (admin) */
+    adminMode:"Dekanat rejimi", adminTitle:"Kelgan arizalar", adminOn:"Dekanat rejimi yoqildi",
+    accept:"Qabul qilish", reject:"Rad etish", adminNo:"Hozircha yangi ariza yo'q.",
+    fromStudent:"Talaba", decidedOk:"Ariza qabul qilindi", decidedNo:"Ariza rad etildi",
+    rejectWhy:"Rad etish sababi", rejectPh:"Masalan: hujjatlar to'liq emas",
+    exitAdmin:"Dekanat rejimidan chiqish",
+
     /* dars jadvali */
     semester:"semestr", prevWeek:"Oldingi hafta", nextWeek:"Keyingi hafta",
     thisWeek:"Joriy hafta", todayWord:"bugun",
+    schedTitle:"Dars jadvali", noDayLessons:"Dars yo'q",
+    lsnTime:"Vaqti", lsnRoom:"Xona", lsnType:"Dars turi", lsnDate:"Sana",
+    lsnDur:"Davomiyligi", lsnMin:"daqiqa", lsnNow:"Hozir davom etmoqda",
+    lsnDone:"Tugagan", lsnSoon:"Boshlanishiga", lsnLeft:"qoldi",
+
+    /* imtihonlar */
+    examTitle:"Imtihonlar", examNext:"Yaqin imtihon", examAll:"Barcha imtihonlar",
+    examDays:"kun", examHours:"soat", examMin:"daqiqa", examLeft:"qoldi",
+    examToday:"Bugun!", examTomorrow:"Ertaga", examNow:"Hozir davom etmoqda",
+    examDone:"O'tgan", examPassed:"Topshirilgan", examType:"Nazorat turi",
+    examNo:"Imtihon yo'q", examNoX:"Hozircha imtihon jadvali e'lon qilinmagan.",
+    examUpcoming:"Kutilmoqda", examPast:"O'tgan imtihonlar",
+    examRetake:"Qayta topshirish", examGrade:"Baho",
+
+    /* arizalar bo'limi */
+    appsTitle:"Arizalarim", appsAll:"Hammasi", appsWait:"Ko'rib chiqilmoqda",
+    appsDone:"Javob berilgan", appsNone:"Ariza yuborilmagan",
+    appsNoneX:"Hozircha yuborilgan arizangiz yo'q. Yangi ariza yuborish uchun quyidagi tugmani bosing.",
+    appsNoFilter:"Bu bo'lim bo'yicha ariza topilmadi.",
+    appsCount:"ta ariza",
+
+    /* yotoqxona */
+    dormTitle:"Yotoqxona", dormPlace:"Joy", dormBuilding:"Bino", dormRoom:"Xona",
+    dormBed:"O'rin", dormFloor:"Qavat", dormType:"Xona turi", dormPeople:"kishilik",
+    dormPay:"To'lov", dormPaid:"To'langan", dormDebt:"Qarzdorlik", dormPerMonth:"oyiga",
+    dormRules:"Ichki tartib qoidalari", dormContact:"Komendant",
+    dormNo:"Joy band qilinmagan",
+    dormNoX:"Sizga yotoqxonadan joy ajratilmagan. Ariza berish uchun quyidagi tugmani bosing.",
+    dormApply:"Yotoqxonaga ariza berish", dormApplied:"Ariza yuborildi",
+    dormQueue:"Navbatdasiz", dormQueueN:"Navbat raqami",
+    dormStatus:"Holat", dormActive:"Faol", dormFrom:"Joylashgan sana",
+
+    /* rezyume */
+    cvTitle:"Rezyume", cvEdu:"Ta'lim", cvSkills:"Ko'nikmalar",
+    cvAwards:"Yutuqlar", cvCourses:"Kurslar", cvPapers:"Maqolalar",
+    cvContact:"Aloqa", cvAbout:"Qisqacha", cvGpa:"O'rtacha ball",
+    cvDownload:"PDF yuklab olish", cvShare:"Havolani ulashish",
+    cvExp:"Ish tajribasi", cvProjects:"Loyihalar", cvLangs:"Tillar",
+    cvLang:"Dasturlash tillari", cvFw:"Freymvorklar", cvDb:"Ma'lumotlar bazasi",
+    cvTools:"Vositalar", cvOther:"Boshqa",
+    cvNative:"ona tili", cvFluent:"erkin", cvBasic:"boshlang'ich",
+    cvNone:"Rezyume yaratilmagan",
+    cvNoneX:"Rezyume yaratsangiz, ish beruvchilar sizni topa oladi. Kabinetdagi ma'lumotlar avtomatik qo'shiladi.",
+    cvCreate:"Rezyume yaratish",
+    cvAbout2:"Frontend yo'nalishidagi talaba. React va TypeScript bilan interfeys yaratish bo'yicha "+
+             "amaliy tajribaga ega. Moslashuvchan dizayn va REST API integratsiyasi bilan ishlaydi.",
+    cvAutoNote:"Rezyume kabinetdagi ma'lumotlaringizdan avtomatik tuzildi.",
+    cvAboutText:"Django va Django REST Framework yo'nalishiga ixtisoslashgan Python backend dasturchi. "+
+                "Token autentifikatsiya va egalik asosidagi ruxsat qatlami bilan to'liq CRUD REST API'lar "+
+                "yaratgan. SQL so'rovlar, ma'lumotlar bazasi sxemasini loyihalash va Git bo'yicha amaliy "+
+                "tajribaga ega. Hozirda kuniga 100+ foydalanuvchiga xizmat ko'rsatuvchi HR platformasida "+
+                "texnik yordam ko'rsatadi.",
+    cvAbout3:"Axborot tizimlari va texnologiyalari yo'nalishidagi talaba. Veb ilovalar yaratish bo'yicha "+
+             "amaliy tajribaga ega: JavaScript, HTML va CSS bilan mobil interfeyslar quradi. "+
+             "Toza kod va foydalanuvchiga qulay dizaynga e'tibor qaratadi.",
+
+    /* fotogalereya */
+    photoTitle:"Fotogalereya", photoCount:"ta surat", photoNo:"Surat yo'q",
+    photoNoX:"Tadbirlar suratlari shu yerda ko'rinadi.", photoAll:"Barchasi",
+    weekLessons:"ta dars", freeDay:"Dam olish kuni",
     noLessons:"Tanlangan hafta uchun dars jadvali kiritilmagan.",
     noToday:"Bugun dars yo'q",
 
@@ -119,6 +219,7 @@ const I18N = {
     wrongCode:"Kod noto'g'ri", welcome:"Xush kelibsiz!",
     authFoot:"Kirish orqali siz ommaviy oferta shartlariga rozilik bildirasiz",
     demoYourCode:"Namuna rejimi — kirish kodi:", demoFill:"Qo'yish",
+    demoCodes:"Namuna rejimi — talabani tanlang:",
 
     /* batafsil oyna */
     author:"Muallif", year:"Yil", format:"Format", pages:"Betlar soni",
@@ -201,6 +302,15 @@ const I18N = {
     metrics:"Показатели", news:"Объявления",
     attendance:"Посещаемость", avgGrade:"Средний балл", soon:"Скоро",
     now:"Сейчас", allGood:"Все предметы в норме", lowSubj:"предм. низкая",
+
+    /* посещаемость */
+    attTitle:"Посещаемость", attTotal:"Общая посещаемость", attHours:"ч.",
+    attAll:"Всего", attCame:"Посещено", attMissed:"Пропущено",
+    attExcused:"По уважит.", attUnexcused:"Без причины",
+    attMissedDays:"Пропущенные занятия", attNoMiss:"Ни одного пропуска",
+    attOf:"из", attWarn:"Низкая посещаемость — обратитесь в деканат",
+    attRisk:"предм. низкая посещаемость", attFine:"Посещаемость в норме",
+    attNoData:"Нет данных", attNoDataX:"Данные о посещаемости ещё не внесены.",
     newTag:"НОВОЕ",
 
     schedule:"Расписание", grades:"Мои оценки", debts:"Задолженность",
@@ -226,6 +336,18 @@ const I18N = {
     totalDebt:"Общая задолженность", payBy:"Срок оплаты:",
     points:"баллов", pointsShort:"баллов не хватает",
 
+    /* оценки */
+    gradesTitle:"Мои оценки", gpaLabel:"Средний балл", gpaOf:"из 5",
+    semLabel:"семестр", allSem:"Все семестры",
+    gCredits:"кредит", gTotal:"Всего", gPassed:"Освоено", gFailed:"Не освоено",
+    gJN:"ТК", gON:"РК", gYN:"ИК",
+    gJNFull:"Текущий контроль", gONFull:"Рубежный контроль", gYNFull:"Итоговый контроль",
+    gA5:"Отлично", gB4:"Хорошо", gC3:"Удовлетворительно", gD2:"Неудовлетворительно",
+    gNoData:"Оценки не выставлены", gNoDataX:"За выбранный семестр оценки ещё не выставлены.",
+    gSubjCount:"предметов", gBest:"Наивысший", gWorst:"Наименьший",
+    gDebtSubj:"предмет(ов) не сдано",
+    gDetail:"По видам контроля", gMax:"макс",
+
     save:"Сохранить", cancel:"Отмена", change:"Изменить",
     yesExit:"Да, выйти", markRead:"Отметить как прочитанное",
     notifications:"Уведомления", unread:"непрочитанных",
@@ -250,8 +372,85 @@ const I18N = {
     dlSoon:"Скачивание скоро заработает",
     noApps:"По выбранному разделу заявлений нет.",
 
+    newApp:"Новое заявление", sendApp:"Отправить заявление", appType:"Тип заявления",
+    appSubjects:"Выберите предметы", appNote:"Комментарий", appNoteHint:"Кратко укажите причину",
+    appNotePh:"Например: не смог прийти на экзамен по болезни",
+    pickSubject:"Выберите хотя бы один предмет", writeNote:"Напишите комментарий",
+    appSent:"Заявление отправлено", appSentX:"Заявление отправлено в деканат. Следите за ответом здесь.",
+    stWait:"На рассмотрении", stOk:"Принято", stNo:"Отклонено",
+    stWaitX:"Заявление отправлено в деканат. Ответ в течение 3 рабочих дней.",
+    appApproved:"Заявление принято. Скачайте документы и произведите оплату.",
+    appRejected:"Заявление отклонено. За подробностями обратитесь в деканат.",
+    noDebtForApp:"Академической задолженности нет — заявление не требуется.",
+
+    adminMode:"Режим деканата", adminTitle:"Поступившие заявления", adminOn:"Режим деканата включён",
+    accept:"Принять", reject:"Отклонить", adminNo:"Новых заявлений пока нет.",
+    fromStudent:"Студент", decidedOk:"Заявление принято", decidedNo:"Заявление отклонено",
+    rejectWhy:"Причина отказа", rejectPh:"Например: документы неполные",
+    exitAdmin:"Выйти из режима деканата",
+
     semester:"семестр", prevWeek:"Предыдущая неделя", nextWeek:"Следующая неделя",
     thisWeek:"Текущая неделя", todayWord:"сегодня",
+    schedTitle:"Расписание", noDayLessons:"Занятий нет",
+    lsnTime:"Время", lsnRoom:"Аудитория", lsnType:"Вид занятия", lsnDate:"Дата",
+    lsnDur:"Длительность", lsnMin:"мин.", lsnNow:"Идёт сейчас",
+    lsnDone:"Завершено", lsnSoon:"До начала", lsnLeft:"осталось",
+
+    /* экзамены */
+    examTitle:"Экзамены", examNext:"Ближайший экзамен", examAll:"Все экзамены",
+    examDays:"дн.", examHours:"ч.", examMin:"мин.", examLeft:"осталось",
+    examToday:"Сегодня!", examTomorrow:"Завтра", examNow:"Идёт сейчас",
+    examDone:"Прошёл", examPassed:"Сдан", examType:"Вид контроля",
+    examNo:"Экзаменов нет", examNoX:"Расписание экзаменов пока не опубликовано.",
+    examUpcoming:"Предстоящие", examPast:"Прошедшие экзамены",
+    examRetake:"Пересдача", examGrade:"Оценка",
+
+    /* заявления */
+    appsTitle:"Мои заявления", appsAll:"Все", appsWait:"На рассмотрении",
+    appsDone:"С ответом", appsNone:"Заявлений нет",
+    appsNoneX:"Вы ещё не подавали заявлений. Нажмите кнопку ниже, чтобы подать новое.",
+    appsNoFilter:"По этому разделу заявлений не найдено.",
+    appsCount:"заявлений",
+
+    /* общежитие */
+    dormTitle:"Общежитие", dormPlace:"Место", dormBuilding:"Корпус", dormRoom:"Комната",
+    dormBed:"Койко-место", dormFloor:"Этаж", dormType:"Тип комнаты", dormPeople:"-местная",
+    dormPay:"Оплата", dormPaid:"Оплачено", dormDebt:"Задолженность", dormPerMonth:"в месяц",
+    dormRules:"Правила проживания", dormContact:"Комендант",
+    dormNo:"Место не выделено",
+    dormNoX:"Вам не выделено место в общежитии. Нажмите кнопку ниже, чтобы подать заявление.",
+    dormApply:"Подать заявление", dormApplied:"Заявление отправлено",
+    dormQueue:"Вы в очереди", dormQueueN:"Номер в очереди",
+    dormStatus:"Статус", dormActive:"Активно", dormFrom:"Дата заселения",
+
+    /* резюме */
+    cvTitle:"Резюме", cvEdu:"Образование", cvSkills:"Навыки",
+    cvAwards:"Достижения", cvCourses:"Курсы", cvPapers:"Публикации",
+    cvContact:"Контакты", cvAbout:"О себе", cvGpa:"Средний балл",
+    cvDownload:"Скачать PDF", cvShare:"Поделиться ссылкой",
+    cvExp:"Опыт работы", cvProjects:"Проекты", cvLangs:"Языки",
+    cvLang:"Языки программирования", cvFw:"Фреймворки", cvDb:"Базы данных",
+    cvTools:"Инструменты", cvOther:"Прочее",
+    cvNative:"родной", cvFluent:"свободно", cvBasic:"базовый",
+    cvNone:"Резюме не создано",
+    cvNoneX:"Создайте резюме, чтобы работодатели могли вас найти. Данные из кабинета добавятся автоматически.",
+    cvCreate:"Создать резюме",
+    cvAbout2:"Студентка направления frontend-разработки. Практический опыт создания интерфейсов "+
+             "на React и TypeScript. Работает с адаптивной вёрсткой и интеграцией REST API.",
+    cvAutoNote:"Резюме сформировано автоматически из данных вашего кабинета.",
+    cvAboutText:"Python backend-разработчик со специализацией на Django и Django REST Framework. "+
+                "Разработал полноценные CRUD REST API с токен-аутентификацией и слоем прав на основе "+
+                "владения объектом. Практический опыт работы с SQL-запросами, проектированием схемы "+
+                "базы данных и Git. Сейчас оказывает техническую поддержку HR-платформы, обслуживающей "+
+                "100+ пользователей ежедневно.",
+    cvAbout3:"Студент направления информационных систем и технологий. Практический опыт создания "+
+             "веб-приложений: разрабатывает мобильные интерфейсы на JavaScript, HTML и CSS. "+
+             "Уделяет внимание чистому коду и удобному для пользователя дизайну.",
+
+    /* фотогалерея */
+    photoTitle:"Фотогалерея", photoCount:"фото", photoNo:"Фотографий нет",
+    photoNoX:"Здесь появятся фотографии с мероприятий.", photoAll:"Все",
+    weekLessons:"занятий", freeDay:"Выходной",
     noLessons:"На выбранную неделю расписание не загружено.",
     noToday:"Сегодня занятий нет",
 
@@ -261,6 +460,7 @@ const I18N = {
     wrongCode:"Неверный код", welcome:"Добро пожаловать!",
     authFoot:"Входя, вы соглашаетесь с условиями публичной оферты",
     demoYourCode:"Демо-режим — код доступа:", demoFill:"Вставить",
+    demoCodes:"Демо-режим — выберите студента:",
 
     author:"Автор", year:"Год", format:"Формат", pages:"Страниц",
     bookLang:"Язык", backOn:"Вернётся",
@@ -335,6 +535,15 @@ const I18N = {
     metrics:"Overview", news:"Announcements",
     attendance:"Attendance", avgGrade:"Average grade", soon:"Coming soon",
     now:"Now", allGood:"All subjects on track", lowSubj:"subject(s) low",
+
+    /* attendance */
+    attTitle:"Attendance", attTotal:"Overall attendance", attHours:"h",
+    attAll:"Total", attCame:"Attended", attMissed:"Missed",
+    attExcused:"Excused", attUnexcused:"Unexcused",
+    attMissedDays:"Missed classes", attNoMiss:"No classes missed",
+    attOf:"of", attWarn:"Low attendance — contact the dean's office",
+    attRisk:"subject(s) with low attendance", attFine:"Attendance is fine",
+    attNoData:"No data", attNoDataX:"Attendance data has not been entered yet.",
     newTag:"NEW",
 
     schedule:"Class schedule", grades:"My grades", debts:"Debts",
@@ -360,6 +569,18 @@ const I18N = {
     totalDebt:"Total debt", payBy:"Due date:",
     points:"points", pointsShort:"points short",
 
+    /* grades */
+    gradesTitle:"My grades", gpaLabel:"Average score", gpaOf:"of 5",
+    semLabel:"semester", allSem:"All semesters",
+    gCredits:"credits", gTotal:"Total", gPassed:"Passed", gFailed:"Failed",
+    gJN:"CA", gON:"MT", gYN:"FE",
+    gJNFull:"Continuous assessment", gONFull:"Midterm", gYNFull:"Final exam",
+    gA5:"Excellent", gB4:"Good", gC3:"Satisfactory", gD2:"Unsatisfactory",
+    gNoData:"No grades yet", gNoDataX:"Grades for the selected semester have not been posted yet.",
+    gSubjCount:"subjects", gBest:"Highest", gWorst:"Lowest",
+    gDebtSubj:"subjects failed",
+    gDetail:"By assessment type", gMax:"max",
+
     save:"Save", cancel:"Cancel", change:"Change",
     yesExit:"Yes, log out", markRead:"Mark as read",
     notifications:"Notifications", unread:"unread",
@@ -384,8 +605,84 @@ const I18N = {
     dlSoon:"Downloading will be available soon",
     noApps:"No applications found in this section.",
 
+    newApp:"New application", sendApp:"Submit application", appType:"Application type",
+    appSubjects:"Select subjects", appNote:"Comment", appNoteHint:"Briefly state the reason",
+    appNotePh:"For example: I missed the exam due to illness",
+    pickSubject:"Select at least one subject", writeNote:"Please write a comment",
+    appSent:"Application submitted", appSentX:"Your application was sent to the dean's office. Track the reply here.",
+    stWait:"Under review", stOk:"Approved", stNo:"Rejected",
+    stWaitX:"Sent to the dean's office. A reply follows within 3 working days.",
+    appApproved:"Application approved. Download the documents and complete the payment.",
+    appRejected:"Application rejected. Contact the dean's office for details.",
+    noDebtForApp:"No academic debt — no application needed.",
+
+    adminMode:"Dean's office mode", adminTitle:"Incoming applications", adminOn:"Dean's office mode enabled",
+    accept:"Approve", reject:"Reject", adminNo:"No new applications yet.",
+    fromStudent:"Student", decidedOk:"Application approved", decidedNo:"Application rejected",
+    rejectWhy:"Reason for rejection", rejectPh:"For example: incomplete documents",
+    exitAdmin:"Exit dean's office mode",
+
     semester:"semester", prevWeek:"Previous week", nextWeek:"Next week",
     thisWeek:"Current week", todayWord:"today",
+    schedTitle:"Class schedule", noDayLessons:"No classes",
+    lsnTime:"Time", lsnRoom:"Room", lsnType:"Class type", lsnDate:"Date",
+    lsnDur:"Duration", lsnMin:"min", lsnNow:"In progress",
+    lsnDone:"Finished", lsnSoon:"Starts in", lsnLeft:"left",
+
+    /* exams */
+    examTitle:"Exams", examNext:"Next exam", examAll:"All exams",
+    examDays:"d", examHours:"h", examMin:"min", examLeft:"left",
+    examToday:"Today!", examTomorrow:"Tomorrow", examNow:"In progress",
+    examDone:"Past", examPassed:"Passed", examType:"Assessment type",
+    examNo:"No exams", examNoX:"The exam schedule has not been published yet.",
+    examUpcoming:"Upcoming", examPast:"Past exams",
+    examRetake:"Retake", examGrade:"Grade",
+
+    /* applications */
+    appsTitle:"My applications", appsAll:"All", appsWait:"Under review",
+    appsDone:"Answered", appsNone:"No applications",
+    appsNoneX:"You have not submitted any applications yet. Tap the button below to create one.",
+    appsNoFilter:"No applications found in this section.",
+    appsCount:"applications",
+
+    /* dormitory */
+    dormTitle:"Dormitory", dormPlace:"Place", dormBuilding:"Building", dormRoom:"Room",
+    dormBed:"Bed", dormFloor:"Floor", dormType:"Room type", dormPeople:"-person",
+    dormPay:"Payment", dormPaid:"Paid", dormDebt:"Outstanding", dormPerMonth:"per month",
+    dormRules:"House rules", dormContact:"Warden",
+    dormNo:"No place assigned",
+    dormNoX:"You have not been assigned a place. Tap the button below to apply.",
+    dormApply:"Apply for a place", dormApplied:"Application sent",
+    dormQueue:"You are in the queue", dormQueueN:"Queue number",
+    dormStatus:"Status", dormActive:"Active", dormFrom:"Moved in",
+
+    /* resume */
+    cvTitle:"Resume", cvEdu:"Education", cvSkills:"Skills",
+    cvAwards:"Achievements", cvCourses:"Courses", cvPapers:"Publications",
+    cvContact:"Contact", cvAbout:"About", cvGpa:"Average score",
+    cvDownload:"Download PDF", cvShare:"Share link",
+    cvExp:"Experience", cvProjects:"Projects", cvLangs:"Languages",
+    cvLang:"Languages", cvFw:"Frameworks", cvDb:"Databases",
+    cvTools:"Tools", cvOther:"Other",
+    cvNative:"native", cvFluent:"fluent", cvBasic:"basic",
+    cvNone:"No resume yet",
+    cvNoneX:"Create a resume so employers can find you. Your profile data will be added automatically.",
+    cvCreate:"Create resume",
+    cvAbout2:"Frontend development student with hands-on experience building interfaces in React "+
+             "and TypeScript. Works with responsive layouts and REST API integration.",
+    cvAutoNote:"This resume was generated automatically from your profile data.",
+    cvAboutText:"Python backend developer focused on Django and Django REST Framework. Built full CRUD "+
+                "REST APIs with token authentication and an ownership-based permission layer. Practical "+
+                "experience with SQL queries, database schema design, and Git. Currently provides technical "+
+                "support for an HR platform serving 100+ daily users.",
+    cvAbout3:"Information systems and technologies student with hands-on experience building web "+
+             "applications. Creates mobile interfaces with JavaScript, HTML and CSS, with a focus on "+
+             "clean code and user-friendly design.",
+
+    /* photo gallery */
+    photoTitle:"Photo gallery", photoCount:"photos", photoNo:"No photos",
+    photoNoX:"Event photos will appear here.", photoAll:"All",
+    weekLessons:"classes", freeDay:"Day off",
     noLessons:"No schedule has been published for the selected week.",
     noToday:"No classes today",
 
@@ -395,6 +692,7 @@ const I18N = {
     wrongCode:"Wrong code", welcome:"Welcome!",
     authFoot:"By logging in you accept the terms of the public offer",
     demoYourCode:"Demo mode — access code:", demoFill:"Fill in",
+    demoCodes:"Demo mode — pick a student:",
 
     author:"Author", year:"Year", format:"Format", pages:"Pages",
     bookLang:"Language", backOn:"Available from",
@@ -472,20 +770,181 @@ function t(key){
   return (L && L[key] !== undefined) ? L[key] : (I18N.uz[key] !== undefined ? I18N.uz[key] : key);
 }
 
+/* ---------- MA'LUMOTLAR LUG'ATI ----------
+   Fan nomlari, xona, dars turi kabi ma'lumotlar SCHEDULE, EXAMS va boshqa
+   massivlarda o'zbekcha yozilgan. td() ularni joriy tilga o'giradi.
+   Lug'atda topilmasa — matn o'zgarishsiz qaytadi (o'zbekcha ko'rinadi).
+
+   Backend ulanganda: server har bir yozuvni tanlangan tilda qaytaradi,
+   shunda td() kerak bo'lmaydi — chaqiruvlarni olib tashlash kifoya. */
+const D_RU = {
+  /* fanlar */
+  "Mobil ilovalar ishlab chiqish":"Разработка мобильных приложений",
+  "Axborot xavfsizligi":"Информационная безопасность",
+  "Ingliz tili":"Английский язык",
+  "Dasturiy ta'minot arxitekturasi":"Архитектура программного обеспечения",
+  "Loyihalarni boshqarish":"Управление проектами",
+  "Ma'lumotlar bazasi":"Базы данных",
+  "Veb dasturlash":"Веб-программирование",
+  "Algoritmlar":"Алгоритмы",
+  "Operatsion tizimlar":"Операционные системы",
+  "Kompyuter tarmoqlari":"Компьютерные сети",
+  /* dars turi */
+  "Ma'ruza":"Лекция", "Amaliyot":"Практика", "Laboratoriya":"Лаборатория",
+  "Yakuniy nazorat":"Итоговый контроль", "Oraliq nazorat":"Промежуточный контроль",
+  /* holat */
+  "Tayyor":"Готово", "Kutilmoqda":"Ожидается", "Faol":"Активно",
+  "Qishki sessiya":"Зимняя сессия", "Yozgi sessiya":"Летняя сессия",
+  "Yuborilgan":"Отправлено",
+  "Shartnoma yaratildi":"Договор создан",
+  "Ko'rib chiqilmoqda":"На рассмотрении", "Javob berilgan":"Отвечено",
+  "O'qimoqda":"Учится",
+  /* semestr / kurs */
+  "1-kurs":"1 курс", "2-kurs":"2 курс", "3-kurs":"3 курс", "4-kurs":"4 курс",
+  "Kunduzgi":"Очная", "Sirtqi":"Заочная", "Kechki":"Вечерняя"
+};
+
+const D_EN = {
+  /* fanlar */
+  "Mobil ilovalar ishlab chiqish":"Mobile Application Development",
+  "Axborot xavfsizligi":"Information Security",
+  "Ingliz tili":"English Language",
+  "Dasturiy ta'minot arxitekturasi":"Software Architecture",
+  "Loyihalarni boshqarish":"Project Management",
+  "Ma'lumotlar bazasi":"Databases",
+  "Veb dasturlash":"Web Programming",
+  "Algoritmlar":"Algorithms",
+  "Operatsion tizimlar":"Operating Systems",
+  "Kompyuter tarmoqlari":"Computer Networks",
+  /* dars turi */
+  "Ma'ruza":"Lecture", "Amaliyot":"Practice", "Laboratoriya":"Lab",
+  "Yakuniy nazorat":"Final exam", "Oraliq nazorat":"Midterm",
+  /* holat */
+  "Tayyor":"Ready", "Kutilmoqda":"Pending", "Faol":"Active",
+  "Qishki sessiya":"Winter session", "Yozgi sessiya":"Summer session",
+  "Yuborilgan":"Sent",
+  "Shartnoma yaratildi":"Contract created",
+  "Ko'rib chiqilmoqda":"Under review", "Javob berilgan":"Answered",
+  "O'qimoqda":"Studying",
+  /* semestr / kurs */
+  "1-kurs":"1st year", "2-kurs":"2nd year", "3-kurs":"3rd year", "4-kurs":"4th year",
+  "Kunduzgi":"Full-time", "Sirtqi":"Part-time", "Kechki":"Evening"
+};
+
+/* td('matn') — ma'lumot matnini joriy tilga o'giradi.
+   "214-xona" va "2-bino" kabi raqamli qo'shimchalar alohida ishlanadi. */
+function td(s){
+  if(s == null) return s;
+  const str = String(s);
+  if(LANG === 'uz') return str;
+
+  const D = (LANG === 'ru') ? D_RU : D_EN;
+  if(D[str] !== undefined) return D[str];
+
+  /* "214-xona" -> "ауд. 214" / "room 214" */
+  let m = str.match(/^(\d+)-xona$/);
+  if(m) return (LANG === 'ru') ? ('ауд. ' + m[1]) : ('room ' + m[1]);
+
+  /* "2-bino" -> "корпус 2" / "building 2" */
+  m = str.match(/^(\d+)-bino$/);
+  if(m) return (LANG === 'ru') ? ('корпус ' + m[1]) : ('building ' + m[1]);
+
+  /* "4 kishilik" -> "на 4 человека" / "4-person" */
+  m = str.match(/^(\d+)\s*kishilik$/);
+  if(m) return (LANG === 'ru') ? ('на ' + m[1] + ' чел.') : (m[1] + '-person');
+
+  /* "Yuborilgan: 05.01.2026 · PDF" — boshidagi so'z tarjima qilinadi */
+  m = str.match(/^([^:]+):\s*(.+)$/);
+  if(m && D[m[1]] !== undefined) return D[m[1]] + ': ' + m[2];
+
+  return str;
+}
+
 /* =========================================================
    1) FOYDALANUVCHI — keyin API'dan keladi, faqat shu joy o'zgaradi
    ========================================================= */
+/* ---------- TALABALAR BAZASI ----------
+   Har bir talabaning o'z kirish kodi bor. Login ekranida kod kiritilganda
+   shu talabaning ma'lumotlari yuklanadi.
+
+   Backend ulanganda bu massiv o'rniga:
+     POST /api/login  {kod}  ->  {token, talaba}
+     GET  /api/talaba (token bilan)
+   qolgan kod o'zgarmaydi — USER obyekti to'ldirilsa kifoya. */
+const TALABALAR = [
+  {
+    kod:"2024",
+    name:"Aliyev Jasur Bekzod o‘g‘li",
+    group:"ATT-06-24",
+    faculty:"Axborot tizimlari va texnologiyalari",
+    form:"Sirtqi",
+    course:"3-kurs",
+    studentId:"ATT-06-24",
+    status:"O'qimoqda",
+    phone:"+998 90 123 45 67",
+    email:"j.aliyev@student.uz",
+    sem:5
+  },
+  {
+    kod:"3050",
+    name:"Yusupova Nilufar Bahodir qizi",
+    group:"KIF-04-25",
+    faculty:"Kompyuter injiniringi",
+    form:"Kunduzgi",
+    course:"2-kurs",
+    studentId:"KIF-04-25",
+    status:"O'qimoqda",
+    phone:"+998 91 234 56 78",
+    email:"n.yusupova@student.uz",
+    sem:3
+  },
+  {
+    kod:"7788",
+    name:"Rahmonov Sardor Alisher o‘g‘li",
+    group:"IQT-02-23",
+    faculty:"Iqtisodiyot va menejment",
+    form:"Kunduzgi",
+    course:"4-kurs",
+    studentId:"IQT-02-23",
+    status:"O'qimoqda",
+    phone:"+998 93 777 88 99",
+    email:"s.rahmonov@student.uz",
+    sem:7
+  },
+  {
+    kod:"1111",
+    name:"Dusmurodov Lazizjon",
+    group:"ATT-06-24",
+    faculty:"Axborot tizimlari va texnologiyalari",
+    form:"sirtqi",
+    course:"3-kurs",
+    studentId:"ATT-06-24",
+    status:"O'qimoqda",
+    phone:"+998 50 581 66 67",
+    email:"lazizjondusmurodov26@gmail.com",
+    sem:5
+  }
+];
+
+/* Joriy talaba. Login vaqtida to'ldiriladi. */
 const USER = {
-  name:"Dusmurodov Lazizjon Naimjon o‘g‘li",
-  group:"ATTS-06-24",
-  faculty:"Axborot tizimlari va texnologiyalari",
-  form:"Sirtqi",
-  course:"2-kurs",
-  studentId:"ATTS-06-24",
-  status:"O'qimoqda",
-  phone:"",
-  email:""
+  name:"", group:"", faculty:"", form:"", course:"",
+  studentId:"", status:"", phone:"", email:"", kod:""
 };
+
+/* kod bo'yicha talabani topish */
+function talabaTop(kod){
+  return TALABALAR.filter(function(x){ return x.kod === kod; })[0] || null;
+}
+
+/* USER ni tanlangan talaba bilan to'ldirish */
+function userYukla(t2){
+  Object.keys(USER).forEach(function(k){
+    if(k in t2) USER[k] = t2[k];
+  });
+  USER.kod = t2.kod;
+  if(t2.sem) curSem = t2.sem;
+}
 
 /* =========================================================
    2) YORDAMCHI FUNKSIYALAR
@@ -512,7 +971,7 @@ function fillUserUI(){
 
   $('profName').textContent   = USER.name;
   $('profGroup').textContent  = USER.group;
-  $('profStatus').textContent = USER.status;
+  $('profStatus').textContent = td(USER.status);
   $('profAva').textContent    = initials(USER.name);
 
   $('drawerName').textContent  = USER.name;
@@ -521,10 +980,10 @@ function fillUserUI(){
 
   const rows = [
     [t('faculty'),   USER.faculty],
-    [t('eduForm'),   USER.form],
-    [t('course'),    USER.course],
+    [t('eduForm'),   td(USER.form)],
+    [t('course'),    td(USER.course)],
     [t('studentId'), USER.studentId],
-    [t('status'),    USER.status]
+    [t('status'),    td(USER.status)]
   ];
   if(USER.phone) rows.push([t('phone'), USER.phone]);
   if(USER.email) rows.push([t('email'), USER.email]);
@@ -543,43 +1002,324 @@ fillUserUI();
    4) MA'LUMOTLAR
    ========================================================= */
 /* Dars jadvali.
-   Backend ulanganda bu massiv serverdan keladi:
-     {sem:4, date:"2026-04-06", t:"Fan nomi", from:"08:30", to:"09:50",
+   Backend ulanganda bu massiv serverdan keladi (GET /api/jadval):
+     {sem:5, date:"2026-09-07", t:"Fan nomi", from:"08:30", to:"09:50",
       room:"214-xona", type:"Amaliyot", teacher:"A. Karimov"}
-   Hozircha bo'sh — "Ma'lumotlar topilmadi" ko'rsatiladi. */
-const SCHEDULE = [];
+   date — ISO ko'rinishda "YYYY-MM-DD". */
+const SCHEDULE = [
+  /* --- 7-sentabr, dushanba --- */
+  {sem:5, date:"2026-09-07", t:"Mobil ilovalar ishlab chiqish", from:"08:30", to:"09:50",
+   room:"214-xona", type:"Ma'ruza",  teacher:"A. Karimov"},
+  {sem:5, date:"2026-09-07", t:"Axborot xavfsizligi",           from:"10:00", to:"11:20",
+   room:"305-xona", type:"Amaliyot", teacher:"S. Rahmonov"},
+  {sem:5, date:"2026-09-07", t:"Ingliz tili",                   from:"11:30", to:"12:50",
+   room:"108-xona", type:"Amaliyot", teacher:"N. Yusupova"},
+
+  /* --- 8-sentabr, seshanba --- */
+  {sem:5, date:"2026-09-08", t:"Dasturiy ta'minot arxitekturasi", from:"08:30", to:"09:50",
+   room:"210-xona", type:"Ma'ruza",  teacher:"M. To'xtayev"},
+  {sem:5, date:"2026-09-08", t:"Loyihalarni boshqarish",          from:"10:00", to:"11:20",
+   room:"402-xona", type:"Ma'ruza",  teacher:"D. Sobirova"},
+
+  /* --- 9-sentabr, chorshanba --- */
+  {sem:5, date:"2026-09-09", t:"Mobil ilovalar ishlab chiqish", from:"08:30", to:"09:50",
+   room:"312-xona", type:"Amaliyot", teacher:"A. Karimov"},
+  {sem:5, date:"2026-09-09", t:"Axborot xavfsizligi",           from:"10:00", to:"11:20",
+   room:"305-xona", type:"Ma'ruza",  teacher:"S. Rahmonov"},
+  {sem:5, date:"2026-09-09", t:"Dasturiy ta'minot arxitekturasi", from:"13:00", to:"14:20",
+   room:"210-xona", type:"Amaliyot", teacher:"M. To'xtayev"},
+
+  /* --- 10-sentabr, payshanba --- */
+  {sem:5, date:"2026-09-10", t:"Ingliz tili",                   from:"08:30", to:"09:50",
+   room:"108-xona", type:"Amaliyot", teacher:"N. Yusupova"},
+  {sem:5, date:"2026-09-10", t:"Loyihalarni boshqarish",        from:"10:00", to:"11:20",
+   room:"402-xona", type:"Amaliyot", teacher:"D. Sobirova"},
+
+  /* --- 11-sentabr, juma --- */
+  {sem:5, date:"2026-09-11", t:"Mobil ilovalar ishlab chiqish", from:"08:30", to:"09:50",
+   room:"214-xona", type:"Ma'ruza",  teacher:"A. Karimov"},
+  {sem:5, date:"2026-09-11", t:"Axborot xavfsizligi",           from:"10:00", to:"11:20",
+   room:"305-xona", type:"Amaliyot", teacher:"S. Rahmonov"},
+
+  /* --- 14-sentabr, dushanba (keyingi hafta) --- */
+  {sem:5, date:"2026-09-14", t:"Mobil ilovalar ishlab chiqish", from:"08:30", to:"09:50",
+   room:"214-xona", type:"Ma'ruza",  teacher:"A. Karimov"},
+  {sem:5, date:"2026-09-14", t:"Axborot xavfsizligi",           from:"10:00", to:"11:20",
+   room:"305-xona", type:"Amaliyot", teacher:"S. Rahmonov"},
+  {sem:5, date:"2026-09-14", t:"Ingliz tili",                   from:"11:30", to:"12:50",
+   room:"108-xona", type:"Amaliyot", teacher:"N. Yusupova"},
+
+  /* --- 15-sentabr, seshanba --- */
+  {sem:5, date:"2026-09-15", t:"Dasturiy ta'minot arxitekturasi", from:"08:30", to:"09:50",
+   room:"210-xona", type:"Ma'ruza",  teacher:"M. To'xtayev"},
+  {sem:5, date:"2026-09-15", t:"Loyihalarni boshqarish",          from:"10:00", to:"11:20",
+   room:"402-xona", type:"Ma'ruza",  teacher:"D. Sobirova"},
+
+  /* --- 16-sentabr, chorshanba --- */
+  {sem:5, date:"2026-09-16", t:"Mobil ilovalar ishlab chiqish", from:"08:30", to:"09:50",
+   room:"312-xona", type:"Amaliyot", teacher:"A. Karimov"},
+  {sem:5, date:"2026-09-16", t:"Axborot xavfsizligi",           from:"10:00", to:"11:20",
+   room:"305-xona", type:"Ma'ruza",  teacher:"S. Rahmonov"}
+];
+
+/* ---------- SANA YORDAMCHILARI ---------- */
+/* Date -> "YYYY-MM-DD" */
+function isoDate(d){
+  return d.getFullYear()+'-'+
+         String(d.getMonth()+1).padStart(2,'0')+'-'+
+         String(d.getDate()).padStart(2,'0');
+}
+
+/* berilgan sana tegishli haftaning dushanbasi */
+function mondayOf(d){
+  const x = new Date(d.getFullYear(), d.getMonth(), d.getDate());
+  x.setDate(x.getDate() - ((x.getDay() + 6) % 7));
+  return x;
+}
+
+/* bugungi sana (ISO) */
+function todayIso(){ return isoDate(new Date()); }
+
+/* bir kunning darslari, vaqt bo'yicha tartiblangan */
+function lessonsOn(iso){
+  return SCHEDULE.filter(function(l){ return l.date === iso; })
+                 .sort(function(a, b){ return toMin(a.from) - toMin(b.from); });
+}
 
 /* joriy semestr va ko'rilayotgan hafta */
 const SEMESTERS = [1, 2, 3, 4, 5, 6, 7, 8];
-let curSem = 4;
+let curSem = 5;
 let weekStart = null;   /* dushanba, Date */
 
-const ATTENDANCE = [
-  {t:"Veb-dasturlash",      v:96},
-  {t:"Ma'lumotlar bazasi",  v:88},
-  {t:"Operatsion tizimlar", v:74},
-  {t:"Ingliz tili",         v:100}
+/* ---------- IMTIHONLAR ----------
+   date  — "YYYY-MM-DD", from/to — vaqt
+   tur   — nazorat turi
+   ball  — o'tgan imtihon natijasi (bo'lmasa hali topshirilmagan)
+   Backend: GET /api/imtihonlar */
+const EXAMS = [
+  {sem:5, date:"2026-09-11", from:"09:00", to:"11:00", t:"Axborot xavfsizligi",
+   room:"305-xona", tur:"Oraliq nazorat", teacher:"S. Rahmonov"},
+  {sem:5, date:"2026-09-14", from:"09:00", to:"11:00", t:"Mobil ilovalar ishlab chiqish",
+   room:"214-xona", tur:"Oraliq nazorat", teacher:"A. Karimov"},
+  {sem:5, date:"2026-09-18", from:"11:00", to:"13:00", t:"Dasturiy ta'minot arxitekturasi",
+   room:"210-xona", tur:"Oraliq nazorat", teacher:"M. To'xtayev"},
+  {sem:5, date:"2026-09-22", from:"09:00", to:"11:00", t:"Ingliz tili",
+   room:"108-xona", tur:"Oraliq nazorat", teacher:"N. Yusupova"},
+  {sem:5, date:"2026-09-25", from:"13:00", to:"15:00", t:"Loyihalarni boshqarish",
+   room:"402-xona", tur:"Oraliq nazorat", teacher:"D. Sobirova"},
+
+  /* o'tgan imtihonlar — natijasi bilan */
+  {sem:5, date:"2026-09-04", from:"09:00", to:"11:00", t:"Mobil ilovalar ishlab chiqish",
+   room:"214-xona", tur:"Joriy nazorat", teacher:"A. Karimov", ball:27, maks:30},
+  {sem:5, date:"2026-09-02", from:"11:00", to:"13:00", t:"Axborot xavfsizligi",
+   room:"305-xona", tur:"Joriy nazorat", teacher:"S. Rahmonov", ball:26, maks:30}
 ];
 
+/* imtihongacha qolgan vaqt (millisekund; manfiy — o'tib ketgan) */
+function examLeftMs(x){
+  return new Date(x.date + 'T' + x.from + ':00').getTime() - Date.now();
+}
+
+/* imtihon holati: 'now' | 'done' | 'soon' */
+function examState(x){
+  const start = new Date(x.date + 'T' + x.from + ':00').getTime();
+  const end   = new Date(x.date + 'T' + x.to   + ':00').getTime();
+  const now   = Date.now();
+  return now > end ? 'done' : now >= start ? 'now' : 'soon';
+}
+
+/* qolgan vaqtni matnga aylantirish: "12 kun 4 soat" */
+function examCountdown(ms){
+  if(ms <= 0) return '';
+  const daq  = Math.floor(ms / 60000);
+  const kun  = Math.floor(daq / 1440);
+  const soat = Math.floor((daq % 1440) / 60);
+  const min  = daq % 60;
+
+  if(kun)  return kun + ' ' + t('examDays') + (soat ? ' ' + soat + ' ' + t('examHours') : '');
+  if(soat) return soat + ' ' + t('examHours') + (min ? ' ' + min + ' ' + t('examMin') : '');
+  return min + ' ' + t('examMin');
+}
+
+/* kelayotgan imtihonlar — sana bo'yicha */
+function examsUpcoming(){
+  return EXAMS.filter(function(x){ return examState(x) !== 'done'; })
+              .sort(function(a, b){ return examLeftMs(a) - examLeftMs(b); });
+}
+
+/* o'tgan imtihonlar — yangisidan boshlab */
+function examsPast(){
+  return EXAMS.filter(function(x){ return examState(x) === 'done'; })
+              .sort(function(a, b){ return examLeftMs(b) - examLeftMs(a); });
+}
+
+/* eng yaqin imtihon */
+function examNext(){
+  return examsUpcoming()[0] || null;
+}
+
+/* ---------- DAVOMAT ----------
+   jami   — semestrdagi jami dars soati
+   kelgan — qatnashgan soat
+   qoldi  — qoldirilgan darslar: sana + sabab ('sababli' | 'sababsiz')
+   Foiz avtomatik hisoblanadi. Backend: GET /api/davomat */
+const ATTENDANCE = [
+  {t:"Mobil ilovalar ishlab chiqish",   jami:26, qoldi:[
+    {d:"12.09.2026", s:"sababsiz"}
+  ]},
+  {t:"Dasturiy ta'minot arxitekturasi", jami:24, qoldi:[
+    {d:"03.09.2026", s:"sababli"},
+    {d:"17.09.2026", s:"sababsiz"},
+    {d:"01.10.2026", s:"sababli"}
+  ]},
+  {t:"Axborot xavfsizligi",             jami:24, qoldi:[
+    {d:"10.09.2026", s:"sababli"},
+    {d:"24.09.2026", s:"sababli"}
+  ]},
+  {t:"Ingliz tili",                     jami:20, qoldi:[]},
+  {t:"Loyihalarni boshqarish",          jami:16, qoldi:[
+    {d:"05.09.2026", s:"sababsiz"},
+    {d:"12.09.2026", s:"sababsiz"},
+    {d:"19.09.2026", s:"sababli"},
+    {d:"26.09.2026", s:"sababsiz"}
+  ]}
+];
+
+/* har bir fan uchun hisob-kitob */
+function attCalc(x){
+  const qoldi    = x.qoldi ? x.qoldi.length : 0;
+  const kelgan   = x.jami - qoldi;
+  const sababsiz = (x.qoldi || []).filter(function(q){ return q.s === 'sababsiz'; }).length;
+  return {
+    jami:x.jami, kelgan:kelgan, qoldi:qoldi, sababsiz:sababsiz,
+    sababli:qoldi - sababsiz,
+    v:x.jami ? Math.round(kelgan / x.jami * 100) : 100
+  };
+}
+
+/* umumiy davomat — barcha fanlar bo'yicha */
+function attTotal(){
+  let jami = 0, kelgan = 0, sababsiz = 0, sababli = 0;
+  ATTENDANCE.forEach(function(x){
+    const c = attCalc(x);
+    jami += c.jami; kelgan += c.kelgan;
+    sababsiz += c.sababsiz; sababli += c.sababli;
+  });
+  return {
+    jami:jami, kelgan:kelgan, qoldi:jami - kelgan,
+    sababsiz:sababsiz, sababli:sababli,
+    v: jami ? Math.round(kelgan / jami * 100) : 100
+  };
+}
+
+/* davomat darajasi -> rang */
+function attTone(v){
+  return v >= 90 ? 'ok' : v > 75 ? 'good' : v >= 60 ? 'warn' : 'bad';
+}
+
+/* ---------- BAHOLAR ----------
+   Har bir fan: jn (joriy, maks 30), on (oraliq, maks 30), yn (yakuniy, maks 40).
+   jami = jn + on + yn (100 ballik tizim). Backend ulanganda GET /api/baholar. */
+const GRADES = [
+  {sem:5, t:"Mobil ilovalar ishlab chiqish", kredit:6, jn:27, on:26, yn:34},
+  {sem:5, t:"Dasturiy ta'minot arxitekturasi", kredit:5, jn:25, on:24, yn:31},
+  {sem:5, t:"Axborot xavfsizligi",  kredit:5, jn:26, on:25, yn:33},
+  {sem:5, t:"Ingliz tili",          kredit:4, jn:29, on:28, yn:37},
+  {sem:5, t:"Loyihalarni boshqarish", kredit:3, jn:24, on:23, yn:30},
+
+  {sem:4, t:"Veb-dasturlash",       kredit:6, jn:28, on:27, yn:35},
+  {sem:4, t:"Ma'lumotlar bazasi",   kredit:5, jn:26, on:24, yn:32},
+  {sem:4, t:"Operatsion tizimlar",  kredit:5, jn:18, on:16, yn:24},
+  {sem:4, t:"Ingliz tili",          kredit:4, jn:29, on:28, yn:38},
+  {sem:4, t:"Falsafa",              kredit:3, jn:24, on:22, yn:28},
+
+  {sem:3, t:"Algoritmlar",          kredit:6, jn:27, on:26, yn:34},
+  {sem:3, t:"Diskret matematika",   kredit:5, jn:22, on:20, yn:26},
+  {sem:3, t:"Kompyuter tarmoqlari", kredit:5, jn:25, on:24, yn:31},
+  {sem:3, t:"Ingliz tili",          kredit:4, jn:28, on:27, yn:36},
+
+  {sem:2, t:"Dasturlash asoslari",  kredit:6, jn:29, on:28, yn:37},
+  {sem:2, t:"Oliy matematika",      kredit:5, jn:20, on:19, yn:25},
+  {sem:2, t:"Fizika",               kredit:4, jn:23, on:21, yn:29},
+
+  {sem:1, t:"Informatika",          kredit:5, jn:27, on:26, yn:35},
+  {sem:1, t:"Oliy matematika",      kredit:5, jn:21, on:20, yn:27},
+  {sem:1, t:"O'zbekiston tarixi",   kredit:3, jn:26, on:25, yn:33}
+];
+
+/* nazorat turlarining maksimal ballari */
+const G_MAX = {jn:30, on:30, yn:40};
+
+/* 100 ballik ball -> 5 ballik baho */
+function gradeOf(ball){
+  return ball >= 86 ? 5 : ball >= 71 ? 4 : ball >= 60 ? 3 : 2;
+}
+
+/* baho -> nom va rang klassi */
+function gradeName(g){
+  return g === 5 ? t('gA5') : g === 4 ? t('gB4') : g === 3 ? t('gC3') : t('gD2');
+}
+function gradeTone(g){
+  return g === 5 ? 'ok' : g === 4 ? 'good' : g === 3 ? 'warn' : 'bad';
+}
+
+/* fanning umumiy balli */
+function gradeSum(x){ return x.jn + x.on + x.yn; }
+
+/* tanlangan semestr fanlari ('all' — hammasi) */
+function gradesOf(sem){
+  return sem === 'all' ? GRADES.slice() : GRADES.filter(function(x){ return x.sem === sem; });
+}
+
+/* kredit bo'yicha o'rtacha baho (GPA, 5 ballik) */
+function gpaOf(rows){
+  if(!rows.length) return 0;
+  let ball = 0, kredit = 0;
+  rows.forEach(function(x){
+    ball   += gradeOf(gradeSum(x)) * x.kredit;
+    kredit += x.kredit;
+  });
+  return kredit ? ball / kredit : 0;
+}
+
+/* E'lonlar. full — bosilganda ochiladigan to'liq matn.
+   Backend: GET /api/elonlar */
 const NEWS = [
-  {who:"Dekanat", when:"2 soat oldin", t:"Qishki sessiya jadvali e'lon qilindi",
+  {id:"n1", who:"Dekanat", when:"2 soat oldin", t:"Qishki sessiya jadvali e'lon qilindi",
    x:"Imtihonlar 10-yanvardan boshlanadi. Batafsil jadval kabinetdan yuklab olinadi.",
-   ic:"cal", tone:"", isNew:true},
-  {who:"Kutubxona", when:"Kecha", t:"Yangi elektron kitoblar qo'shildi",
+   ic:"cal", tone:"", isNew:true,
+   full:"Hurmatli talabalar!\n\n"+
+        "2026-2027 o'quv yili qishki imtihon sessiyasi jadvali tasdiqlandi. "+
+        "Imtihonlar 10-yanvardan 28-yanvarga qadar davom etadi.\n\n"+
+        "Har bir fan bo'yicha imtihon sanasi, vaqti va xonasi \"Imtihonlar\" bo'limida ko'rsatilgan. "+
+        "Imtihonga kirish uchun talaba guvohnomasi majburiy.\n\n"+
+        "Akademik qarzdorligi bo'lgan talabalar sessiya boshlanishidan oldin dekanatga murojaat qilishlari shart."},
+
+  {id:"n2", who:"Kutubxona", when:"Kecha", t:"Yangi elektron kitoblar qo'shildi",
    x:"Dasturlash va ma'lumotlar bazasi bo'yicha 12 ta yangi nashr.",
-   ic:"book", tone:"ok", isNew:true},
-  {who:"O'quv bo'limi", when:"3 kun oldin", t:"Amaliyot hisobotini topshirish muddati",
+   ic:"book", tone:"ok", isNew:true,
+   full:"Elektron kutubxona fondi yangilandi.\n\n"+
+        "Dasturlash, ma'lumotlar bazasi va axborot xavfsizligi yo'nalishlari bo'yicha 12 ta yangi nashr qo'shildi. "+
+        "Ular orasida 2025-2026 yillarda chop etilgan darsliklar va o'quv qo'llanmalari bor.\n\n"+
+        "Kitoblarni \"Kutubxona\" bo'limidan yuklab olishingiz mumkin. "+
+        "Bosma nashrlar uchun kutubxonaga shaxsan murojaat qiling."},
+
+  {id:"n3", who:"O'quv bo'limi", when:"3 kun oldin", t:"Amaliyot hisobotini topshirish muddati",
    x:"Hisobotlar 20-sentabrgacha qabul qilinadi.",
-   ic:"warn", tone:"warn", isNew:false}
+   ic:"warn", tone:"warn", isNew:false,
+   full:"Ishlab chiqarish amaliyoti hisobotlarini topshirish muddati \u2014 20-sentabr.\n\n"+
+        "Hisobot quyidagilarni o'z ichiga olishi kerak:\n"+
+        "\u2022 Amaliyot o'tagan tashkilot haqida ma'lumot\n"+
+        "\u2022 Bajarilgan ishlar tavsifi\n"+
+        "\u2022 Rahbar tomonidan tasdiqlangan tavsifnoma\n"+
+        "\u2022 Kundalik daftar\n\n"+
+        "Belgilangan muddatda topshirilmagan hisobotlar qabul qilinmaydi."}
 ];
 
 const DATA = {
-  davomat:{title:"Davomat", bars: ATTENDANCE},
-  ariza:{title:"Arizalar", empty:{t:"Ariza yo'q", m:"Hozircha yuborilgan arizangiz yo'q. Yangi ariza yuborish uchun dekanatga murojaat qiling."}},
   chaqiruv:{title:"Chaqiruv xatlari", items:[
     {t:"Qishki sessiya", m:"Yuborilgan: 05.01.2026 · PDF", b:"Tayyor", ok:true}
-  ]},
-  yotoqxona:{title:"Yotoqxona", empty:{t:"Joy band qilinmagan", m:"Sirtqi ta'lim shakli uchun yotoqxona ajratilmaydi."}}
+  ]}
 };
 
 const LIBRARY = [
@@ -603,7 +1343,7 @@ const LIBRARY = [
 
 const JOBS = [
   {id:"job1", t:"Frontend dasturchi (intern)", m:"Samarqand · To'liq bo'lmagan ish kuni · HTML, CSS, JS", b:"Ochiq", ok:true,
-   company:"TimePay HR", place:"Samarqand", mode:"To'liq bo'lmagan ish kuni", salary:"3 000 000 so'm dan",
+   company:"Digital Solutions", place:"Samarqand", mode:"To'liq bo'lmagan ish kuni", salary:"3 000 000 so'm dan",
    x:"Mavjud veb-ilovalar interfeysini ishlab chiqish va qo'llab-quvvatlash. Tajribali dasturchi rahbarligida.",
    skills:["HTML", "CSS", "JavaScript", "Git"], act:"apply"},
   {id:"job2", t:"Backend dasturchi (junior)",  m:"Masofaviy · Python, Django, PostgreSQL", b:"Ochiq", ok:true,
@@ -621,7 +1361,7 @@ const YEARS = ["2025-2026", "2024-2025"];
 
 /* akademik qarzdorlik — fandan o'ta olmaganlik */
 const AKADEMIK = [
-  {fan:"Operatsion tizimlar", year:"2025-2026", sem:"1-semestr",
+  {fan:"Operatsion tizimlar", year:"2025-2026", sem:"4-semestr",
    ball:48, kerak:60, tur:"Yakuniy nazorat", sabab:"Ball yetarli emas"},
   {fan:"Ingliz tili",         year:"2024-2025", sem:"2-semestr",
    ball:0,  kerak:60, tur:"Yakuniy nazorat", sabab:"Imtihonga kelmagan"}
@@ -642,11 +1382,49 @@ const ARIZALAR = [
     x:"Ariza bo‘yicha shartnoma yaratildi. Shartnomani yuklab oling va to‘lovni amalga oshiring.",
     files:["ariza", "shartnoma"],
     fanlarRoyxat:[
-      {t:"Operatsion tizimlar", m:"1-semestr · 5 kredit · 48/60 ball"},
+      {t:"Operatsion tizimlar", m:"4-semestr · 5 kredit · 48/60 ball"},
       {t:"Ingliz tili",         m:"2-semestr · 5 kredit · imtihonga kelmagan"}
     ]
   }
 ];
+
+/* ---------- ARIZA SAQLASH (localStorage) ----------
+   Imtihon namunasi uchun arizalar brauzer xotirasida saqlanadi.
+   Backend ulanganda faqat shu 3 ta funksiya server bilan almashtiriladi:
+     arizaOqi()  -> GET  /api/arizalar
+     arizaYoz()  -> POST /api/arizalar
+   ------------------------------------------------- */
+const ARIZA_KEY = 'ms.arizalar';
+
+/* saqlangan arizalarni o'qish */
+function arizaOqi(){
+  try{
+    const raw = localStorage.getItem(ARIZA_KEY);
+    return raw ? JSON.parse(raw) : [];
+  }catch(e){ return []; }
+}
+
+/* arizalarni saqlash */
+function arizaYoz(list){
+  try{ localStorage.setItem(ARIZA_KEY, JSON.stringify(list)); }catch(e){}
+}
+
+/* namuna + yuborilgan arizalar birgalikda */
+function hammaArizalar(){
+  return ARIZALAR.concat(arizaOqi());
+}
+
+/* holat bo'yicha matn va rang */
+function holatMatn(h){
+  return h === 'ok' ? t('stOk') : h === 'no' ? t('stNo') : t('stWait');
+}
+
+/* hozirgi vaqt: "14:17 18.07.2026" */
+function hozirVaqt(){
+  const d = new Date(), n = function(x){ return String(x).padStart(2, '0'); };
+  return n(d.getHours())+':'+n(d.getMinutes())+' '+
+         n(d.getDate())+'.'+n(d.getMonth()+1)+'.'+d.getFullYear();
+}
 
 /* shartnoma bo'yicha qarzdorlik — pul */
 const SHARTNOMA_QARZ = [
@@ -655,13 +1433,56 @@ const SHARTNOMA_QARZ = [
 
 function money(n){ return n.toLocaleString('ru-RU').replace(/ /g, ' '); }
 
+/* ---------- FOTOGALEREYA ----------
+   Suratlar o'rniga rangli gradient va ikonka ishlatiladi (rasm fayllari yo'q).
+   Backend ulanganda: {id, t, sana, soni, rasm:"url"} */
+const PHOTOS = [
+  {id:"ph1", t:"Bilimlar kuni", sana:"02.09.2026", soni:24, ton:"brand",
+   ic:'<path d="M22 10 12 5 2 10l10 5 10-5z"/><path d="M6 12v5c0 1 3 3 6 3s6-2 6-3v-5"/>'},
+  {id:"ph2", t:"IT-olimpiada", sana:"15.03.2026", soni:38, ton:"warn",
+   ic:'<path d="M12 2 4 5v6c0 5 3.4 9.2 8 10.5 4.6-1.3 8-5.5 8-10.5V5z"/><path d="m12 8 1.2 2.4 2.6.4-1.9 1.8.5 2.6L12 14l-2.4 1.2.5-2.6-1.9-1.8 2.6-.4z"/>'},
+  {id:"ph3", t:"Talabalar bahori", sana:"20.04.2026", soni:52, ton:"ok",
+   ic:'<path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/>'},
+  {id:"ph4", t:"Hackathon \"Smart City\"", sana:"08.12.2025", soni:31, ton:"good",
+   ic:'<rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/>'},
+  {id:"ph5", t:"Kutubxona ochilishi", sana:"10.10.2025", soni:17, ton:"brand",
+   ic:'<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>'},
+  {id:"ph6", t:"Sport musobaqalari", sana:"25.09.2025", soni:45, ton:"warn",
+   ic:'<circle cx="12" cy="12" r="10"/><path d="M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20M2 12h20"/>'}
+];
+
+/* ---------- YOTOQXONA ----------
+   holat: 'yashaydi' | 'navbat' | 'yoq'
+   Backend: GET /api/yotoqxona */
+const DORM = {
+  holat:"yashaydi",
+  bino:"2-bino",
+  xona:"312",
+  orin:"3",
+  qavat:4,
+  kishi:4,
+  sana:"01.09.2026",
+  oylik:250000,
+  tolangan:250000,
+  komendant:"G. Ismoilova",
+  tel:"+998 66 233 45 67",
+  navbat:0,
+  qoidalar:[
+    "Kirish-chiqish: 06:00 \u2013 23:00",
+    "Xonani toza saqlash va navbatchilik tartibiga rioya qilish",
+    "Elektr isitgich va ochiq olov ishlatish taqiqlanadi",
+    "Begona shaxslarni tunab qoldirish mumkin emas",
+    "To'lov har oyning 10-sanasigacha amalga oshiriladi"
+  ]
+};
+
+/* yotoqxona to'lov qoldig'i */
+function dormLeft(){
+  return Math.max(0, DORM.oylik - DORM.tolangan);
+}
+
 /* ---------- KARYERA MARKAZI ---------- */
 const CAREER = {
-  rezyume:{title:"Rezyume", empty:{
-    t:"Rezyume yaratilmagan",
-    m:"Rezyume yaratsangiz, ish beruvchilar sizni topa oladi. Kabinetdagi ma'lumotlar avtomatik qo'shiladi."
-  }},
-
   ishlar:{title:"Ish takliflari", items: JOBS},
 
   yutuq:{title:"Yutuqlar", items:[
@@ -718,12 +1539,7 @@ const CAREER = {
      author:"D. Nazarova", read:"9 daq", views:210, date:"05.09.2026",
      x:"Uydan turib ishlashning ijobiy tomonlari va e'tibordan chetda qoladigan qiyinchiliklari.",
      act:"read"}
-  ]},
-
-  foto:{title:"Fotogalereya", empty:{
-    t:"Surat yo'q",
-    m:"Tadbirlar suratlari shu yerda ko'rinadi. Hozircha yuklangan surat yo'q."
-  }}
+  ]}
 };
 
 /* =========================================================
@@ -732,14 +1548,14 @@ const CAREER = {
 function badgeHTML(r){
   if(!r.b) return '';
   const cls = r.no ? 'badge--no' : r.mute ? 'badge--mute' : r.ok ? 'badge--ok' : 'badge--warn';
-  return '<span class="badge '+cls+'">'+esc(r.b)+'</span>';
+  return '<span class="badge '+cls+'">'+esc(td(r.b))+'</span>';
 }
 function rowHTML(r){
   const badge = badgeHTML(r);
   const right = r.s ? '<div class="row__sum">'+esc(r.s)+'</div>' : badge;
   const extra = (r.s && r.b) ? '<div style="margin-top:9px">'+badge+'</div>' : '';
-  const ichi  = '<div class="row__top"><div class="row__title">'+esc(r.t)+'</div>'+right+
-                '</div><div class="row__meta">'+esc(r.m)+'</div>'+extra;
+  const ichi  = '<div class="row__top"><div class="row__title">'+esc(td(r.t))+'</div>'+right+
+                '</div><div class="row__meta">'+esc(td(r.m))+'</div>'+extra;
 
   /* id bo'lsa — bosiladigan tugma */
   if(r.id) return '<button class="row" data-item="'+esc(r.id)+'">'+ichi+'</button>';
@@ -747,7 +1563,7 @@ function rowHTML(r){
 }
 function barHTML(b){
   const cls = b.v < 60 ? 'is-bad' : b.v < 75 ? 'is-low' : '';
-  return '<div class="row"><div class="row__top"><div class="row__title">'+esc(b.t)+
+  return '<div class="row"><div class="row__top"><div class="row__title">'+esc(td(b.t))+
          '</div><div class="row__sum">'+b.v+'%</div></div>'+
          '<div class="bar"><i class="'+cls+'" style="width:'+b.v+'%"></i></div></div>';
 }
@@ -783,7 +1599,7 @@ function fillCareerInfo(){
     [t('fullName'), USER.name],
     [t('group'),    USER.group],
     [t('faculty'),  USER.faculty],
-    [t('course'),   USER.course],
+    [t('course'),   td(USER.course)],
     [t('phone'),    USER.phone || "—"],
     [t('email'),    USER.email || "—"]
   ].map(function(r){
@@ -807,16 +1623,27 @@ fillCareerInfo();
    ========================================================= */
 const STRIP = [
   {key:"jadval",   i18n:"schedule",     tone:"",      ic:'<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/>'},
+  {key:"_exams",   i18n:"examTitle",    tone:"warn",  ic:'<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 15l2 2 4-4"/>', tag:function(){ const x = examNext(); if(!x) return ''; const w = examDayWord(x); return w || examCountdown(examLeftMs(x)).split(' ').slice(0,2).join(' '); }, tagColor:"var(--warn)"},
   {key:"davomat",  i18n:"attendance",   tone:"blue",  ic:'<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>'},
   {key:"_debt",    i18n:"debts",        tone:"warn",  ic:'<path d="M12 2 2 20h20z"/><path d="M12 9v5M12 17h.01"/>', tag:function(){ return AKADEMIK.length || ''; }, tagColor:"var(--warn)"},
-  {key:"_soon",    i18n:"grades",       tone:"soon",  ic:'<path d="m12 3 2.9 5.9 6.5.9-4.7 4.6 1.1 6.5L12 17.8 6.2 20.9l1.1-6.5L2.6 9.8l6.5-.9z"/>', tag:function(){ return t('soon'); }},
+  {key:"_grades",  i18n:"grades",       tone:"ok",    ic:'<path d="m12 3 2.9 5.9 6.5.9-4.7 4.6 1.1 6.5L12 17.8 6.2 20.9l1.1-6.5L2.6 9.8l6.5-.9z"/>', tag:function(){ return gpaOf(gradesOf(curSem)).toFixed(1); }, tagColor:"var(--ok)"},
   {key:"ariza",    i18n:"applications", tone:"",      ic:'<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/>'},
   {key:"chaqiruv", i18n:"callLetter",   tone:"blue",      ic:'<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>'},
   {key:"yotoqxona",i18n:"dorm",         tone:"warn",  ic:'<path d="M2 10h20v7H2zM2 17v3M22 17v3M4 10V7a2 2 0 0 1 2-2h5v5"/>'}
 ];
 
 function buildStrip(){
-  $('strip').innerHTML = STRIP.map(function(p){
+  /* dekanat rejimida ustki lentaga "Dekanat" tugmasi qo'shiladi */
+  const items = adminMode
+    ? [{key:"_admin", i18n:"adminMode", tone:"warn",
+        ic:'<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>',
+        tag:function(){
+          const n = arizaOqi().filter(function(a){ return a.holat === 'wait'; }).length;
+          return n || '';
+        }, tagColor:"var(--danger)"}].concat(STRIP)
+    : STRIP;
+
+  $('strip').innerHTML = items.map(function(p){
     const soon = p.tone === 'soon';
     const cls  = 'pill' + (p.tone && !soon ? ' pill--' + p.tone : '') + (soon ? ' pill--soon' : '');
     const tag  = p.tag ? p.tag() : '';
@@ -831,15 +1658,8 @@ function buildStrip(){
     '</'+el+'>';
   }).join('');
 
-  /* tugmalarni qayta bog'lash */
-  $('strip').querySelectorAll('[data-key]').forEach(function(b){
-    b.addEventListener('click', function(){
-      if(b.dataset.key === 'jadval') openSchedule();
-      else openDetail(b.dataset.key);
-    });
-  });
-  const pd = $('pillDebt');
-  if(pd) pd.addEventListener('click', openDebt);
+  /* tugmalar document dagi delegatsiya orqali ishlaydi — bu yerda
+     qayta bog'lash shart emas (aks holda ikki marta ochiladi). */
 }
 
 /* =========================================================
@@ -849,49 +1669,70 @@ function buildToday(){
   const now  = new Date();
   const mins = now.getHours()*60 + now.getMinutes();
 
-  let nextFound = false;
-  $('todayList').innerHTML = SCHEDULE.map(function(l){
-    const s = toMin(l.from), e = toMin(l.to);
-    let cls = '', tag = '';
-
-    if(mins >= s && mins <= e){
-      cls = 'lesson--now';
-      tag = '<span class="live"><i></i>'+esc(t('now'))+'</span>';
-      nextFound = true;
-    } else if(mins > e){
-      cls = 'lesson--done';
-    } else if(!nextFound){
-      cls = 'lesson--next';
-      nextFound = true;
-    }
-
-    return '<button class="lesson '+cls+'" data-key="jadval">'+
-      '<span class="lesson__rail"></span>'+
-      '<span class="lesson__in">'+
-        '<span class="lesson__time">'+
-          '<span class="lesson__h">'+esc(l.from)+'</span>'+
-          '<span class="lesson__to">'+esc(l.to)+'</span>'+
-        '</span>'+
-        '<span class="lesson__body">'+
-          '<span class="lesson__t">'+esc(l.t)+tag+'</span>'+
-          '<span class="lesson__s">'+esc(l.room+' · '+l.type+' · '+l.teacher)+'</span>'+
-        '</span>'+
-      '</span>'+
-    '</button>';
-  }).join('');
-
-  const qolgan = SCHEDULE.filter(function(l){ return mins <= toMin(l.to); }).length;
-  $('todayTitle').textContent = qolgan ? t('today') + ' · ' + qolgan + ' ' + t('todayLeft') : t('today');
+  const bugun = lessonsOn(todayIso());
 
   /* dars kiritilmagan bo'lsa — bo'sh holat */
-  if(!SCHEDULE.length){
+  if(!bugun.length){
     $('todayList').innerHTML =
       '<div class="row" style="text-align:center;padding:26px 16px">'+
         '<div style="font-size:14px;font-weight:650;color:var(--ink-3)">'+esc(t('noToday'))+'</div>'+
         '<div style="margin-top:6px;font-size:12.5px;color:var(--ink-4)">'+esc(t('noLessons'))+'</div>'+
       '</div>';
     $('todayTitle').textContent = t('today');
+    return;
   }
+
+  let nextFound = false;
+
+  $('todayList').innerHTML = '<div class="tl">' + bugun.map(function(l, i){
+    const s2 = toMin(l.from), e2 = toMin(l.to);
+
+    /* dars holati */
+    let cls = '', tag = '', dot = '';
+    if(mins >= s2 && mins <= e2){
+      cls = ' tli--now';
+      tag = '<span class="live"><i></i>'+esc(t('now'))+'</span>';
+      dot = '<span class="tl__dot tl__dot--now"></span>';
+      nextFound = true;
+    } else if(mins > e2){
+      cls = ' tli--done';
+      dot = '<span class="tl__dot tl__dot--done">'+
+              '<svg viewBox="0 0 12 12"><path d="M2.5 6.2l2.4 2.4L9.5 4"/></svg>'+
+            '</span>';
+    } else if(!nextFound){
+      cls = ' tli--next';
+      dot = '<span class="tl__dot tl__dot--next"></span>';
+      nextFound = true;
+    } else {
+      dot = '<span class="tl__dot"></span>';
+    }
+
+    /* dars turi — rangli teg (amaliyot / ma'ruza) */
+    const amaliy = /amali|практ|practic/i.test(l.type);
+    const tur = '<span class="tl__type'+(amaliy ? ' tl__type--p' : '')+'">'+esc(td(l.type))+'</span>';
+
+    const oxirgi = (i === bugun.length - 1) ? ' tli--last' : '';
+
+    return '<button class="tli'+cls+oxirgi+'" data-lsn="'+SCHEDULE.indexOf(l)+'">'+
+      '<span class="tl__rail">'+dot+'</span>'+
+      '<span class="tl__time">'+
+        '<span class="tl__h">'+esc(l.from)+'</span>'+
+        '<span class="tl__to">'+esc(l.to)+'</span>'+
+      '</span>'+
+      '<span class="tl__body">'+
+        '<span class="tl__t">'+esc(td(l.t))+tag+'</span>'+
+        '<span class="tl__s">'+tur+
+          '<span class="tl__room">'+esc(td(l.room))+'</span>'+
+        '</span>'+
+        '<span class="tl__x">'+esc(l.teacher)+'</span>'+
+      '</span>'+
+    '</button>';
+  }).join('') + '</div>';
+
+  const qolgan = bugun.filter(function(l){ return mins <= toMin(l.to); }).length;
+  $('todayTitle').textContent = qolgan
+    ? t('today') + ' \u00b7 ' + qolgan + ' ' + t('todayLeft')
+    : t('today');
 }
 buildToday();
 
@@ -899,19 +1740,65 @@ buildToday();
    7) DAVOMAT KO'RSATKICHI
    ========================================================= */
 function buildAttStat(){
-  const avg = Math.round(ATTENDANCE.reduce(function(a,b){ return a + b.v; }, 0) / ATTENDANCE.length);
-  $('statAtt').innerHTML = avg + '<small>%</small>';
-
-  const bar = $('statAttBar');
-  bar.className = avg < 60 ? 'is-bad' : avg < 75 ? 'is-low' : '';
-  setTimeout(function(){ bar.style.width = avg + '%'; }, 260);
-
-  const past = ATTENDANCE.filter(function(x){ return x.v < 75; }).length;
   const note = $('statAttNote');
-  note.textContent = past ? past + ' ' + t('lowSubj') : t('allGood');
-  if(past) note.style.color = 'var(--warn)';
+  const bar  = $('statAttBar');
+
+  if(!ATTENDANCE.length){
+    $('statAtt').innerHTML = '—';
+    bar.style.width = '0';
+    note.textContent = t('attNoData');
+    return;
+  }
+
+  const tot = attTotal();
+  $('statAtt').innerHTML = tot.v + '<small>%</small>';
+
+  bar.className = tot.v < 60 ? 'is-bad' : tot.v < 75 ? 'is-low' : '';
+  setTimeout(function(){ bar.style.width = tot.v + '%'; }, 260);
+
+  /* qoldirilgan soat bo'lsa — shuni ko'rsatamiz, bo'lmasa "hammasi yaxshi" */
+  const past = ATTENDANCE.filter(function(x){ return attCalc(x).v < 75; }).length;
+  if(past){
+    note.textContent = past + ' ' + t('lowSubj');
+    note.style.color = 'var(--warn)';
+  } else if(tot.qoldi){
+    note.textContent = tot.qoldi + ' ' + t('attHours') + ' ' + t('attMissed').toLowerCase();
+    note.style.color = '';
+  } else {
+    note.textContent = t('allGood');
+    note.style.color = '';
+  }
 }
 buildAttStat();
+
+/* o'rtacha baho ko'rsatkichi (joriy semestr) */
+function buildGpaStat(){
+  const rows = gradesOf(curSem);
+  const el   = $('statGpa');
+  if(!el) return;
+
+  const bar  = $('statGpaBar');
+  const note = $('statGpaNote');
+
+  if(!rows.length){
+    el.innerHTML = '—';
+    bar.style.width = '0';
+    note.textContent = t('gNoData');
+    return;
+  }
+
+  const gpa = gpaOf(rows);
+  el.innerHTML = (Math.round(gpa * 100) / 100).toFixed(2) + '<small>/5</small>';
+
+  const pct = Math.round(gpa / 5 * 100);
+  bar.className = gpa < 3 ? 'is-bad' : gpa < 4 ? 'is-low' : '';
+  setTimeout(function(){ bar.style.width = pct + '%'; }, 300);
+
+  const past = rows.filter(function(x){ return gradeOf(gradeSum(x)) < 3; }).length;
+  note.textContent = past ? past + ' ' + t('gDebtSubj') : rows.length + ' ' + t('gSubjCount');
+  note.style.color = past ? 'var(--danger)' : '';
+}
+buildGpaStat();
 
 /* =========================================================
    8) E'LONLAR
@@ -923,21 +1810,42 @@ function buildNews(){
     warn:'<path d="M12 2 2 20h20z"/><path d="M12 9v5M12 17h.01"/>'
   };
   $('newsList').innerHTML = NEWS.map(function(n){
-    return '<article class="post'+(n.tone ? ' post--'+n.tone : '')+'">'+
-      '<div class="post__top">'+
+    return '<button class="post'+(n.tone ? ' post--'+n.tone : '')+'" data-news="'+esc(n.id)+'">'+
+      '<span class="post__top">'+
         '<span class="post__ic"><svg viewBox="0 0 24 24">'+ICONS[n.ic]+'</svg></span>'+
         '<span class="post__from">'+
           '<span class="post__who">'+esc(n.who)+'</span>'+
-          '<div class="post__when">'+esc(n.when)+'</div>'+
+          '<span class="post__when">'+esc(n.when)+'</span>'+
         '</span>'+
         (n.isNew ? '<span class="post__new">'+esc(t('newTag'))+'</span>' : '')+
-      '</div>'+
-      '<div class="post__t">'+esc(n.t)+'</div>'+
-      '<p class="post__x">'+esc(n.x)+'</p>'+
-    '</article>';
+      '</span>'+
+      '<span class="post__t">'+esc(n.t)+'</span>'+
+      '<span class="post__x">'+esc(n.x)+'</span>'+
+      (n.full ? '<span class="post__more">'+esc(t('readMore'))+
+                '<svg viewBox="0 0 8 14"><path d="M1 1l6 6-6 6"/></svg></span>' : '')+
+    '</button>';
   }).join('');
 }
 buildNews();
+
+/* e'lonni to'liq ochish */
+function openNews(id){
+  const n = NEWS.filter(function(x){ return x.id === id; })[0];
+  if(!n) return;
+  haptic();
+
+  /* to'liq matn: qatorlarga ajratamiz */
+  const matn = (n.full || n.x).split('\n').map(function(p){
+    return p.trim() ? '<p class="nwx__p">'+esc(p)+'</p>' : '';
+  }).join('');
+
+  openModal(n.t, n.who + ' \u00b7 ' + n.when,
+    '<div class="nwx">'+matn+'</div>'+
+    '<button class="btn btn--ghost" id="nwClose">'+esc(t('close'))+'</button>');
+
+  const c = $('nwClose');
+  if(c) c.addEventListener('click', closeModal);
+}
 
 /* =========================================================
    9) YON MENYU
@@ -983,10 +1891,28 @@ tabs.forEach(function(tab){
 const detail = $('detail'), detailTitle = $('detailTitle'), detailBody = $('detailBody');
 let detailOpen = false;
 
+/* qaysi ichki sahifa ochiq: 'grades' | 'att' | 'sched' | 'debt' | 'admin' | '' */
+let curPage = '';
+
+/* sahifa nomi -> uni qayta chizadigan funksiya (pastda to'ldiriladi) */
+const PAGE_RENDER = {};
+
+/* imtihon sanog'ini yangilab turuvchi taymer */
+let examTimer = null;
+
+/* sahifa nomi -> sarlavha i18n kaliti */
+const PAGE_TITLE = {
+  grades:'gradesTitle', att:'attTitle',    sched:'schedTitle',
+  debt:'debtTitle',     admin:'adminMode', exams:'examTitle',
+  apps:'appsTitle',     dorm:'dormTitle',   cv:'cvTitle',
+  photo:'photoTitle'
+};
+
 function openDetail(key){
   const d = DATA[key];
   if(!d) return;
   haptic();
+  curPage = 'detail:' + key;
   $('refBtn').hidden = true;
   detailTitle.textContent = d.title;
 
@@ -1009,17 +1935,57 @@ function closeDetail(){
   detail.classList.remove('is-open');
   detail.setAttribute('aria-hidden','true');
   detailOpen = false;
+  curPage = '';
+  /* imtihon sanog'i taymerini to'xtatish */
+  if(examTimer){
+    clearInterval(examTimer);
+    examTimer = null;
+  }
 }
 
 window.addEventListener('popstate', function(){
   if(detailOpen) closeDetail();
 });
 
-document.querySelectorAll('[data-key]').forEach(function(btn){
-  btn.addEventListener('click', function(){
-    if(btn.dataset.key === 'jadval') openSchedule();
-    else openDetail(btn.dataset.key);
-  });
+/* Hodisa delegatsiyasi: tugmalar qayta chizilganda ham ishlashi uchun
+   handler document ga bir marta bog'lanadi (buildToday, buildStrip va
+   boshqalar innerHTML bilan qayta chizadi — eski handler yo'qoladi). */
+document.addEventListener('click', function(e){
+  /* e'lon — to'liq matn */
+  const nw = e.target.closest('[data-news]');
+  if(nw){
+    openNews(nw.dataset.news);
+    return;
+  }
+
+  /* dars — tafsilot oynasi */
+  const lsn = e.target.closest('[data-lsn]');
+  if(lsn){
+    openLesson(+lsn.dataset.lsn);
+    return;
+  }
+
+  /* qarzdorlik tugmasi (id bo'yicha) */
+  if(e.target.closest('#pillDebt')){
+    openDebt();
+    return;
+  }
+
+  /* bo'lim tugmalari */
+  const btn = e.target.closest('[data-key]');
+  if(!btn) return;
+
+  const k = btn.dataset.key;
+  if(k === 'jadval')       openSchedule();
+  else if(k === '_admin')  openAdmin();
+  else if(k === '_grades') openGrades();
+  else if(k === 'davomat') openAtt();
+  else if(k === '_exams')  openExams();
+  else if(k === 'ariza')   openApps();
+  else if(k === 'yotoqxona') openDorm();
+  else if(k === 'rezyume') openCv();
+  else if(k === 'foto')    openPhoto();
+  else                     openDetail(k);
 });
 $('backBtn').addEventListener('click', function(){
   if(detailOpen) history.back(); else closeDetail();
@@ -1036,11 +2002,11 @@ let debtYear   = YEARS[0];
 function noResultHTML(text, sub){
   return '<div class="nores">'+
     '<svg viewBox="0 0 100 100" fill="none">'+
-      '<circle cx="42" cy="42" r="31" stroke="#B8D4D0" stroke-width="7"/>'+
-      '<circle cx="32" cy="37" r="3.4" fill="#B8D4D0"/>'+
-      '<circle cx="52" cy="37" r="3.4" fill="#B8D4D0"/>'+
-      '<path d="M32 54c5-5 15-5 20 0" stroke="#B8D4D0" stroke-width="5" stroke-linecap="round"/>'+
-      '<path d="M65 65 88 88" stroke="#B8D4D0" stroke-width="7" stroke-linecap="round"/>'+
+      '<circle cx="42" cy="42" r="31" stroke="#E0BFBC" stroke-width="7"/>'+
+      '<circle cx="32" cy="37" r="3.4" fill="#E0BFBC"/>'+
+      '<circle cx="52" cy="37" r="3.4" fill="#E0BFBC"/>'+
+      '<path d="M32 54c5-5 15-5 20 0" stroke="#E0BFBC" stroke-width="5" stroke-linecap="round"/>'+
+      '<path d="M65 65 88 88" stroke="#E0BFBC" stroke-width="7" stroke-linecap="round"/>'+
     '</svg>'+
     '<b>'+esc(text)+'</b>'+
     (sub ? '<p>'+esc(sub)+'</p>' : '')+
@@ -1066,14 +2032,19 @@ function debtHTML(){
              esc(f.label)+'</button>';
     }).join('') + '</div>';
 
-    const rows = ARIZALAR.filter(function(a){ return a.turi === debtFilter; });
+    /* yangi ariza yuborish tugmasi */
+    h += '<div class="newapp"><button class="btn btn--primary" id="newAppBtn">'+
+         esc(t('newApp'))+'</button></div>';
+
+    const rows = hammaArizalar().filter(function(a){ return a.turi === debtFilter; });
 
     if(!rows.length){
       h += noResultHTML(t('notFound'), t('noApps'));
       return h;
     }
 
-    h += '<div class="list">' + rows.map(appCardHTML).join('') + '</div>';
+    /* yangi yuborilganlar tepada */
+    h += '<div class="list">' + rows.slice().reverse().map(appCardHTML).join('') + '</div>';
     return h;
   }
 
@@ -1141,18 +2112,309 @@ function appCardHTML(a){
       '<p class="appc__sx">'+esc(a.x)+'</p>'+
     '</div>'+
 
-    '<div class="appc__btns">'+
+    /* talaba yozgan izoh */
+    (a.izoh ? '<p class="appc__note"><b>'+esc(t('appNote'))+':</b> '+esc(a.izoh)+'</p>' : '')+
+
+    ((a.files && a.files.length) ? '<div class="appc__btns">'+
       a.files.map(function(f, i){
         return '<button class="appc__btn'+(i ? '' : ' appc__btn--ghost')+'" data-dl="'+esc(f)+'">'+
                esc(F[f] || f)+'</button>';
       }).join('')+
-    '</div>'+
+    '</div>' : '')+
   '</article>';
 }
 
+/* ---------- YANGI ARIZA YUBORISH ---------- */
+
+/* ariza turlari — kalit va nomi */
+const ARIZA_TURLARI = [
+  {k:'ariza',   nom:function(){ return t('fApps');   }},
+  {k:'qayta',   nom:function(){ return t('fRetake'); }},
+  {k:'yakuniy', nom:function(){ return t('fFinal');  }}
+];
+
+/* ariza formasini ochish */
+function openNewApp(){
+  /* qarzdorlik yo'q bo'lsa — ariza kerak emas */
+  if(!AKADEMIK.length){
+    toast(t('noDebtForApp'));
+    return;
+  }
+
+  haptic();
+
+  const turH = '<div class="field" id="f_appType"><label>'+esc(t('appType'))+'</label>'+
+    '<div class="sel"><select id="appType">'+
+      ARIZA_TURLARI.map(function(x){
+        return '<option value="'+esc(x.k)+'"'+(x.k === debtFilter ? ' selected' : '')+'>'+
+               esc(x.nom())+'</option>';
+      }).join('')+
+    '</select></div></div>';
+
+  /* akademik qarzdorlik fanlari — belgilanadigan ro'yxat */
+  const fanH = '<div class="field" id="f_appSubj"><label>'+esc(t('appSubjects'))+'</label>'+
+    '<div class="applist">'+
+      AKADEMIK.map(function(f, i){
+        return '<label class="appck">'+
+          '<input type="checkbox" data-fan="'+i+'">'+
+          '<span class="appck__b"><b>'+esc(f.fan)+'</b>'+
+          '<i>'+esc(f.sem+' · '+f.ball+'/'+f.kerak+' ball · '+f.sabab)+'</i></span>'+
+        '</label>';
+      }).join('')+
+    '</div><div class="err">'+esc(t('pickSubject'))+'</div></div>';
+
+  const izohH = '<div class="field" id="f_appNote"><label for="appNote">'+esc(t('appNote'))+'</label>'+
+    '<textarea id="appNote" rows="3" placeholder="'+esc(t('appNotePh'))+'"></textarea>'+
+    '<div class="hint">'+esc(t('appNoteHint'))+'</div>'+
+    '<div class="err">'+esc(t('writeNote'))+'</div></div>';
+
+  openModal(t('newApp'), USER.name + ' · ' + USER.group,
+    turH + fanH + izohH +
+    '<button class="btn btn--primary" id="appSend">'+esc(t('sendApp'))+'</button>'+
+    '<button class="btn btn--ghost" id="appCancel">'+esc(t('close'))+'</button>');
+
+  const cancel = $('appCancel');
+  if(cancel) cancel.addEventListener('click', closeModal);
+
+  /* to'g'rilanganda qizil xato darhol yo'qolsin */
+  document.querySelectorAll('[data-fan]').forEach(function(c){
+    c.addEventListener('change', function(){
+      const bor = Array.prototype.slice.call(document.querySelectorAll('[data-fan]'))
+        .some(function(x){ return x.checked; });
+      $('f_appSubj').classList.toggle('is-bad', !bor);
+    });
+  });
+  const nt = $('appNote');
+  if(nt) nt.addEventListener('input', function(){
+    $('f_appNote').classList.toggle('is-bad', !nt.value.trim());
+  });
+
+  const send = $('appSend');
+  if(send) send.addEventListener('click', yuborArizani);
+}
+
+/* formani tekshirish va saqlash */
+function yuborArizani(){
+  const turi = $('appType').value;
+  const izoh = $('appNote').value.trim();
+  const belgilangan = Array.prototype.slice.call(
+    document.querySelectorAll('[data-fan]')
+  ).filter(function(c){ return c.checked; });
+
+  /* tekshirish */
+  let xato = false;
+  $('f_appSubj').classList.toggle('is-bad', !belgilangan.length);
+  if(!belgilangan.length) xato = true;
+  $('f_appNote').classList.toggle('is-bad', !izoh);
+  if(!izoh) xato = true;
+
+  if(xato){ haptic(20); return; }
+
+  /* tanlangan fanlar */
+  const fanlar = belgilangan.map(function(c){ return AKADEMIK[+c.dataset.fan]; });
+  const kredit = fanlar.length * 5;   /* har fan 5 kredit */
+
+  const turNomi = (ARIZA_TURLARI.filter(function(x){ return x.k === turi; })[0] || {}).nom;
+
+  const yangi = {
+    id:      'usr' + Date.now(),
+    yangimi: true,                    /* foydalanuvchi yuborgan — dekanat ko'radi */
+    turi:    turi,
+    t:       turNomi ? turNomi() : turi,
+    fanlar:  fanlar.length,
+    kredit:  kredit,
+    holat:   'wait',
+    holatT:  t('stWait'),
+    vaqt:    hozirVaqt(),
+    x:       t('stWaitX'),
+    izoh:    izoh,
+    talaba:  USER.name,
+    guruh:   USER.group,
+    files:   [],                      /* javob kelguncha yuklanadigan fayl yo'q */
+    fanlarRoyxat: fanlar.map(function(f){
+      return {t:f.fan, m:f.sem + ' · 5 kredit · ' + f.sabab};
+    })
+  };
+
+  const list = arizaOqi();
+  list.push(yangi);
+  arizaYoz(list);
+
+  closeModal();
+  haptic(16);
+
+  /* yuborilgan turga o'tib, ro'yxatni yangilaymiz */
+  debtFilter = turi;
+  renderDebt();
+  toast(t('appSent'));
+}
+
+/* =========================================================
+   11.6) DEKANAT (ADMIN) PANELI
+   Kirish: login ekranida DEKANAT_KODI kiritiladi.
+   Bu yerda kelgan arizalar ko'riladi va qabul/rad qilinadi.
+   ========================================================= */
+let adminMode = false;
+try{ adminMode = localStorage.getItem('ms.admin') === '1'; }catch(e){}
+
+function adminHTML(){
+  const list = arizaOqi();
+
+  let h = '<div class="adminbar">'+
+    '<span class="adminbar__t">'+esc(t('adminTitle'))+'</span>'+
+    '<button class="linkbtn" id="adminExit">'+esc(t('exitAdmin'))+'</button>'+
+  '</div>';
+
+  if(!list.length){
+    h += noResultHTML(t('notFound'), t('adminNo'));
+    return h;
+  }
+
+  h += '<div class="list">' + list.slice().reverse().map(function(a){
+    const dot = a.holat === 'ok' ? '' : a.holat === 'wait' ? ' appc__dot--wait' : ' appc__dot--no';
+
+    /* javob berilmagan bo'lsa — tugmalar chiqadi */
+    const btns = a.holat === 'wait'
+      ? '<div class="appc__btns">'+
+          '<button class="appc__btn appc__btn--ghost" data-rej="'+esc(a.id)+'">'+esc(t('reject'))+'</button>'+
+          '<button class="appc__btn" data-acc="'+esc(a.id)+'">'+esc(t('accept'))+'</button>'+
+        '</div>'
+      : '<div class="appc__done">'+esc(holatMatn(a.holat))+' · '+esc(a.vaqt)+'</div>';
+
+    return '<article class="appc">'+
+      '<div class="appc__head">'+
+        '<span class="appc__dot'+dot+'"></span>'+
+        '<span class="appc__t">'+esc(a.t)+'</span>'+
+      '</div>'+
+      '<p class="appc__who">'+esc(t('fromStudent'))+': <b>'+esc(a.talaba || '-')+'</b>'+
+        (a.guruh ? ' · '+esc(a.guruh) : '')+'</p>'+
+      '<button class="appc__meta" data-appsub="'+esc(a.id)+'">'+
+        '<span class="appc__mi">'+esc(t('subjects2'))+':<b>'+a.fanlar+'</b></span>'+
+        '<span class="appc__mi appc__mi--r">'+esc(t('credits'))+':<b>'+a.kredit+'</b></span>'+
+        '<svg class="appc__chev" viewBox="0 0 8 14"><path d="M1 1l6 6-6 6"/></svg>'+
+      '</button>'+
+      (a.izoh ? '<p class="appc__note"><b>'+esc(t('appNote'))+':</b> '+esc(a.izoh)+'</p>' : '')+
+      btns+
+    '</article>';
+  }).join('') + '</div>';
+
+  return h;
+}
+
+/* arizaga javob berish: 'ok' yoki 'no' */
+function javobBer(id, holat, sabab){
+  const list = arizaOqi();
+  const a = list.filter(function(x){ return x.id === id; })[0];
+  if(!a) return;
+
+  a.holat  = holat;
+  a.holatT = holatMatn(holat);
+  a.vaqt   = hozirVaqt();
+
+  if(holat === 'ok'){
+    a.x = t('appApproved');
+    a.files = ['ariza', 'shartnoma'];   /* qabul qilinsa hujjat beriladi */
+  }else{
+    a.x = sabab ? t('rejectWhy') + ': ' + sabab : t('appRejected');
+    a.files = [];
+  }
+
+  arizaYoz(list);
+  haptic(16);
+  renderAdmin();
+  toast(holat === 'ok' ? t('decidedOk') : t('decidedNo'));
+}
+
+/* dekanat panelini ochish */
+function openAdmin(){
+  haptic();
+  curPage = 'admin';
+  detailTitle.textContent = t('adminMode');
+  $('refBtn').hidden = true;
+  renderAdmin();
+
+  detail.classList.add('is-open');
+  detail.setAttribute('aria-hidden','false');
+  detail.scrollTop = 0;
+
+  if(!detailOpen){
+    detailOpen = true;
+    history.pushState({detail:true}, '');
+  }
+}
+
+function renderAdmin(){
+  detailBody.innerHTML = adminHTML();
+
+  /* qabul qilish */
+  detailBody.querySelectorAll('[data-acc]').forEach(function(b){
+    b.addEventListener('click', function(){ javobBer(b.dataset.acc, 'ok'); });
+  });
+
+  /* rad etish — sababi so'raladi */
+  detailBody.querySelectorAll('[data-rej]').forEach(function(b){
+    b.addEventListener('click', function(){
+      const id = b.dataset.rej;
+      haptic();
+      openModal(t('reject'), '', 
+        '<div class="field" id="f_rejWhy"><label for="rejWhy">'+esc(t('rejectWhy'))+'</label>'+
+        '<textarea id="rejWhy" rows="3" placeholder="'+esc(t('rejectPh'))+'"></textarea>'+
+        '<div class="err">'+esc(t('writeNote'))+'</div></div>'+
+        '<button class="btn btn--danger" id="rejOk">'+esc(t('reject'))+'</button>'+
+        '<button class="btn btn--ghost" id="rejNo">'+esc(t('close'))+'</button>');
+
+      const no = $('rejNo');
+      if(no) no.addEventListener('click', closeModal);
+
+      const w0 = $('rejWhy');
+      if(w0) w0.addEventListener('input', function(){
+        $('f_rejWhy').classList.toggle('is-bad', !w0.value.trim());
+      });
+
+      const ok = $('rejOk');
+      if(ok) ok.addEventListener('click', function(){
+        const w = $('rejWhy').value.trim();
+        if(!w){ $('f_rejWhy').classList.add('is-bad'); haptic(20); return; }
+        closeModal();
+        javobBer(id, 'no', w);
+      });
+    });
+  });
+
+  /* fanlar ro'yxati */
+  detailBody.querySelectorAll('[data-appsub]').forEach(function(b){
+    b.addEventListener('click', function(){
+      const a = arizaOqi().filter(function(x){ return x.id === b.dataset.appsub; })[0];
+      if(!a) return;
+      haptic();
+      openModal(a.t, t('subjects2') + ': ' + a.fanlar + ' · ' + t('credits') + ': ' + a.kredit,
+        '<div class="list" style="padding:0">' +
+          (a.fanlarRoyxat || []).map(rowHTML).join('') +
+        '</div>' +
+        '<button class="btn btn--ghost" id="subClose">' + esc(t('close')) + '</button>');
+      const c = $('subClose');
+      if(c) c.addEventListener('click', closeModal);
+    });
+  });
+
+  /* dekanat rejimidan chiqish */
+  const ex = $('adminExit');
+  if(ex) ex.addEventListener('click', function(){
+    adminMode = false;
+    try{ localStorage.removeItem('ms.admin'); }catch(e){}
+    haptic();
+    closeDetail();
+    buildStrip();
+  });
+}
+
+/* =========================================================
+   11.7) QARZDORLIK SAHIFASI YORDAMCHI
+   ========================================================= */
 /* qarzdorlik sahifasini ochish */
 function openDebt(){
   haptic();
+  curPage = 'debt';
   detailTitle.textContent = t('debtTitle');
   $('refBtn').hidden = false;
   renderDebt();
@@ -1170,6 +2432,10 @@ function openDebt(){
 /* ichini qayta chizish + tugmalarni bog'lash */
 function renderDebt(){
   detailBody.innerHTML = debtHTML();
+
+  /* yangi ariza tugmasi */
+  const nb = $('newAppBtn');
+  if(nb) nb.addEventListener('click', openNewApp);
 
   detailBody.querySelectorAll('[data-dtab]').forEach(function(b){
     b.addEventListener('click', function(){
@@ -1220,14 +2486,1206 @@ function renderDebt(){
 
 
 
-/* qarzdorlik sahifasini yangilash */
+/* =========================================================
+   11.6) BAHOLAR SAHIFASI
+   ========================================================= */
+let gradeSem  = curSem;      /* tanlangan semestr: raqam yoki 'all' */
+let gradeOpen = null;        /* yoyilgan fan indeksi */
+
+/* nazorat turi qatori: JN / ON / YN */
+function gCtrlHTML(label, val, max){
+  const pct = Math.round(val / max * 100);
+  const cls = pct < 60 ? 'is-bad' : pct < 71 ? 'is-low' : '';
+  return '<div class="gctrl">'+
+    '<div class="gctrl__t">'+esc(label)+'</div>'+
+    '<div class="gctrl__bar"><i class="'+cls+'" style="width:'+pct+'%"></i></div>'+
+    '<div class="gctrl__v">'+val+'<small>/'+max+'</small></div>'+
+  '</div>';
+}
+
+/* bitta fan kartasi */
+function gradeCardHTML(x, i){
+  const jami = gradeSum(x);
+  const g    = gradeOf(jami);
+  const tone = gradeTone(g);
+  const open = gradeOpen === i;
+
+  return '<button class="gcard'+(open ? ' is-open' : '')+'" data-gcard="'+i+'" aria-expanded="'+(open ? 'true' : 'false')+'">'+
+    '<span class="gcard__head">'+
+      '<span class="gcard__mark gcard__mark--'+tone+'">'+g+'</span>'+
+      '<span class="gcard__body">'+
+        '<span class="gcard__t">'+esc(td(x.t))+'</span>'+
+        '<span class="gcard__m">'+x.kredit+' '+esc(t('gCredits'))+' \u00b7 '+esc(gradeName(g))+'</span>'+
+      '</span>'+
+      '<span class="gcard__sum">'+jami+'<small>/100</small></span>'+
+      '<svg class="gcard__caret" viewBox="0 0 14 9"><path d="M1 1l6 6 6-6"/></svg>'+
+    '</span>'+
+    '<span class="gcard__bar"><i class="is-'+tone+'" style="width:'+jami+'%"></i></span>'+
+    '<span class="gcard__more">'+
+      '<span class="gcard__more-t">'+esc(t('gDetail'))+'</span>'+
+      gCtrlHTML(t('gJNFull'), x.jn, G_MAX.jn)+
+      gCtrlHTML(t('gONFull'), x.on, G_MAX.on)+
+      gCtrlHTML(t('gYNFull'), x.yn, G_MAX.yn)+
+    '</span>'+
+  '</button>';
+}
+
+function gradesHTML(){
+  /* semestr tanlash */
+  let h = '<div class="filters"><div class="sel"><select id="gradeSemSel">'+
+    '<option value="all"'+(gradeSem === 'all' ? ' selected' : '')+'>'+esc(t('allSem'))+'</option>'+
+    SEMESTERS.map(function(n){
+      return '<option value="'+n+'"'+(gradeSem === n ? ' selected' : '')+'>'+
+             n+'-'+esc(t('semLabel'))+'</option>';
+    }).join('')+
+  '</select></div></div>';
+
+  const rows = gradesOf(gradeSem);
+
+  if(!rows.length){
+    h += noResultHTML(t('gNoData'), t('gNoDataX'));
+    return h;
+  }
+
+  /* o'rtacha ball (GPA) */
+  const gpa  = gpaOf(rows);
+  const g5   = Math.round(gpa * 100) / 100;
+  const tone = gradeTone(Math.round(gpa));
+  const pass = rows.filter(function(x){ return gradeOf(gradeSum(x)) > 2; }).length;
+  const fail = rows.length - pass;
+
+  h += '<div class="gpa gpa--'+tone+'">'+
+    '<div class="gpa__label">'+esc(t('gpaLabel'))+'</div>'+
+    '<div class="gpa__val">'+g5.toFixed(2)+'<small>'+esc(t('gpaOf'))+'</small></div>'+
+    '<div class="gpa__ring" style="--p:'+Math.round(gpa / 5 * 100)+'"></div>'+
+    '<div class="gpa__stats">'+
+      '<span><b>'+rows.length+'</b>'+esc(t('gTotal'))+'</span>'+
+      '<span><b class="is-ok">'+pass+'</b>'+esc(t('gPassed'))+'</span>'+
+      (fail ? '<span><b class="is-bad">'+fail+'</b>'+esc(t('gFailed'))+'</span>' : '')+
+    '</div>'+
+  '</div>';
+
+  /* eng yuqori / eng past */
+  const sorted = rows.slice().sort(function(a, b){ return gradeSum(b) - gradeSum(a); });
+  if(sorted.length > 1){
+    const top = sorted[0], low = sorted[sorted.length - 1];
+    h += '<div class="gtop">'+
+      '<div class="gtop__c"><div class="gtop__l">'+esc(t('gBest'))+'</div>'+
+        '<div class="gtop__t">'+esc(top.t)+'</div>'+
+        '<div class="gtop__v is-ok">'+gradeSum(top)+'</div></div>'+
+      '<div class="gtop__c"><div class="gtop__l">'+esc(t('gWorst'))+'</div>'+
+        '<div class="gtop__t">'+esc(low.t)+'</div>'+
+        '<div class="gtop__v'+(gradeOf(gradeSum(low)) < 3 ? ' is-bad' : '')+'">'+gradeSum(low)+'</div></div>'+
+    '</div>';
+  }
+
+  /* fanlar ro'yxati — eng yuqori balldan boshlab */
+  h += '<div class="list">' + sorted.map(function(x){
+    return gradeCardHTML(x, GRADES.indexOf(x));
+  }).join('') + '</div>';
+
+  return h;
+}
+
+function openGrades(){
+  haptic();
+  curPage = 'grades';
+  detailTitle.textContent = t('gradesTitle');
+  $('refBtn').hidden = false;
+  renderGrades();
+
+  detail.classList.add('is-open');
+  detail.setAttribute('aria-hidden','false');
+  detail.scrollTop = 0;
+
+  if(!detailOpen){
+    detailOpen = true;
+    history.pushState({detail:true}, '');
+  }
+}
+
+function renderGrades(){
+  detailBody.innerHTML = gradesHTML();
+
+  const sel = $('gradeSemSel');
+  if(sel) sel.addEventListener('change', function(){
+    gradeSem  = sel.value === 'all' ? 'all' : +sel.value;
+    gradeOpen = null;
+    haptic();
+    renderGrades();
+  });
+
+  /* fan kartasini yoyish/yig'ish */
+  detailBody.querySelectorAll('[data-gcard]').forEach(function(b){
+    b.addEventListener('click', function(){
+      const i = +b.dataset.gcard;
+      gradeOpen = (gradeOpen === i) ? null : i;
+      haptic();
+      renderGrades();
+    });
+  });
+
+  /* barlarni animatsiya bilan chizish */
+  requestAnimationFrame(function(){
+    detailBody.querySelectorAll('.gcard__bar i, .gctrl__bar i').forEach(function(el){
+      const w = el.style.width;
+      el.style.width = '0';
+      requestAnimationFrame(function(){ el.style.width = w; });
+    });
+  });
+}
+
+/* =========================================================
+   11.65) DARS JADVALI SAHIFASI
+   ========================================================= */
+
+/* hafta sarlavhasi: "7 – 13 sentabr" */
+function weekLabel(mon){
+  const L   = I18N[LANG];
+  const end = new Date(mon.getFullYear(), mon.getMonth(), mon.getDate() + 6);
+  const m1  = L.months[mon.getMonth()], m2 = L.months[end.getMonth()];
+
+  return mon.getMonth() === end.getMonth()
+    ? mon.getDate() + ' \u2013 ' + end.getDate() + ' ' + m2
+    : mon.getDate() + ' ' + m1 + ' \u2013 ' + end.getDate() + ' ' + m2;
+}
+
+/* bitta dars qatori */
+function schedLessonHTML(l, isToday){
+  const now  = new Date();
+  const mins = now.getHours()*60 + now.getMinutes();
+  const s = toMin(l.from), e = toMin(l.to);
+
+  let cls = '', tag = '';
+  if(isToday){
+    if(mins >= s && mins <= e){
+      cls = ' slot--now';
+      tag = '<span class="live"><i></i>'+esc(t('now'))+'</span>';
+    } else if(mins > e){
+      cls = ' slot--done';
+    }
+  }
+
+  return '<button class="slot'+cls+'" data-lsn="'+SCHEDULE.indexOf(l)+'">'+
+    '<span class="slot__time">'+
+      '<span class="slot__h">'+esc(l.from)+'</span>'+
+      '<span class="slot__to">'+esc(l.to)+'</span>'+
+    '</span>'+
+    '<span class="slot__body">'+
+      '<span class="slot__t">'+esc(td(l.t))+tag+'</span>'+
+      '<span class="slot__s">'+esc(td(l.room))+' \u00b7 '+esc(td(l.type))+'</span>'+
+      '<span class="slot__x">'+esc(l.teacher)+'</span>'+
+    '</span>'+
+    '<svg class="slot__chev" viewBox="0 0 8 14"><path d="M1 1l6 6-6 6"/></svg>'+
+  '</button>';
+}
+
+/* bitta kun bloki */
+function schedDayHTML(d){
+  const L     = I18N[LANG];
+  const iso   = isoDate(d);
+  const rows  = lessonsOn(iso);
+  const today = iso === todayIso();
+  const wd    = (d.getDay() + 6) % 7;          /* 0 = dushanba */
+  const off   = wd === 6;                       /* yakshanba */
+
+  /* darssiz ish kunini ham ko'rsatamiz, yakshanbani faqat dars bo'lsa */
+  if(!rows.length && off) return '';
+
+  return '<section class="day'+(today ? ' day--today' : '')+'">'+
+    '<div class="day__head">'+
+      '<div class="day__name">'+esc(L.days[d.getDay()])+
+        (today ? '<span class="day__now">'+esc(t('todayWord'))+'</span>' : '')+
+      '</div>'+
+      '<div class="day__date">'+d.getDate()+' '+esc(L.months[d.getMonth()])+
+        (rows.length ? ' \u00b7 ' + rows.length + ' ' + esc(t('weekLessons')) : '')+
+      '</div>'+
+    '</div>'+
+    (rows.length
+      ? '<div class="day__list">' + rows.map(function(l){
+          return schedLessonHTML(l, today);
+        }).join('') + '</div>'
+      : '<div class="day__off">'+esc(off ? t('freeDay') : t('noDayLessons'))+'</div>')+
+  '</section>';
+}
+
+function schedHTML(){
+  const mon = weekStart;
+  const cur = isoDate(mondayOf(new Date()));
+  const isCur = isoDate(mon) === cur;
+
+  /* hafta boshqaruvi */
+  let h = '<div class="wnav">'+
+    '<button class="wnav__b" data-week="-1" aria-label="'+esc(t('prevWeek'))+'">'+
+      '<svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>'+
+    '</button>'+
+    '<div class="wnav__mid">'+
+      '<div class="wnav__t">'+esc(weekLabel(mon))+'</div>'+
+      (isCur ? '<div class="wnav__s">'+esc(t('thisWeek'))+'</div>' : '')+
+    '</div>'+
+    '<button class="wnav__b" data-week="1" aria-label="'+esc(t('nextWeek'))+'">'+
+      '<svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>'+
+    '</button>'+
+  '</div>';
+
+  /* joriy haftaga qaytish tugmasi */
+  if(!isCur){
+    h += '<div class="wback"><button id="weekNow">'+
+         esc(t('thisWeek'))+'</button></div>';
+  }
+
+  /* hafta kunlari */
+  let days = '', total = 0;
+  for(let i = 0; i < 7; i++){
+    const d = new Date(mon.getFullYear(), mon.getMonth(), mon.getDate() + i);
+    total += lessonsOn(isoDate(d)).length;
+    days  += schedDayHTML(d);
+  }
+
+  if(!total) return h + noResultHTML(t('notFound'), t('noLessons'));
+
+  return h + days;
+}
+
+/* dars haqida to'liq ma'lumot */
+function openLesson(i){
+  const l = SCHEDULE[i];
+  if(!l) return;
+  haptic();
+
+  const L    = I18N[LANG];
+  const d    = new Date(l.date + 'T00:00:00');
+  const sana = d.getDate() + ' ' + L.months[d.getMonth()] + ', ' + L.days[d.getDay()].toLowerCase();
+  const dur  = toMin(l.to) - toMin(l.from);
+
+  /* holat: hozir / tugagan / boshlanishiga qancha qoldi */
+  let holat = '';
+  if(l.date === todayIso()){
+    const now  = new Date();
+    const mins = now.getHours()*60 + now.getMinutes();
+    const s2 = toMin(l.from), e2 = toMin(l.to);
+
+    if(mins >= s2 && mins <= e2){
+      holat = '<div class="lsn-state lsn-state--now">'+
+        '<span class="live"><i></i></span>'+esc(t('lsnNow'))+'</div>';
+    } else if(mins > e2){
+      holat = '<div class="lsn-state lsn-state--done">'+esc(t('lsnDone'))+'</div>';
+    } else {
+      const qoldi = s2 - mins;
+      const soat  = Math.floor(qoldi / 60), daq = qoldi % 60;
+      const matn  = (soat ? soat + ' ' + t('attHours') + ' ' : '') + daq + ' ' + t('lsnMin');
+      holat = '<div class="lsn-state">'+esc(t('lsnSoon'))+' '+esc(matn)+'</div>';
+    }
+  }
+
+  const html = holat +
+    '<div class="dt__facts">'+
+      factRow(t('lsnDate'), sana)+
+      factRow(t('lsnTime'), l.from + ' \u2013 ' + l.to)+
+      factRow(t('lsnDur'),  dur + ' ' + t('lsnMin'))+
+      factRow(t('lsnRoom'), td(l.room))+
+      factRow(t('lsnType'), td(l.type))+
+      factRow(t('teacher'), l.teacher)+
+    '</div>'+
+    '<button class="btn btn--ghost" id="lsnClose">'+esc(t('close'))+'</button>';
+
+  openModal(td(l.t), td(l.room) + ' \u00b7 ' + td(l.type), html);
+  const c = $('lsnClose');
+  if(c) c.addEventListener('click', closeModal);
+}
+
+function openSchedule(){
+  haptic();
+  curPage = 'sched';
+  if(!weekStart) weekStart = mondayOf(new Date());
+  detailTitle.textContent = t('schedTitle');
+  $('refBtn').hidden = false;
+  renderSched();
+
+  detail.classList.add('is-open');
+  detail.setAttribute('aria-hidden','false');
+  detail.scrollTop = 0;
+
+  if(!detailOpen){
+    detailOpen = true;
+    history.pushState({detail:true}, '');
+  }
+}
+
+function renderSched(){
+  detailBody.innerHTML = schedHTML();
+
+  /* oldingi / keyingi hafta */
+  detailBody.querySelectorAll('[data-week]').forEach(function(b){
+    b.addEventListener('click', function(){
+      const step = +b.dataset.week;
+      weekStart = new Date(weekStart.getFullYear(), weekStart.getMonth(),
+                           weekStart.getDate() + step * 7);
+      haptic();
+      renderSched();
+      detail.scrollTop = 0;
+    });
+  });
+
+  /* dars tafsiloti */
+  detailBody.querySelectorAll('[data-lsn]').forEach(function(b){
+    b.addEventListener('click', function(){ openLesson(+b.dataset.lsn); });
+  });
+
+  /* joriy haftaga qaytish */
+  const wn = $('weekNow');
+  if(wn) wn.addEventListener('click', function(){
+    weekStart = mondayOf(new Date());
+    haptic();
+    renderSched();
+    detail.scrollTop = 0;
+  });
+}
+
+/* =========================================================
+   11.64) REZYUME SAHIFASI
+   ========================================================= */
+
+/* ko'nikmalar — mahorat darslari va maqolalardan yig'iladi */
+/* ---------- REZYUME MA'LUMOTLARI ----------
+   Talabaning haqiqiy rezyumesi. Backend: GET /api/rezyume */
+/* ---------- REZYUMELAR ----------
+   Har bir talabaning o'z rezyumesi (kirish kodi bo'yicha).
+   Rezyume yaratmagan talabada yozuv bo'lmaydi — bo'sh holat ko'rsatiladi.
+   Backend: GET /api/rezyume (token bo'yicha) */
+const CV_BAZA = {
+
+  /* Aliyev Jasur */
+  "2024":{
+    rol:"Python Backend Developer",
+    shahar:"Samarqand, O'zbekiston",
+    github:"github.com/j-aliyev",
+    haqida:"cvAboutText",
+
+    skills:[
+      {g:"cvLang",  v:"Python, SQL"},
+      {g:"cvFw",    v:"Django, Django REST Framework"},
+      {g:"cvDb",    v:"PostgreSQL, SQLite"},
+      {g:"cvTools", v:"Git, GitHub, Postman, Swagger / OpenAPI"},
+      {g:"cvOther", v:"REST API loyihalash, Token autentifikatsiya, CRM tizimlari"}
+    ],
+
+    ish:[
+      {t:"Texnik mutaxassis", org:"IT Park Samarqand", vaqt:"2025 — hozirgacha",
+       nuqta:[
+         "Kuniga 100+ foydalanuvchidan kelgan texnik so'rovlarni hal qilish",
+         "CRM tizimida xodimlar ma'lumotlarini yuritish va hisobotlar tayyorlash",
+         "Ma'lumotlar bazasidan SQL so'rovlar orqali ma'lumot olish va nomuvofiqliklarni aniqlash"
+       ]}
+    ],
+
+    loyiha:[
+      {t:"Blog API — Django REST Framework",
+       x:"Postlar va kitoblar uchun to'liq CRUD REST API. Token asosidagi ro'yxatdan o'tish va "+
+         "autentifikatsiya, faqat muallif tahrirlay oladigan ruxsat qatlami, izohlar uchun endpointlar "+
+         "va mashhur postlar endpointi. Swagger UI va ReDoc bilan hujjatlashtirilgan.",
+       stek:"Python · Django · DRF · SQLite · Swagger"},
+
+      {t:"O'quv loyihalari to'plami",
+       x:"Iteratorlar va kontekst menejerlari bo'yicha amaliy Python mashqlari, bitta fayldan iborat "+
+         "Django ilovasi hamda foydalanuvchilar va buyurtmalar jadvallari bilan PostgreSQL sxemasi.",
+       stek:"github.com/j-aliyev/python-praktika"}
+    ],
+
+    tillar:[
+      {t:"O'zbek", d:"cvNative"},
+      {t:"Rus",    d:"cvFluent"},
+      {t:"Ingliz", d:"cvBasic"}
+    ]
+  },
+
+  /* Yusupova Nilufar */
+  "3050":{
+    rol:"Frontend Developer",
+    shahar:"Samarqand, O'zbekiston",
+    github:"github.com/n-yusupova",
+    haqida:"cvAbout2",
+
+    skills:[
+      {g:"cvLang",  v:"JavaScript, TypeScript"},
+      {g:"cvFw",    v:"React, Vue"},
+      {g:"cvDb",    v:"Firebase"},
+      {g:"cvTools", v:"Git, Figma, Vite"},
+      {g:"cvOther", v:"Responsive dizayn, REST API integratsiya"}
+    ],
+
+    ish:[],
+
+    loyiha:[
+      {t:"Talabalar portali interfeysi",
+       x:"Universitet talabalari uchun mobil interfeys. Dars jadvali, baholar va e'lonlar bo'limlari.",
+       stek:"React · TypeScript · Vite"}
+    ],
+
+    tillar:[
+      {t:"O'zbek", d:"cvNative"},
+      {t:"Rus",    d:"cvFluent"},
+      {t:"Ingliz", d:"cvFluent"}
+    ]
+  },
+
+  /* Dusmurodov Lazizjon */
+  "1111":{
+    rol:"Frontend Developer",
+    shahar:"Samarqand, O'zbekiston",
+    github:"github.com/lazizjondusmurodov-create",
+    haqida:"cvAbout3",
+
+    skills:[
+      {g:"cvLang",  v:"JavaScript, HTML, CSS"},
+      {g:"cvFw",    v:"Vanilla JS, Sass"},
+      {g:"cvDb",    v:"localStorage, JSON"},
+      {g:"cvTools", v:"Git, GitHub, VS Code"},
+      {g:"cvOther", v:"Mobil interfeys, Responsive dizayn, i18n (uz/ru/en)"}
+    ],
+
+    ish:[],
+
+    loyiha:[
+      {t:"MyStudent — talaba kabineti ilovasi",
+       x:"Talabalar uchun mobil veb ilova: dars jadvali, davomat, baholar, kutubxona va karyera "+
+         "bo'limlari. Uch tilli interfeys (o'zbek, rus, ingliz), swipe bilan tab almashtirish va "+
+         "pull-to-refresh. Framework'siz, sof JavaScript'da yozilgan.",
+       stek:"JavaScript · HTML · CSS"}
+    ],
+
+    tillar:[
+      {t:"O'zbek", d:"cvNative"},
+      {t:"Rus",    d:"cvBasic"},
+      {t:"Ingliz", d:"cvBasic"}
+    ]
+  }
+
+  /* "7788" — Rahmonov Sardor rezyume yaratmagan (bo'sh holat namunasi) */
+};
+
+/* joriy talabaning rezyumesi (bo'lmasa null) */
+function cvOf(){
+  return CV_BAZA[USER.kod] || null;
+}
+
+
+function cvHTML(){
+  const CV = cvOf();
+
+  /* rezyume yaratilmagan bo'lsa */
+  if(!CV){
+    return noResultHTML(t('cvNone'), t('cvNoneX')) +
+      '<div class="newapp"><button class="btn btn--primary" id="cvNew">' +
+      esc(t('cvCreate')) + '</button></div>';
+  }
+
+  const gpa  = gpaOf(gradesOf('all'));
+  const yut  = (CAREER.yutuq   && CAREER.yutuq.items)   || [];
+  const kurs = (CAREER.mahorat && CAREER.mahorat.items) || [];
+  const maq  = (CAREER.maqola  && CAREER.maqola.items)  || [];
+
+  /* sarlavha */
+  let h = '<div class="cv">'+
+    '<div class="cv__head">'+
+      '<div class="cv__ava">'+esc(initials(USER.name))+'</div>'+
+      '<div class="cv__hi">'+
+        '<div class="cv__name">'+esc(USER.name)+'</div>'+
+        '<div class="cv__role">'+esc(CV.rol)+'</div>'+
+        '<div class="cv__sub">'+esc(CV.shahar)+'</div>'+
+      '</div>'+
+    '</div>'+
+
+    '<div class="cv__links">'+
+      '<span class="cv__link"><svg viewBox="0 0 24 24"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .3 1.9.6 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.5 2.8.6a2 2 0 0 1 1.7 2z"/></svg>'+
+      esc(USER.phone)+'</span>'+
+      '<span class="cv__link"><svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg>'+
+      esc(USER.email)+'</span>'+
+      '<span class="cv__link"><svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.9a3.4 3.4 0 0 0-.9-2.6c3-.3 6.2-1.5 6.2-6.7A5.2 5.2 0 0 0 19.9 5a4.9 4.9 0 0 0-.1-3.6s-1.1-.3-3.7 1.4a12.6 12.6 0 0 0-6.6 0C6.9 1.1 5.8 1.4 5.8 1.4A4.9 4.9 0 0 0 5.7 5a5.2 5.2 0 0 0-1.4 3.6c0 5.2 3.2 6.4 6.2 6.7a3.4 3.4 0 0 0-.9 2.6V22"/></svg>'+
+      esc(CV.github)+'</span>'+
+    '</div>'+
+
+    '<div class="cv__gpa">'+
+      '<span class="cv__gpav">'+(Math.round(gpa * 100) / 100).toFixed(2)+'<small>/5</small></span>'+
+      '<span class="cv__gpal">'+esc(t('cvGpa'))+'</span>'+
+    '</div>'+
+  '</div>';
+
+  /* qisqacha */
+  h += '<h2 class="eyebrow">'+esc(t('cvAbout'))+'</h2>'+
+    '<div class="cvsec"><p class="cvsec__p">'+esc(t(CV.haqida))+'</p></div>';
+
+  /* ko'nikmalar — guruhlar bo'yicha */
+  h += '<h2 class="eyebrow">'+esc(t('cvSkills'))+'</h2>'+
+    '<div class="cvsec">' + CV.skills.map(function(k){
+      return '<div class="cvsk">'+
+        '<span class="cvsk__g">'+esc(t(k.g))+'</span>'+
+        '<span class="cvsk__v">'+esc(k.v)+'</span>'+
+      '</div>';
+    }).join('') + '</div>';
+
+  /* ish tajribasi */
+  if(CV.ish.length){
+    h += '<h2 class="eyebrow">'+esc(t('cvExp'))+'</h2>'+
+      '<div class="cvsec">' + CV.ish.map(function(x){
+        return '<div class="cvrow">'+
+          '<div class="cvrow__top">'+
+            '<span class="cvrow__t">'+esc(x.t)+'</span>'+
+            '<span class="cvrow__d">'+esc(x.vaqt)+'</span>'+
+          '</div>'+
+          '<div class="cvrow__m">'+esc(x.org)+'</div>'+
+          '<ul class="cvlist">' + x.nuqta.map(function(n){
+            return '<li>'+esc(n)+'</li>';
+          }).join('') + '</ul>'+
+        '</div>';
+      }).join('') + '</div>';
+  }
+
+  /* loyihalar */
+  if(CV.loyiha.length){
+    h += '<h2 class="eyebrow">'+esc(t('cvProjects'))+'</h2>'+
+      '<div class="cvsec">' + CV.loyiha.map(function(x){
+        return '<div class="cvrow">'+
+          '<div class="cvrow__t">'+esc(x.t)+'</div>'+
+          '<p class="cvrow__x">'+esc(x.x)+'</p>'+
+          '<div class="cvrow__stek">'+esc(x.stek)+'</div>'+
+        '</div>';
+      }).join('') + '</div>';
+  }
+
+  /* ta'lim */
+  h += '<h2 class="eyebrow">'+esc(t('cvEdu'))+'</h2>'+
+    '<div class="cvsec">'+
+      '<div class="cvrow">'+
+        '<div class="cvrow__top">'+
+          '<span class="cvrow__t">'+esc(USER.faculty)+'</span>'+
+          '<span class="cvrow__d">'+esc(td(USER.status))+'</span>'+
+        '</div>'+
+        '<div class="cvrow__m">'+esc(td(USER.form))+' · '+esc(td(USER.course))+' · '+esc(USER.group)+'</div>'+
+      '</div>'+
+    '</div>';
+
+  /* yutuqlar */
+  if(yut.length){
+    h += '<h2 class="eyebrow">'+esc(t('cvAwards'))+'</h2>'+
+      '<div class="cvsec">' + yut.map(function(x){
+        return '<div class="cvrow">'+
+          '<div class="cvrow__t">'+esc(x.t)+'</div>'+
+          '<div class="cvrow__m">'+esc(x.m)+'</div>'+
+        '</div>';
+      }).join('') + '</div>';
+  }
+
+  /* tugatilgan kurslar */
+  const bitgan = kurs.filter(function(x){ return /yakun|заверш|complet/i.test(x.b || ''); });
+  if(bitgan.length){
+    h += '<h2 class="eyebrow">'+esc(t('cvCourses'))+'</h2>'+
+      '<div class="cvsec">' + bitgan.map(function(x){
+        return '<div class="cvrow">'+
+          '<div class="cvrow__t">'+esc(x.t)+'</div>'+
+          '<div class="cvrow__m">'+esc(x.m)+'</div>'+
+        '</div>';
+      }).join('') + '</div>';
+  }
+
+  /* maqolalar */
+  if(maq.length){
+    h += '<h2 class="eyebrow">'+esc(t('cvPapers'))+'</h2>'+
+      '<div class="cvsec">' + maq.map(function(x){
+        return '<div class="cvrow">'+
+          '<div class="cvrow__t">'+esc(x.t)+'</div>'+
+          '<div class="cvrow__m">'+esc(x.m)+'</div>'+
+        '</div>';
+      }).join('') + '</div>';
+  }
+
+  /* tillar */
+  h += '<h2 class="eyebrow">'+esc(t('cvLangs'))+'</h2>'+
+    '<div class="cvsec"><div class="cvtags">' + CV.tillar.map(function(x){
+      return '<span class="cvtag">'+esc(x.t)+' · '+esc(t(x.d))+'</span>';
+    }).join('') + '</div></div>';
+
+  /* tugmalar */
+  h += '<div class="cvbtns">'+
+    '<button class="btn btn--primary" id="cvDl">'+esc(t('cvDownload'))+'</button>'+
+    '<button class="btn btn--ghost" id="cvShare">'+esc(t('cvShare'))+'</button>'+
+  '</div>'+
+  '<p class="cvnote">'+esc(t('cvAutoNote'))+'</p>';
+
+  return h;
+}
+
+function openCv(){
+  haptic();
+  curPage = 'cv';
+  detailTitle.textContent = t('cvTitle');
+  $('refBtn').hidden = true;
+  renderCv();
+
+  detail.classList.add('is-open');
+  detail.setAttribute('aria-hidden','false');
+  detail.scrollTop = 0;
+
+  if(!detailOpen){
+    detailOpen = true;
+    history.pushState({detail:true}, '');
+  }
+}
+
+function renderCv(){
+  detailBody.innerHTML = cvHTML();
+
+  const nw = $('cvNew');
+  if(nw) nw.addEventListener('click', function(){
+    haptic(12);
+    toast(t('dlSoon'));
+  });
+
+  const d = $('cvDl');
+  if(d) d.addEventListener('click', function(){ haptic(12); toast(t('dlSoon')); });
+
+  const sh = $('cvShare');
+  if(sh) sh.addEventListener('click', function(){
+    haptic(12);
+    if(navigator.share){
+      navigator.share({title:USER.name, text:t('cvTitle')}).catch(function(){});
+    } else {
+      toast(t('dlSoon'));
+    }
+  });
+}
+
+/* =========================================================
+   11.65) FOTOGALEREYA SAHIFASI
+   ========================================================= */
+function photoHTML(){
+  if(!PHOTOS.length) return noResultHTML(t('photoNo'), t('photoNoX'));
+
+  return '<div class="pgrid">' + PHOTOS.map(function(x){
+    return '<button class="pcard pcard--'+esc(x.ton)+'" data-photo="'+esc(x.id)+'">'+
+      '<span class="pcard__img"><svg viewBox="0 0 24 24">'+x.ic+'</svg></span>'+
+      '<span class="pcard__t">'+esc(x.t)+'</span>'+
+      '<span class="pcard__m">'+esc(x.sana)+' · '+x.soni+' '+esc(t('photoCount'))+'</span>'+
+    '</button>';
+  }).join('') + '</div>';
+}
+
+function openPhoto(){
+  haptic();
+  curPage = 'photo';
+  detailTitle.textContent = t('photoTitle');
+  $('refBtn').hidden = true;
+  renderPhoto();
+
+  detail.classList.add('is-open');
+  detail.setAttribute('aria-hidden','false');
+  detail.scrollTop = 0;
+
+  if(!detailOpen){
+    detailOpen = true;
+    history.pushState({detail:true}, '');
+  }
+}
+
+function renderPhoto(){
+  detailBody.innerHTML = photoHTML();
+
+  detailBody.querySelectorAll('[data-photo]').forEach(function(b){
+    b.addEventListener('click', function(){
+      const x = PHOTOS.filter(function(y){ return y.id === b.dataset.photo; })[0];
+      if(!x) return;
+      haptic();
+      openModal(x.t, x.sana + ' · ' + x.soni + ' ' + t('photoCount'),
+        '<div class="pmod pmod--'+esc(x.ton)+'">'+
+          '<svg viewBox="0 0 24 24">'+x.ic+'</svg>'+
+        '</div>'+
+        '<button class="btn btn--ghost" id="phClose">'+esc(t('close'))+'</button>');
+      const c = $('phClose');
+      if(c) c.addEventListener('click', closeModal);
+    });
+  });
+}
+
+/* =========================================================
+   11.66) ARIZALAR SAHIFASI
+   ========================================================= */
+let appsFilter = 'all';   /* 'all' | 'wait' | 'done' */
+
+function appsHTML(){
+  const hammasi = hammaArizalar();
+
+  const F = [
+    {k:'all',  label:t('appsAll')},
+    {k:'wait', label:t('appsWait')},
+    {k:'done', label:t('appsDone')}
+  ];
+  let h = '<div class="dfilter">' + F.map(function(f){
+    return '<button class="'+(appsFilter === f.k ? 'is-on' : '')+'" data-afil="'+f.k+'">'+
+           esc(f.label)+'</button>';
+  }).join('') + '</div>';
+
+  h += '<div class="newapp"><button class="btn btn--primary" id="newAppBtn2">'+
+       esc(t('newApp'))+'</button></div>';
+
+  if(!hammasi.length) return h + noResultHTML(t('appsNone'), t('appsNoneX'));
+
+  const rows = hammasi.filter(function(a){
+    return appsFilter === 'all'  ? true
+         : appsFilter === 'wait' ? a.holat === 'wait'
+         : a.holat !== 'wait';
+  });
+
+  if(!rows.length) return h + noResultHTML(t('notFound'), t('appsNoFilter'));
+
+  h += '<div class="list">' + rows.slice().reverse().map(appCardHTML).join('') + '</div>';
+  return h;
+}
+
+function openApps(){
+  haptic();
+  curPage = 'apps';
+  detailTitle.textContent = t('appsTitle');
+  $('refBtn').hidden = false;
+  renderApps();
+
+  detail.classList.add('is-open');
+  detail.setAttribute('aria-hidden','false');
+  detail.scrollTop = 0;
+
+  if(!detailOpen){
+    detailOpen = true;
+    history.pushState({detail:true}, '');
+  }
+}
+
+function renderApps(){
+  detailBody.innerHTML = appsHTML();
+
+  detailBody.querySelectorAll('[data-afil]').forEach(function(b){
+    b.addEventListener('click', function(){
+      appsFilter = b.dataset.afil;
+      haptic();
+      renderApps();
+    });
+  });
+
+  const nb = $('newAppBtn2');
+  if(nb) nb.addEventListener('click', openNewApp);
+
+  detailBody.querySelectorAll('[data-appsub]').forEach(function(b){
+    b.addEventListener('click', function(){
+      const a = hammaArizalar().filter(function(x){ return x.id === b.dataset.appsub; })[0];
+      if(!a) return;
+      haptic();
+      openModal(a.t, t('subjects2') + ': ' + a.fanlar + ' · ' + t('credits') + ': ' + a.kredit,
+        '<div class="list" style="padding:0">' +
+          (a.fanlarRoyxat || []).map(rowHTML).join('') +
+        '</div>' +
+        '<button class="btn btn--ghost" id="subClose2">' + esc(t('close')) + '</button>');
+      const c = $('subClose2');
+      if(c) c.addEventListener('click', closeModal);
+    });
+  });
+
+  detailBody.querySelectorAll('[data-dl]').forEach(function(b){
+    b.addEventListener('click', function(){
+      haptic(12);
+      toast(t('dlSoon'));
+    });
+  });
+}
+
+/* =========================================================
+   11.67) YOTOQXONA SAHIFASI
+   ========================================================= */
+function dormHTML(){
+  /* joy ajratilmagan yoki navbatda */
+  if(DORM.holat !== 'yashaydi'){
+    let h = '';
+    if(DORM.holat === 'navbat'){
+      h += '<div class="dsum dsum--wait">'+
+        '<div class="dsum__label">'+esc(t('dormQueue'))+'</div>'+
+        '<div class="dsum__val">'+DORM.navbat+'<small>'+esc(t('dormQueueN'))+'</small></div>'+
+      '</div>';
+      h += noResultHTML(t('dormApplied'), t('dormNoX'));
+    } else {
+      h += noResultHTML(t('dormNo'), t('dormNoX'));
+      h += '<div class="newapp"><button class="btn btn--primary" id="dormApply">'+
+           esc(t('dormApply'))+'</button></div>';
+    }
+    return h;
+  }
+
+  /* joy ajratilgan */
+  let h = '<div class="dsum">'+
+    '<div class="dsum__label">'+esc(t('dormPlace'))+'</div>'+
+    '<div class="dsum__val">'+esc(DORM.xona)+'<small>'+esc(t('dormRoom')).toLowerCase()+'</small></div>'+
+    '<div class="dsum__note">'+esc(td(DORM.bino))+' · '+DORM.qavat+'-'+esc(t('dormFloor')).toLowerCase()+
+      ' · '+esc(t('dormBed'))+' '+esc(DORM.orin)+'</div>'+
+    '<span class="dsum__chip">'+esc(t('dormActive'))+'</span>'+
+  '</div>';
+
+  h += '<h2 class="eyebrow">'+esc(t('infoTitle'))+'</h2>'+
+    '<div class="info" style="margin:0 18px 4px">'+
+      [[t('dormBuilding'), td(DORM.bino)],
+       [t('dormRoom'),     DORM.xona],
+       [t('dormBed'),      DORM.orin],
+       [t('dormFloor'),    DORM.qavat],
+       [t('dormType'),     DORM.kishi + ' ' + t('dormPeople')],
+       [t('dormFrom'),     DORM.sana]
+      ].map(function(r){
+        return '<div class="info__row"><span>'+esc(r[0])+'</span><b>'+esc(String(r[1]))+'</b></div>';
+      }).join('')+
+    '</div>';
+
+  const qoldi = dormLeft();
+  h += '<h2 class="eyebrow">'+esc(t('dormPay'))+'</h2>'+
+    '<div class="sum'+(qoldi ? ' sum--bad' : '')+'" style="margin:0 18px 4px">'+
+      '<div class="sum__label">'+esc(qoldi ? t('dormDebt') : t('dormPaid'))+'</div>'+
+      '<div class="sum__val">'+money(qoldi || DORM.tolangan)+'<small>so’m</small></div>'+
+      '<div class="sum__note">'+money(DORM.oylik)+' so’m · '+esc(t('dormPerMonth'))+'</div>'+
+    '</div>';
+
+  h += '<h2 class="eyebrow">'+esc(t('dormRules'))+'</h2>'+
+    '<div class="drules">' + DORM.qoidalar.map(function(q){
+      return '<div class="drules__i">'+
+        '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m8.5 12 2.5 2.5 4.5-5"/></svg>'+
+        '<span>'+esc(q)+'</span>'+
+      '</div>';
+    }).join('') + '</div>';
+
+  h += '<h2 class="eyebrow">'+esc(t('dormContact'))+'</h2>'+
+    '<div class="info" style="margin:0 18px 4px">'+
+      '<div class="info__row"><span>'+esc(t('fullName'))+'</span><b>'+esc(DORM.komendant)+'</b></div>'+
+      '<div class="info__row"><span>'+esc(t('phone'))+'</span><b>'+esc(DORM.tel)+'</b></div>'+
+    '</div>';
+
+  return h;
+}
+
+function openDorm(){
+  haptic();
+  curPage = 'dorm';
+  detailTitle.textContent = t('dormTitle');
+  $('refBtn').hidden = false;
+  renderDorm();
+
+  detail.classList.add('is-open');
+  detail.setAttribute('aria-hidden','false');
+  detail.scrollTop = 0;
+
+  if(!detailOpen){
+    detailOpen = true;
+    history.pushState({detail:true}, '');
+  }
+}
+
+function renderDorm(){
+  detailBody.innerHTML = dormHTML();
+
+  const ab = $('dormApply');
+  if(ab) ab.addEventListener('click', function(){
+    haptic(12);
+    DORM.holat = 'navbat';
+    DORM.navbat = 14;
+    toast(t('dormApplied'));
+    renderDorm();
+  });
+}
+
+/* =========================================================
+   11.68) IMTIHONLAR SAHIFASI
+   ========================================================= */
+
+/* sanani chiroyli ko'rsatish: "11 sentabr, juma" */
+function examDateText(x){
+  const L = I18N[LANG];
+  const d = new Date(x.date + 'T00:00:00');
+  return d.getDate() + ' ' + L.months[d.getMonth()] + ', ' + L.days[d.getDay()].toLowerCase();
+}
+
+/* bugundan necha kun keyinligini so'z bilan: bugun / ertaga */
+function examDayWord(x){
+  const bugun  = new Date(todayIso() + 'T00:00:00').getTime();
+  const kuni   = new Date(x.date     + 'T00:00:00').getTime();
+  const farq   = Math.round((kuni - bugun) / 86400000);
+  return farq === 0 ? t('examToday') : farq === 1 ? t('examTomorrow') : '';
+}
+
+/* eng yaqin imtihon — katta sanoq kartasi */
+function examNextHTML(){
+  const x = examNext();
+  if(!x) return '';
+
+  const st = examState(x);
+  const ms = examLeftMs(x);
+
+  /* holatga qarab: hozir ketyapti / bugun / sanoq */
+  let big, note;
+  if(st === 'now'){
+    big  = '<span class="live"><i></i></span>' + t('examNow');
+    note = x.from + ' \u2013 ' + x.to + ' \u00b7 ' + x.room;
+  } else {
+    const word = examDayWord(x);
+    big  = word || examCountdown(ms);
+    note = examDateText(x) + ' \u00b7 ' + x.from + ' \u00b7 ' + td(x.room);
+  }
+
+  const tone = st === 'now' ? ' exnext--now'
+             : ms < 86400000 ? ' exnext--soon' : '';
+
+  return '<div class="exnext'+tone+'">'+
+    '<div class="exnext__label">'+esc(t('examNext'))+'</div>'+
+    '<div class="exnext__big">'+big+
+      (st === 'soon' && !examDayWord(x) ? '<small>'+esc(t('examLeft'))+'</small>' : '')+
+    '</div>'+
+    '<div class="exnext__t">'+esc(td(x.t))+'</div>'+
+    '<div class="exnext__note">'+esc(note)+'</div>'+
+  '</div>';
+}
+
+/* bitta imtihon kartasi */
+function examCardHTML(x){
+  const st   = examState(x);
+  const past = st === 'done';
+
+  /* o'ng tomondagi belgi: ball yoki sanoq */
+  let right = '';
+  if(past && x.ball !== undefined){
+    const pct  = Math.round(x.ball / x.maks * 100);
+    const tone = pct >= 86 ? 'ok' : pct >= 71 ? 'good' : pct >= 60 ? 'warn' : 'bad';
+    right = '<span class="excard__ball excard__ball--'+tone+'">'+x.ball+
+            '<small>/'+x.maks+'</small></span>';
+  } else if(st === 'now'){
+    right = '<span class="excard__tag excard__tag--now">'+esc(t('examNow'))+'</span>';
+  } else if(!past){
+    const word = examDayWord(x);
+    right = '<span class="excard__tag">'+esc(word || examCountdown(examLeftMs(x)))+'</span>';
+  }
+
+  const d = new Date(x.date + 'T00:00:00');
+
+  return '<div class="excard'+(past ? ' excard--past' : '')+(st === 'now' ? ' excard--now' : '')+'">'+
+    '<div class="excard__day">'+
+      '<span class="excard__d">'+d.getDate()+'</span>'+
+      '<span class="excard__m">'+esc(I18N[LANG].months[d.getMonth()].slice(0, 3))+'</span>'+
+    '</div>'+
+    '<div class="excard__body">'+
+      '<div class="excard__t">'+esc(td(x.t))+'</div>'+
+      '<div class="excard__s">'+esc(x.from)+' \u2013 '+esc(x.to)+' \u00b7 '+esc(td(x.room))+'</div>'+
+      '<div class="excard__x">'+esc(td(x.tur))+' \u00b7 '+esc(x.teacher)+'</div>'+
+    '</div>'+
+    right+
+  '</div>';
+}
+
+function examsHTML(){
+  if(!EXAMS.length) return noResultHTML(t('examNo'), t('examNoX'));
+
+  const kel = examsUpcoming();
+  const otg = examsPast();
+
+  let h = examNextHTML();
+
+  if(kel.length){
+    h += '<h2 class="eyebrow">'+esc(t('examUpcoming'))+'</h2>'+
+         '<div class="list">' + kel.map(examCardHTML).join('') + '</div>';
+  }
+
+  if(otg.length){
+    h += '<h2 class="eyebrow">'+esc(t('examPast'))+'</h2>'+
+         '<div class="list">' + otg.map(examCardHTML).join('') + '</div>';
+  }
+
+  return h;
+}
+
+function openExams(){
+  haptic();
+  curPage = 'exams';
+  detailTitle.textContent = t('examTitle');
+  $('refBtn').hidden = false;
+  renderExams();
+
+  detail.classList.add('is-open');
+  detail.setAttribute('aria-hidden','false');
+  detail.scrollTop = 0;
+
+  if(!detailOpen){
+    detailOpen = true;
+    history.pushState({detail:true}, '');
+  }
+}
+
+/* sanoq har daqiqada yangilanadi (examTimer yuqorida e'lon qilingan) */
+function renderExams(){
+  detailBody.innerHTML = examsHTML();
+
+  clearInterval(examTimer);
+  examTimer = setInterval(function(){
+    /* sahifa yopilgan bo'lsa — to'xtatamiz */
+    if(!detailOpen || curPage !== 'exams'){
+      clearInterval(examTimer);
+      examTimer = null;
+      return;
+    }
+    detailBody.innerHTML = examsHTML();
+  }, 60000);
+}
+
+/* =========================================================
+   11.7) DAVOMAT SAHIFASI
+   ========================================================= */
+let attOpen = null;   /* yoyilgan fan indeksi */
+
+/* qoldirilgan bitta dars qatori */
+function attMissHTML(q){
+  const bad = q.s === 'sababsiz';
+  return '<span class="amiss">'+
+    '<span class="amiss__dot'+(bad ? ' amiss__dot--no' : '')+'"></span>'+
+    '<span class="amiss__d">'+esc(q.d)+'</span>'+
+    '<span class="amiss__s'+(bad ? ' amiss__s--no' : '')+'">'+
+      esc(bad ? t('attUnexcused') : t('attExcused'))+
+    '</span>'+
+  '</span>';
+}
+
+/* bitta fan kartasi */
+function attCardHTML(x, i){
+  const c    = attCalc(x);
+  const tone = attTone(c.v);
+  const open = attOpen === i;
+
+  let more = '';
+  if(open){
+    more = '<span class="acard__more-t">'+esc(t('attMissedDays'))+'</span>' +
+      (c.qoldi
+        ? (x.qoldi || []).map(attMissHTML).join('')
+        : '<span class="amiss amiss--none">'+esc(t('attNoMiss'))+'</span>');
+  }
+
+  return '<button class="acard'+(open ? ' is-open' : '')+'" data-acard="'+i+'" aria-expanded="'+(open ? 'true' : 'false')+'">'+
+    '<span class="acard__head">'+
+      '<span class="acard__pct acard__pct--'+tone+'">'+c.v+'<small>%</small></span>'+
+      '<span class="acard__body">'+
+        '<span class="acard__t">'+esc(td(x.t))+'</span>'+
+        '<span class="acard__m">'+c.kelgan+'/'+c.jami+' '+esc(t('attHours'))+
+          (c.qoldi ? ' \u00b7 '+c.qoldi+' '+esc(t('attMissed')).toLowerCase() : '')+
+        '</span>'+
+      '</span>'+
+      (c.qoldi ? '<svg class="acard__caret" viewBox="0 0 14 9"><path d="M1 1l6 6 6-6"/></svg>' : '')+
+    '</span>'+
+    '<span class="acard__bar"><i class="is-'+tone+'" style="width:'+c.v+'%"></i></span>'+
+    '<span class="acard__more">'+more+'</span>'+
+  '</button>';
+}
+
+function attHTML(){
+  if(!ATTENDANCE.length) return noResultHTML(t('attNoData'), t('attNoDataX'));
+
+  const tot  = attTotal();
+  const tone = attTone(tot.v);
+
+  /* umumiy karta */
+  let h = '<div class="atot atot--'+tone+'">'+
+    '<div class="atot__label">'+esc(t('attTotal'))+'</div>'+
+    '<div class="atot__val">'+tot.v+'<small>%</small></div>'+
+    '<div class="atot__ring" style="--p:'+tot.v+'"></div>'+
+    '<div class="atot__stats">'+
+      '<span><b>'+tot.jami+'</b>'+esc(t('attAll'))+'</span>'+
+      '<span><b class="is-ok">'+tot.kelgan+'</b>'+esc(t('attCame'))+'</span>'+
+      (tot.sababli   ? '<span><b class="is-warn">'+tot.sababli+'</b>'+esc(t('attExcused'))+'</span>' : '')+
+      (tot.sababsiz  ? '<span><b class="is-bad">'+tot.sababsiz+'</b>'+esc(t('attUnexcused'))+'</span>' : '')+
+    '</div>'+
+  '</div>';
+
+  /* past davomat ogohlantirishi */
+  const past = ATTENDANCE.filter(function(x){ return attCalc(x).v <= 75; }).length;
+  if(past){
+    h += '<div class="anote">'+
+      '<svg viewBox="0 0 24 24"><path d="M12 2 2 20h20z"/><path d="M12 9v5M12 17h.01"/></svg>'+
+      '<span>'+esc(t('attWarn'))+'</span>'+
+    '</div>';
+  }
+
+  /* fanlar — eng past davomat tepada */
+  const rows = ATTENDANCE.map(function(x, i){ return {x:x, i:i, v:attCalc(x).v}; })
+                         .sort(function(a, b){ return a.v - b.v; });
+
+  h += '<div class="list">' + rows.map(function(r){
+    return attCardHTML(r.x, r.i);
+  }).join('') + '</div>';
+
+  return h;
+}
+
+function openAtt(){
+  haptic();
+  curPage = 'att';
+  detailTitle.textContent = t('attTitle');
+  $('refBtn').hidden = false;
+  renderAtt();
+
+  detail.classList.add('is-open');
+  detail.setAttribute('aria-hidden','false');
+  detail.scrollTop = 0;
+
+  if(!detailOpen){
+    detailOpen = true;
+    history.pushState({detail:true}, '');
+  }
+}
+
+function renderAtt(){
+  detailBody.innerHTML = attHTML();
+
+  detailBody.querySelectorAll('[data-acard]').forEach(function(b){
+    b.addEventListener('click', function(){
+      const i = +b.dataset.acard;
+      attOpen = (attOpen === i) ? null : i;
+      haptic();
+      renderAtt();
+    });
+  });
+
+  requestAnimationFrame(function(){
+    detailBody.querySelectorAll('.acard__bar i').forEach(function(el){
+      const w = el.style.width;
+      el.style.width = '0';
+      requestAnimationFrame(function(){ el.style.width = w; });
+    });
+  });
+}
+
+/* ochiq sahifani yangilash — qarzdorlik yoki baholar */
+/* Ochiq ichki sahifani qayta chizish.
+   Sahifa nomi curPage da saqlanadi — sarlavha matniga tayanmaydi,
+   shuning uchun til almashsa ham to'g'ri sahifa yangilanadi. */
+function renderDetailPage(){
+  const r = PAGE_RENDER[curPage];
+  if(r) r();
+}
+
+/* sahifa nomi -> qayta chizuvchi funksiya */
+PAGE_RENDER.grades = renderGrades;
+PAGE_RENDER.att    = renderAtt;
+PAGE_RENDER.sched  = renderSched;
+PAGE_RENDER.debt   = renderDebt;
+PAGE_RENDER.admin  = renderAdmin;
+PAGE_RENDER.exams  = renderExams;
+PAGE_RENDER.apps   = renderApps;
+PAGE_RENDER.dorm   = renderDorm;
+PAGE_RENDER.cv     = renderCv;
+PAGE_RENDER.photo  = renderPhoto;
+
+/* sahifani yangilash tugmasi */
 $('refBtn').addEventListener('click', function(){
   const b = this;
   if(b.classList.contains('is-spin')) return;
   b.classList.add('is-spin');
   haptic(10);
   setTimeout(function(){
-    renderDebt();
+    renderDetailPage();
     b.classList.remove('is-spin');
     toast(t('updated'));
   }, 800);
@@ -1451,11 +3909,15 @@ function applyLang(){
   buildStrip();
   buildToday();
   buildAttStat();
+  buildGpaStat();
   buildNews();
   fillCareerCounts();
 
-  /* ochiq qarzdorlik sahifasi bo'lsa — yangilash */
-  if(detailOpen && detailTitle.textContent === I18N.uz.debtTitle) renderDebt();
+  /* ochiq ichki sahifa bo'lsa — sarlavha va ichini yangi tilda qayta chizish */
+  if(detailOpen && PAGE_TITLE[curPage]){
+    detailTitle.textContent = t(PAGE_TITLE[curPage]);
+    renderDetailPage();
+  }
 }
 
 $('langBtn').addEventListener('click', function(){
@@ -1535,6 +3997,7 @@ function refreshData(){
   buildStrip();
   buildToday();
   buildAttStat();
+  buildGpaStat();
   buildNews();
   $('libList').innerHTML = LIBRARY.map(rowHTML).join('');
   applyLang();
@@ -2101,7 +4564,10 @@ document.addEventListener('click', function(e){
    F12 orqali o'qish mumkin. Haqiqiy himoya faqat server bilan bo'ladi:
      kod serverga yuboriladi -> server tekshiradi -> token qaytaradi
    ========================================================= */
-const KIRISH_KODI = '2024';        /* kirish kodi shu yerda */
+/* Talaba kirish kodlari TALABALAR massivida (har birida o'z kodi).
+   Namuna rejimi uchun birinchi talabaning kodi ko'rsatiladi. */
+const DEMO_KOD     = TALABALAR[0].kod;
+const DEKANAT_KODI = '9999';        /* dekanat (admin) kirish kodi */
 
 const auth     = $('auth');
 const codeBox  = $('codeBox');
@@ -2163,7 +4629,11 @@ $('doLogin').addEventListener('click', function(){
     btn.classList.remove('is-busy');
     btn.textContent = t('enter');
 
-    if(code !== KIRISH_KODI){
+    const dekanat = (code === DEKANAT_KODI);
+    const talaba  = dekanat ? TALABALAR[0] : talabaTop(code);
+
+    /* kod hech qaysi talabaga mos kelmasa */
+    if(!talaba){
       codeBox.classList.add('is-bad');
       $('err2').textContent = t('wrongCode');
       codeInps.forEach(function(x){ x.value = ''; });
@@ -2172,10 +4642,26 @@ $('doLogin').addEventListener('click', function(){
       return;
     }
 
-    try{ localStorage.setItem('ms.auth', JSON.stringify({at:Date.now()})); }catch(e){}
+    /* topilgan talaba ma'lumotlarini yuklaymiz */
+    userYukla(talaba);
+
+    try{
+      localStorage.setItem('ms.auth', JSON.stringify({at:Date.now(), kod:talaba.kod}));
+    }catch(e){}
+
+    /* dekanat kodi bilan kirilsa — admin rejimi yoqiladi */
+    adminMode = dekanat;
+    try{
+      if(dekanat) localStorage.setItem('ms.admin', '1');
+      else        localStorage.removeItem('ms.admin');
+    }catch(e){}
+
     hideAuth();
+    /* talaba ma'lumotlari bilan butun ekranni qayta chizamiz */
+    applyLang();
     haptic(16);
-    toast(t('welcome'));
+    toast(dekanat ? t('adminOn') : t('welcome'));
+    if(dekanat) setTimeout(openAdmin, 400);
   }, 450);
 });
 
@@ -2190,6 +4676,7 @@ function showAuth(){
   codeBox.classList.remove('is-bad');
   $('err2').textContent = '';
   document.body.style.overflow = 'hidden';
+  showDemoCode();          /* talabalar ro'yxatini qayta chizamiz */
   setTimeout(function(){ codeInps[0].focus(); }, 300);
 }
 
@@ -2197,22 +4684,47 @@ function showAuth(){
 function showDemoCode(){
   const box = $('demoBox');
   if(!box) return;
-  box.innerHTML = esc(t('demoYourCode')) + ' <b>' + esc(KIRISH_KODI) + '</b>' +
-                  ' <button class="linkbtn" id="fillCode" style="padding:2px 6px">' +
-                  esc(t('demoFill')) + '</button>';
-  const f = $('fillCode');
-  if(f) f.addEventListener('click', function(){
-    codeInps.forEach(function(x, i){ x.value = KIRISH_KODI[i] || ''; });
-    haptic(8);
-    $('doLogin').click();
+
+  /* namuna rejimi: har bir talabaning kodi ko'rsatiladi */
+  box.innerHTML = '<div class="demo__t">'+esc(t('demoCodes'))+'</div>' +
+    '<div class="demo__list">' + TALABALAR.map(function(x){
+      const ism = x.name.split(/\s+/).slice(0, 2).join(' ');
+      return '<button class="demo__i" data-demo="'+esc(x.kod)+'">'+
+        '<span class="demo__k">'+esc(x.kod)+'</span>'+
+        '<span class="demo__n">'+esc(ism)+'</span>'+
+        '<span class="demo__g">'+esc(x.group)+'</span>'+
+      '</button>';
+    }).join('') + '</div>';
+
+  box.querySelectorAll('[data-demo]').forEach(function(b){
+    b.addEventListener('click', function(){
+      const kod = b.dataset.demo;
+      codeInps.forEach(function(x, i){ x.value = kod[i] || ''; });
+      haptic(8);
+      $('doLogin').click();
+    });
   });
 }
 
 /* sahifa ochilganda: kirganmi? */
 (function checkAuth(){
   let kirgan = false;
-  try{ kirgan = !!localStorage.getItem('ms.auth'); }catch(e){}
-  if(kirgan){ hideAuth(); return; }
+  /* saqlangan sessiyani tiklash: qaysi talaba kirgan edi */
+  try{
+    const saqlangan = JSON.parse(localStorage.getItem('ms.auth') || 'null');
+    if(saqlangan){
+      const talaba = talabaTop(saqlangan.kod) || TALABALAR[0];
+      userYukla(talaba);
+      kirgan = true;
+    }
+  }catch(e){}
+
+  if(kirgan){
+    /* talaba ma'lumotlari o'zgargani uchun ekranni qayta chizamiz */
+    applyLang();
+    hideAuth();
+    return;
+  }
   document.body.style.overflow = 'hidden';
   showDemoCode();
   setTimeout(function(){ codeInps[0].focus(); }, 300);
