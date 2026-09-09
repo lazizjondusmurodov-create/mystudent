@@ -58,7 +58,8 @@ Kirish ekranida talabani tanlash mumkin yoki kodni qo'lda kiritish:
 ```
 index.html      — sahifa tuzilmasi va meta teglar
 api.js          — API qatlami: ma'lumot shu yerdan olinadi
-data/           — ma'lumotlar (JSON) — hozircha statik "server"
+server/         — backend: server.js va db.json
+data/           — statik rejim uchun ma'lumot (server bo'lmaganda)
 app.js          — butun mantiq: tillar, sahifalar, ko'rinish
 style.css       — uslublar (ranglar CSS o'zgaruvchilarida)
 manifest.json   — PWA sozlamalari
@@ -84,21 +85,42 @@ Versiya raqamlari, kesh ro'yxati, manifest va tarjimalarni tekshiradi.
 hamda `sw.js` dagi `VERSIYA` ni ko'taring — aks holda foydalanuvchida
 eski nusxa qolib ketadi. `tools_check.js` shuni tekshiradi.
 
-## Ma'lumotlar va API
+## Backend (API server)
 
-Ilova ma'lumotlarni `api.js` orqali oladi — kod ichida qotib qolgan
-massivlar yo'q. Hozir ular `data/*.json` fayllaridan `fetch()` bilan
-yuklanadi (statik "server").
+Loyihada haqiqiy backend bor — `server/server.js`. Node.js'da yozilgan,
+**tashqi kutubxona talab qilmaydi** (npm install kerak emas).
 
-**Haqiqiy backend ulanganda** [api.js](api.js) ning boshidagi ikki
-qatorni o'zgartirish kifoya, qolgan kod umuman tegilmaydi:
-
-```js
-const API_BASE   = 'https://api.mystudent.uz';
-const API_STATIK = false;
+```bash
+node server/server.js
+# so'ng brauzerda: http://localhost:3000
 ```
 
-Endpointlar:
+Ma'lumotlar `server/db.json` faylida saqlanadi. Ariza yuborilsa —
+faylga yoziladi va server qayta ishga tushsa ham qoladi.
+
+### Kirish va himoya
+
+```
+POST /api/login  {kod:"2024"}  →  {token, talaba}
+```
+
+Token olingandan keyin himoyalangan endpointlarga `Authorization: Bearer <token>`
+sarlavhasi bilan murojaat qilinadi. Tokensiz ular **401** qaytaradi.
+
+### Ikki rejim
+
+Ilova o'zi aniqlaydi qaysi rejimda ishlashini:
+
+| Rejim | Qachon | Ma'lumot manbai |
+|---|---|---|
+| **Server** | `node server/server.js` ishlab tursa | `http://localhost:3000/api/...` |
+| **Statik** | server bo'lmasa (GitHub Pages demo) | `data/*.json` fayllari |
+
+Majburiy tanlash uchun [api.js](api.js) da `API_REJIM` ni `'server'`
+yoki `'statik'` qiling. Boshqa domendagi serverga ulash uchun `API_BASE`
+ni to'ldiring.
+
+### Endpointlar:
 
 | Manzil | Qaytaradi |
 |---|---|
@@ -113,9 +135,25 @@ Endpointlar:
 | `GET /qarzdorlik` | `{yillar, akademik, arizalar, shartnoma}` |
 | `GET /fotolar` | `{fotolar:[...]}` |
 | `GET /yotoqxona` | `{yotoqxona:{...}}` |
+| `POST /arizalar` | yangi ariza yozadi → `{ariza}` |
+
+Token talab qilmaydiganlar: `yangiliklar`, `kutubxona`, `ishlar`, `fotolar`.
 
 Barcha so'rovlar parallel ketadi. Ma'lumot kelguncha yuklanish ekrani
 turadi; xato bo'lsa — sabab va "Qayta urinish" tugmasi ko'rsatiladi.
+
+### API'ni qo'lda sinash
+
+```bash
+# kirish
+curl -X POST http://localhost:3000/api/login   -H "Content-Type: application/json" -d '{"kod":"2024"}'
+
+# tokensiz — 401
+curl http://localhost:3000/api/baholar
+
+# token bilan
+curl http://localhost:3000/api/baholar -H "Authorization: Bearer <TOKEN>"
+```
 
 ## Mavzu (yorug'/qorong'i)
 

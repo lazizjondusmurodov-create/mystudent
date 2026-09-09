@@ -4449,13 +4449,29 @@ $('doLogin').addEventListener('click', function(){
   btn.classList.add('is-busy');
   btn.textContent = t('checking');
 
-  setTimeout(function(){
+  (async function(){
+    const dekanat = (code === DEKANAT_KODI);
+    let talaba = null;
+
+    /* SERVER REJIMI: kod serverga yuboriladi, token qaytadi.
+       Dekanat kodi mahalliy tekshiriladi (demo uchun). */
+    if(API_SERVER_BOR && !dekanat){
+      try{
+        const j = await apiLogin(code);
+        /* kirgandan keyin himoyalangan ma'lumotni yuklaymiz */
+        const q = await apiQolganini();
+        malumotlarniQoy(q);
+        talaba = talabaTop(code) || j.talaba || null;
+      }catch(e){
+        talaba = null;
+      }
+    }else{
+      talaba = dekanat ? TALABALAR[0] : talabaTop(code);
+    }
+
     loginBusy = false;
     btn.classList.remove('is-busy');
     btn.textContent = t('enter');
-
-    const dekanat = (code === DEKANAT_KODI);
-    const talaba  = dekanat ? TALABALAR[0] : talabaTop(code);
 
     /* kod hech qaysi talabaga mos kelmasa */
     if(!talaba){
@@ -4487,7 +4503,7 @@ $('doLogin').addEventListener('click', function(){
     haptic(16);
     toast(dekanat ? t('adminOn') : t('welcome'));
     if(dekanat) setTimeout(openAdmin, 400);
-  }, 450);
+  })();
 });
 
 /* --- kirish sahifasini ko'rsatish / yashirish --- */
@@ -4506,13 +4522,20 @@ function showAuth(){
 }
 
 /* kodni ekranda ko'rsatish (namuna rejimi) */
+/* kirish ekranidagi namuna kodlari.
+   Server rejimida GET /api/demo dan, statikda TALABALAR dan keladi. */
+let DEMO_ROYXAT = [];
+
 function showDemoCode(){
   const box = $('demoBox');
   if(!box) return;
 
+  const royxat = DEMO_ROYXAT.length ? DEMO_ROYXAT : TALABALAR;
+  if(!royxat.length){ box.innerHTML = ''; return; }
+
   /* namuna rejimi: har bir talabaning kodi ko'rsatiladi */
   box.innerHTML = '<div class="demo__t">'+esc(t('demoCodes'))+'</div>' +
-    '<div class="demo__list">' + TALABALAR.map(function(x){
+    '<div class="demo__list">' + royxat.map(function(x){
       const ism = x.name.split(/\s+/).slice(0, 2).join(' ');
       return '<button class="demo__i" data-demo="'+esc(x.kod)+'">'+
         '<span class="demo__k">'+esc(x.kod)+'</span>'+
@@ -4570,35 +4593,43 @@ function checkAuth(){
    ILOVANI ISHGA TUSHIRISH
    Avval ma'lumotlar API'dan yuklanadi, keyin ekran chiziladi.
    ========================================================= */
+/* API'dan kelgan ma'lumotni o'z joyiga qo'yadi.
+   Kelmagan qismlar o'zgarmaydi — server rejimida ma'lumot
+   ikki bosqichda keladi (kirishdan oldin / keyin). */
+function malumotlarniQoy(d){
+  if(d.demo)        DEMO_ROYXAT    = d.demo;
+  if(d.talabalar)   TALABALAR      = d.talabalar;
+  if(d.semestrlar)  SEMESTERS      = d.semestrlar;
+  if(d.darslar)     SCHEDULE       = d.darslar;
+  if(d.imtihonlar)  EXAMS          = d.imtihonlar;
+  if(d.davomat)     ATTENDANCE     = d.davomat;
+  if(d.baholar)     GRADES         = d.baholar;
+  if(d.yangiliklar) NEWS           = d.yangiliklar;
+  if(d.kitoblar)    LIBRARY        = d.kitoblar;
+  if(d.ishlar)      JOBS           = d.ishlar;
+  if(d.yillar)      YEARS          = d.yillar;
+  if(d.akademik)    AKADEMIK       = d.akademik;
+  if(d.arizalar)    ARIZALAR       = d.arizalar;
+  if(d.shartnoma)   SHARTNOMA_QARZ = d.shartnoma;
+  if(d.fotolar)     PHOTOS         = d.fotolar;
+  if(d.yotoqxona)   DORM           = d.yotoqxona;
+
+  /* CAREER.ishlar JOBS ga tayanadi */
+  if(CAREER.ishlar){
+    CAREER.ishlar.items = JOBS;
+    if(typeof DATA !== 'undefined') DATA.ishlar = CAREER.ishlar;
+  }
+
+  /* ma'lumotga tayanadigan ro'yxatlarni qayta chizamiz */
+  const lib = document.getElementById('libList');
+  if(lib && LIBRARY.length) lib.innerHTML = LIBRARY.map(rowHTML).join('');
+  fillCareerCounts();
+}
+
 async function ilovaniBoshla(){
   try{
     const d = await apiHammasi();
-
-    /* kelgan ma'lumotlarni o'z joyiga qo'yamiz */
-    TALABALAR      = d.talabalar   || [];
-    SEMESTERS      = d.semestrlar  || [];
-    SCHEDULE       = d.darslar     || [];
-    EXAMS          = d.imtihonlar  || [];
-    ATTENDANCE     = d.davomat     || [];
-    GRADES         = d.baholar     || [];
-    NEWS           = d.yangiliklar || [];
-    LIBRARY        = d.kitoblar    || [];
-    JOBS           = d.ishlar      || [];
-    YEARS          = d.yillar      || [];
-    AKADEMIK       = d.akademik    || [];
-    ARIZALAR       = d.arizalar    || [];
-    SHARTNOMA_QARZ = d.shartnoma   || [];
-    PHOTOS         = d.fotolar     || [];
-    DORM           = d.yotoqxona   || DORM;
-
-    /* CAREER.ishlar JOBS ga tayanadi — endi to'ldiramiz */
-    if(CAREER.ishlar) CAREER.ishlar.items = JOBS;
-    if(typeof DATA !== 'undefined') DATA.ishlar = CAREER.ishlar;
-
-    /* ma'lumotga tayanadigan qismlarni endi chizamiz */
-    const lib = document.getElementById('libList');
-    if(lib) lib.innerHTML = LIBRARY.map(rowHTML).join('');
-    fillCareerCounts();
+    malumotlarniQoy(d);
 
     yuklanmoqdaYop();
     checkAuth();
