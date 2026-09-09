@@ -778,6 +778,10 @@ function t(key){
    Backend ulanganda: server har bir yozuvni tanlangan tilda qaytaradi,
    shunda td() kerak bo'lmaydi — chaqiruvlarni olib tashlash kifoya. */
 const D_RU = {
+  /* fakultetlar */
+  "Axborot tizimlari va texnologiyalari":"Информационные системы и технологии",
+  "Kompyuter injiniringi":"Компьютерный инжиниринг",
+  "Iqtisodiyot va menejment":"Экономика и менеджмент",
   /* fanlar */
   "Mobil ilovalar ishlab chiqish":"Разработка мобильных приложений",
   "Axborot xavfsizligi":"Информационная безопасность",
@@ -805,6 +809,10 @@ const D_RU = {
 };
 
 const D_EN = {
+  /* fakultetlar */
+  "Axborot tizimlari va texnologiyalari":"Information Systems and Technologies",
+  "Kompyuter injiniringi":"Computer Engineering",
+  "Iqtisodiyot va menejment":"Economics and Management",
   /* fanlar */
   "Mobil ilovalar ishlab chiqish":"Mobile Application Development",
   "Axborot xavfsizligi":"Information Security",
@@ -858,6 +866,12 @@ function td(s){
   if(m && D[m[1]] !== undefined) return D[m[1]] + ': ' + m[2];
 
   return str;
+}
+
+/* qavat matni: uz "4-qavat", ru "этаж 4", en "floor 4" */
+function qavatText(n){
+  if(LANG === 'uz') return n + '-' + t('dormFloor').toLowerCase();
+  return t('dormFloor').toLowerCase() + ' ' + n;
 }
 
 /* =========================================================
@@ -916,7 +930,7 @@ const TALABALAR = [
     name:"Dusmurodov Lazizjon",
     group:"ATT-06-24",
     faculty:"Axborot tizimlari va texnologiyalari",
-    form:"sirtqi",
+    form:"Sirtqi",
     course:"3-kurs",
     studentId:"ATT-06-24",
     status:"O'qimoqda",
@@ -979,7 +993,7 @@ function fillUserUI(){
   $('drawerAva').textContent   = initials(USER.name);
 
   const rows = [
-    [t('faculty'),   USER.faculty],
+    [t('faculty'),   td(USER.faculty)],
     [t('eduForm'),   td(USER.form)],
     [t('course'),    td(USER.course)],
     [t('studentId'), USER.studentId],
@@ -1598,7 +1612,7 @@ function fillCareerInfo(){
   $('accInfo').innerHTML = [
     [t('fullName'), USER.name],
     [t('group'),    USER.group],
-    [t('faculty'),  USER.faculty],
+    [t('faculty'),  td(USER.faculty)],
     [t('course'),   td(USER.course)],
     [t('phone'),    USER.phone || "—"],
     [t('email'),    USER.email || "—"]
@@ -3058,7 +3072,7 @@ function cvHTML(){
     '<div class="cvsec">'+
       '<div class="cvrow">'+
         '<div class="cvrow__top">'+
-          '<span class="cvrow__t">'+esc(USER.faculty)+'</span>'+
+          '<span class="cvrow__t">'+esc(td(USER.faculty))+'</span>'+
           '<span class="cvrow__d">'+esc(td(USER.status))+'</span>'+
         '</div>'+
         '<div class="cvrow__m">'+esc(td(USER.form))+' · '+esc(td(USER.course))+' · '+esc(USER.group)+'</div>'+
@@ -3320,7 +3334,7 @@ function dormHTML(){
   let h = '<div class="dsum">'+
     '<div class="dsum__label">'+esc(t('dormPlace'))+'</div>'+
     '<div class="dsum__val">'+esc(DORM.xona)+'<small>'+esc(t('dormRoom')).toLowerCase()+'</small></div>'+
-    '<div class="dsum__note">'+esc(td(DORM.bino))+' · '+DORM.qavat+'-'+esc(t('dormFloor')).toLowerCase()+
+    '<div class="dsum__note">'+esc(td(DORM.bino))+' · '+esc(qavatText(DORM.qavat))+
       ' · '+esc(t('dormBed'))+' '+esc(DORM.orin)+'</div>'+
     '<span class="dsum__chip">'+esc(t('dormActive'))+'</span>'+
   '</div>';
@@ -3331,7 +3345,7 @@ function dormHTML(){
        [t('dormRoom'),     DORM.xona],
        [t('dormBed'),      DORM.orin],
        [t('dormFloor'),    DORM.qavat],
-       [t('dormType'),     DORM.kishi + ' ' + t('dormPeople')],
+       [t('dormType'),     td(DORM.kishi + ' kishilik')],
        [t('dormFrom'),     DORM.sana]
       ].map(function(r){
         return '<div class="info__row"><span>'+esc(r[0])+'</span><b>'+esc(String(r[1]))+'</b></div>';
@@ -3790,7 +3804,7 @@ $('btnEdit').addEventListener('click', function(){
     fieldHTML('fPhone', t('phone'),    USER.phone, {type:'tel', placeholder:'+998 90 123 45 67', err:t('required')}) +
     fieldHTML('fMail',  t('email'),    USER.email, {type:'email', placeholder:'mail@example.com', err:t('required')}) +
     fieldHTML('fGroup', t('group'),    USER.group, {readonly:true, hint:t('groupHint')}) +
-    fieldHTML('fFac',   t('faculty'),  USER.faculty, {readonly:true}) +
+    fieldHTML('fFac',   t('faculty'),  td(USER.faculty), {readonly:true}) +
     '<button class="btn btn--primary" id="saveEdit">'+esc(t('save'))+'</button>'+
     '<button class="btn btn--ghost" id="cancelEdit">'+esc(t('cancel'))+'</button>'
   );
