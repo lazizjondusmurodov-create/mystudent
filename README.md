@@ -61,6 +61,9 @@ app.js          — butun mantiq: tillar, ma'lumotlar, sahifalar
 style.css       — uslublar (ranglar CSS o'zgaruvchilarida)
 manifest.json   — PWA sozlamalari
 sw.js           — service worker: internetsiz ishlash
+404.html        — topilmadi sahifasi (mustaqil, style.css ga bog'liq emas)
+robots.txt      — qidiruv tizimlari uchun
+sitemap.xml     — sayt xaritasi
 docs/           — README uchun skrinshotlar
 tools_shot.js   — skrinshotlarni avtomatik yangilash vositasi
 ```

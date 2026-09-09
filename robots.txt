@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://lazizjondusmurodov-create.github.io/mystudent/sitemap.xml
