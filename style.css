@@ -105,8 +105,32 @@ button{font-family:inherit}
 .strip{
   display:flex;gap:9px;overflow-x:auto;padding:18px 18px 4px;
   scrollbar-width:none;-ms-overflow-style:none;scroll-snap-type:x proximity;
+  /* o'ng chetdagi chip yumshoq so'nadi — yonida yana element borligi bilinadi.
+     Maska faqat aylantirish qolganida ko'rinadi: oxirigacha surilganda
+     animation-timeline uni o'chiradi. Qo'llab-quvvatlamagan brauzerda
+     maska doim turadi — bu ham to'g'ri ko'rinadi. */
+  --strip-fade:56px;
+  -webkit-mask-image:linear-gradient(to right,#000 calc(100% - var(--strip-fade)),transparent);
+          mask-image:linear-gradient(to right,#000 calc(100% - var(--strip-fade)),transparent);
 }
 .strip::-webkit-scrollbar{display:none}
+
+/* oxirgi chip maska ostida qolib ketmasin */
+.strip>.pill:last-child{margin-right:16px}
+
+/* oxirigacha surilganda maskani olib tashlaymiz */
+@supports (animation-timeline:scroll(x self)){
+  .strip{
+    animation:stripFade linear both;
+    animation-timeline:scroll(x self);
+    animation-range:contain;
+  }
+  @keyframes stripFade{
+    from{--strip-fade:56px}
+    80%,to{--strip-fade:0px}
+  }
+}
+@property --strip-fade{syntax:'<length>';inherits:false;initial-value:56px}
 .pill{
   flex:0 0 auto;display:inline-flex;align-items:center;gap:8px;
   background:var(--surface);border:1px solid var(--line);border-radius:99px;
