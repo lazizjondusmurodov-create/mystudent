@@ -48,6 +48,7 @@
   --scrim:rgba(28,21,23,.45);          /* modal ortidagi qorayish */
   --sheen:rgba(255,255,255,.08);       /* promo kartadagi yorug' dog' */
   --brand-tint:rgba(192,57,43,.05);    /* tanlangan katakcha foni */
+  --desk-bg:#EAE4E4;        /* keng ekranda ilova atrofidagi maydon */
 
   /* burchaklar — yumshoqroq, zamonaviy */
   --r-sm:14px; --r:20px; --r-lg:26px; --r-xl:32px;
@@ -106,6 +107,7 @@
     --glass-tab:rgba(33,28,30,.92);
     --scrim:rgba(0,0,0,.62); --sheen:rgba(255,255,255,.06);
     --brand-tint:rgba(229,105,91,.12);
+    --desk-bg:#0E0B0C;
 
     color-scheme:dark;
   }
@@ -143,6 +145,7 @@
   --glass-tab:rgba(33,28,30,.92);
   --scrim:rgba(0,0,0,.62); --sheen:rgba(255,255,255,.06);
   --brand-tint:rgba(229,105,91,.12);
+  --desk-bg:#0E0B0C;
 
   color-scheme:dark;
 }
@@ -1674,7 +1677,11 @@ button.row:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
 
 /* ---------- DESKTOP ---------- */
 @media (min-width:560px){
-  body{max-width:430px;margin:0 auto;background:var(--surface);box-shadow:0 0 0 1px var(--line),0 24px 70px rgba(28,21,23,.10)}
+  /* keng ekranda ilova telefon kengligida qoladi.
+     Atrofdagi maydonga fon beramiz — aks holda brauzerning
+     oq foni ko'rinib, ilova chegarasi bilinmay qoladi. */
+  html{background:var(--desk-bg);min-height:100%}
+  body{max-width:430px;margin:0 auto;background:var(--bg);box-shadow:0 0 0 1px var(--line),0 24px 70px rgba(28,21,23,.10)}
   .appbar,.detail__bar{background:var(--glass-bar-2)}
   .tabbar{left:50%;transform:translateX(-50%);width:406px}
   .detail{left:50%;right:auto;width:430px;background:var(--surface);transform:translateX(calc(-50% + 460px))}
