@@ -39,8 +39,17 @@ async function tayyorla(){
   }
 
   const { Pool } = require('pg');
+
+  /* URL ichidagi sslmode/channel_binding parametrlarini olib tashlaymiz.
+     Sabab: pg ularni 'verify-full' deb talqin qiladi va Neon
+     sertifikatida ulanish uzilib qoladi. SSL sozlamasini quyida
+     o'zimiz beramiz — ulanish baribir shifrlangan. */
+  const TOZA_URL = URL.replace(/[?&](sslmode|channel_binding)=[^&]*/g, function(m){
+    return m[0] === '?' ? '?' : '';
+  }).replace(/\?$/, '').replace(/\?&/, '?');
+
   havza = new Pool({
-    connectionString: URL,
+    connectionString: TOZA_URL,
     ssl: sslSozlama(),
     max: 5,
     /* Neon bepul rejada 5 daqiqa harakatsizlikdan keyin uxlaydi.
