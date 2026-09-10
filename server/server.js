@@ -267,7 +267,10 @@ const server = http.createServer(function(req, res){
   statik(req, res, yol);
 });
 
-server.listen(PORT, function(){
+/* 0.0.0.0 — barcha tarmoq interfeyslari.
+   Bulutli hostinglar (Render, Railway) so'rovni tashqaridan
+   yuboradi; faqat localhost tinglansa javob yetib bormaydi. */
+server.listen(PORT, '0.0.0.0', function(){
   console.log('');
   console.log('  MyStudent server ishga tushdi');
   console.log('  Ilova:  http://localhost:' + PORT);
