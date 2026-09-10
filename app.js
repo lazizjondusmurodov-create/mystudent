@@ -3562,6 +3562,43 @@ function markBad(id, on){ $('f_'+id).classList.toggle('is-bad', !!on); }
 /* =========================================================
    14) BILDIRISHNOMALAR
    ========================================================= */
+/* ---------- o'qilgan bildirishnomalar ----------
+
+   Server har safar bir xil ro'yxatni qaytaradi, "o'qildi" belgisi
+   esa foydalanuvchining o'ziga tegishli. Shuning uchun o'qilgan
+   yangiliklarning id'sini shu qurilma xotirasida saqlaymiz —
+   sahifa yangilanganda ular yana "yangi" bo'lib chiqmasin. */
+const OQILGAN_KEY = 'ms.oqilgan';
+
+function oqilganlarOl(){
+  try{
+    const r = JSON.parse(localStorage.getItem(OQILGAN_KEY) || '[]');
+    return Array.isArray(r) ? r : [];
+  }catch(e){ return []; }
+}
+
+function oqilganSaqla(idlar){
+  try{ localStorage.setItem(OQILGAN_KEY, JSON.stringify(idlar)); }catch(e){}
+}
+
+/* Serverdan kelgan ro'yxatga o'qilgan belgisini qo'llaymiz */
+function oqilganlarniQolla(royxat){
+  const oqilgan = oqilganlarOl();
+  royxat.forEach(function(n){
+    if(oqilgan.indexOf(n.id) !== -1) n.isNew = false;
+  });
+  qongiroqNuqtasi(royxat);
+  return royxat;
+}
+
+/* Qo'ng'iroq yonidagi qizil nuqta — o'qilmagani bo'lsagina ko'rinadi */
+function qongiroqNuqtasi(royxat){
+  const dot = $('bellDot');
+  if(!dot) return;
+  const bor = (royxat || NEWS).some(function(n){ return n.isNew; });
+  dot.style.display = bor ? '' : 'none';
+}
+
 $('bellBtn').addEventListener('click', function(){
   haptic();
   const yangi = NEWS.filter(function(n){ return n.isNew; });
@@ -3585,7 +3622,9 @@ $('bellBtn').addEventListener('click', function(){
   const mr = $('markRead');
   if(mr) mr.addEventListener('click', function(){
     NEWS.forEach(function(n){ n.isNew = false; });
-    $('bellDot').style.display = 'none';
+    /* qurilma xotirasiga yozamiz — qayta yuklashda ham o'qilgan qoladi */
+    oqilganSaqla(NEWS.map(function(n){ return n.id; }));
+    qongiroqNuqtasi();
     document.querySelectorAll('.post__new').forEach(function(el){ el.remove(); });
     closeModal();
     toast(t('allMarked'));
@@ -4653,7 +4692,7 @@ function malumotlarniQoy(d){
   if(d.imtihonlar)  EXAMS          = d.imtihonlar;
   if(d.davomat)     ATTENDANCE     = d.davomat;
   if(d.baholar)     GRADES         = d.baholar;
-  if(d.yangiliklar) NEWS           = d.yangiliklar;
+  if(d.yangiliklar) NEWS           = oqilganlarniQolla(d.yangiliklar);
   if(d.kitoblar)    LIBRARY        = d.kitoblar;
   if(d.ishlar)      JOBS           = d.ishlar;
   if(d.yillar)      YEARS          = d.yillar;
