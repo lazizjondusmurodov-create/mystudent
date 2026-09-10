@@ -3,11 +3,19 @@
 Talabalar uchun mobil veb-ilova: dars jadvali, davomat, baholar, imtihonlar,
 kutubxona va karyera bo'limlari bitta joyda. O'zbek, rus va ingliz tillarida.
 
-**Ishlab turgan ilova:** https://mystudent-lspe.onrender.com
-**Statik demo:** https://lazizjondusmurodov-create.github.io/mystudent/
+### 👉 [Ilovani ochish](https://mystudent-lspe.onrender.com)
 
-Ilovani boshqarish — ma'lumot almashtirish, dekanat kodi, baza, domen —
-[QOLLANMA.md](QOLLANMA.md) da.
+Telefondan ham, kompyuterdan ham ochiladi. Ro'yxatdan o'tish shart emas.
+
+> **Eslatma:** bepul hostingda server 15 daqiqa harakatsizlikdan keyin
+> uxlaydi — birinchi ochilish ~50 soniya olishi mumkin, keyingilari tez.
+
+**Nima bor:** haqiqiy backend (Node.js), doimiy ma'lumotlar bazasi
+(PostgreSQL), token bilan himoya, dekanat paneli, uch til, qorong'i
+rejim, internetsiz ishlash (PWA).
+
+Boshqarish qo'llanmasi — ma'lumot almashtirish, dekanat kodi, baza,
+domen ulash — [QOLLANMA.md](QOLLANMA.md) da.
 
 ## Ekranlar
 
@@ -30,6 +38,7 @@ Ilovani boshqarish — ma'lumot almashtirish, dekanat kodi, baza, domen —
 - **Baholar** — semestr bo'yicha, o'rtacha ball, kredit va eng yuqori/past fanlar
 - **Imtihonlar** — jadval va qolgan kunlar hisoblagichi
 - **Qarzdorlik** — akademik va shartnoma bo'yicha, ariza yuborish
+- **Dekanat paneli** — kelgan arizalarni ko'rish, qabul qilish yoki rad etish
 - **Yotoqxona** — joy holati va ariza
 - **Kutubxona** — kitoblar ro'yxati va qidiruv
 - **Karyera** — rezyume, ish takliflari, yutuqlar, mahorat darslari, maqolalar, bloglar, fotogalereya
@@ -39,16 +48,25 @@ Ilovani boshqarish — ma'lumot almashtirish, dekanat kodi, baza, domen —
 
 ## Ishga tushirish
 
-Alohida qurish (build) talab qilinmaydi — oddiy statik sayt:
+Qurish (build) bosqichi yo'q. Node.js 18+ bo'lsa kifoya:
+
+```bash
+node server/server.js
+# brauzerda: http://localhost:3000
+```
+
+Bu to'liq versiya — API, kirish, dekanat paneli ishlaydi.
+
+Faqat interfeysni ko'rish uchun serversiz ham ochsa bo'ladi — u holda
+ma'lumot `data/*.json` dan o'qiladi, ariza yuborish saqlanmaydi:
 
 ```bash
 python -m http.server 8899
-# so'ng brauzerda: http://localhost:8899
 ```
 
 ## Namuna kirish kodlari
 
-Kirish ekranida talabani tanlash mumkin yoki kodni qo'lda kiritish:
+Ilovadagi ma'lumot — namuna. Kodni kirish ekranida qo'lda kiriting:
 
 | Kod | Talaba | Guruh |
 |---|---|---|
@@ -57,32 +75,54 @@ Kirish ekranida talabani tanlash mumkin yoki kodni qo'lda kiritish:
 | `7788` | Rahmonov Sardor | IQT-02-23 |
 | `1111` | Dusmurodov Lazizjon | ATT-06-24 |
 
+Mahalliy ishga tushirilganda kodlar kirish ekranida ro'yxat bo'lib ham
+ko'rinadi — bosish kifoya. Haqiqiy foydalanishda bu ro'yxat `DEMO=off`
+bilan o'chiriladi.
+
+### Dekanat paneli
+
+`DEKANAT_KODI` (odatiy `9999`) bilan kirilsa — barcha talabalarning
+arizalari ko'rinadi, har biriga qabul/rad javobi beriladi. Javob bazaga
+yoziladi va arizani yuborgan talaba uni o'z qurilmasida ko'radi.
+
 ## Tuzilishi
 
 ```
 index.html      — sahifa tuzilmasi va meta teglar
 api.js          — API qatlami: ma'lumot shu yerdan olinadi
-server/         — backend: server.js va db.json
-data/           — statik rejim uchun ma'lumot (server bo'lmaganda)
 app.js          — butun mantiq: tillar, sahifalar, ko'rinish
 style.css       — uslublar (ranglar CSS o'zgaruvchilarida)
+
+server/
+  server.js     — backend: API va statik fayllar
+  baza.js       — PostgreSQL qatlami (DATABASE_URL bo'lsa)
+  db.json       — asosiy ma'lumot manbai
+
+data/           — statik rejim uchun ma'lumot (server bo'lmaganda)
+
 manifest.json   — PWA sozlamalari
 sw.js           — service worker: internetsiz ishlash
 404.html        — topilmadi sahifasi (mustaqil, style.css ga bog'liq emas)
 robots.txt      — qidiruv tizimlari uchun
 sitemap.xml     — sayt xaritasi
+render.yaml     — hosting sozlamasi (Render)
 docs/           — README uchun skrinshotlar
-tools_shot.js   — skrinshotlarni avtomatik yangilash vositasi
-tools_check.js  — loyihani tekshirish vositasi
+
+tools_check.js  — versiya, kesh, manifest, tarjima kalitlarini tekshiradi
+tools_sinov.js  — ma'lumotni tekshiradi: takroriy kodlar, yetishmayotgan
+                  maydonlar, db.json va data/ orasidagi farq
+tools_shot.js   — skrinshotlarni avtomatik yangilash
 ```
+
+**Ikki hujjat:** [README.md](README.md) — texnik tavsif (shu fayl),
+[QOLLANMA.md](QOLLANMA.md) — kundalik boshqaruv.
 
 ## Chiqarishdan oldin
 
 ```bash
-node tools_check.js
+node tools_check.js    # versiya, kesh, manifest, tarjima kalitlari
+node tools_sinov.js    # ma'lumot: kodlar, id lar, ikki manba mosligi
 ```
-
-Versiya raqamlari, kesh ro'yxati, manifest va tarjimalarni tekshiradi.
 
 **Muhim:** `style.css` yoki `app.js` o'zgarsa, `?v=` raqamini
 [index.html](index.html) **va** [sw.js](sw.js) da bir xil qilib yangilang,
@@ -92,15 +132,29 @@ eski nusxa qolib ketadi. `tools_check.js` shuni tekshiradi.
 ## Backend (API server)
 
 Loyihada haqiqiy backend bor — `server/server.js`. Node.js'da yozilgan,
-**tashqi kutubxona talab qilmaydi** (npm install kerak emas).
+veb-server uchun tashqi kutubxona ishlatilmaydi (faqat o'rnatilgan `http`).
 
 ```bash
 node server/server.js
 # so'ng brauzerda: http://localhost:3000
 ```
 
-Ma'lumotlar `server/db.json` faylida saqlanadi. Ariza yuborilsa —
-faylga yoziladi va server qayta ishga tushsa ham qoladi.
+Ma'lumotlar `server/db.json` faylida. Ariza yuborilsa faylga yoziladi va
+server qayta ishga tushsa ham qoladi.
+
+**Bulutda** (`DATABASE_URL` berilganda) arizalar PostgreSQL'ga yoziladi —
+bepul hostingda disk vaqtinchalik bo'lgani uchun. Buning uchun bitta
+kutubxona kerak: `pg`. Mahalliy ishlashda u ishlatilmaydi, shuning uchun
+`npm install` qilmasangiz ham server ishlayveradi.
+
+### Muhit o'zgaruvchilari
+
+| Nomi | Nima qiladi | Odatiy |
+|---|---|---|
+| `PORT` | Port | `3000` |
+| `DATABASE_URL` | PostgreSQL. Bo'lmasa `db.json` ishlatiladi | — |
+| `DEMO` | `off` — kirish kodlari ro'yxati yashiriladi | `on` |
+| `DEKANAT_KODI` | Dekanat paneli kodi | `9999` |
 
 ### Kirish va himoya
 
@@ -117,8 +171,11 @@ Ilova o'zi aniqlaydi qaysi rejimda ishlashini:
 
 | Rejim | Qachon | Ma'lumot manbai |
 |---|---|---|
-| **Server** | `node server/server.js` ishlab tursa | `http://localhost:3000/api/...` |
-| **Statik** | server bo'lmasa (GitHub Pages demo) | `data/*.json` fayllari |
+| **Server** | backend ishlab tursa | `/api/...` |
+| **Statik** | server bo'lmasa | `data/*.json` fayllari |
+
+Statik rejimda ariza yuborish, dekanat paneli va kirish himoyasi
+ishlamaydi — u faqat interfeysni ko'rsatish uchun.
 
 Majburiy tanlash uchun [api.js](api.js) da `API_REJIM` ni `'server'`
 yoki `'statik'` qiling. Boshqa domendagi serverga ulash uchun `API_BASE`
@@ -140,8 +197,19 @@ ni to'ldiring.
 | `GET /fotolar` | `{fotolar:[...]}` |
 | `GET /yotoqxona` | `{yotoqxona:{...}}` |
 | `POST /arizalar` | yangi ariza yozadi → `{ariza}` |
+| `GET /salom` | hayot belgisi → `{holat, vaqt, baza}` |
 
-Token talab qilmaydiganlar: `yangiliklar`, `kutubxona`, `ishlar`, `fotolar`.
+Token talab qilmaydiganlar: `yangiliklar`, `kutubxona`, `ishlar`,
+`fotolar`, `salom`.
+
+**Dekanat** (`DEKANAT_KODI` bilan kirgan):
+
+| Manzil | Qaytaradi |
+|---|---|
+| `GET /dekanat/arizalar` | barcha talabalarning arizalari |
+| `POST /dekanat/holat` | `{id, holat}` — qabul (`ok`) yoki rad (`no`) |
+
+Oddiy talaba bu yo'llarga kira olmaydi.
 
 Barcha so'rovlar parallel ketadi. Ma'lumot kelguncha yuklanish ekrani
 turadi; xato bo'lsa — sabab va "Qayta urinish" tugmasi ko'rsatiladi.
