@@ -21,10 +21,10 @@ let BAZA_BOR = !!URL;   /* ulanish uzilsa o'chiriladi */
 
 let havza = null;   /* pg.Pool — faqat baza rejimida */
 
-/* Render'ning ichki manzili (…-a.oregon-postgres.render.com emas,
-   balki qisqa nomi) SSL talab qilmaydi; tashqi manzil qiladi.
-   Ikkalasida ham ishlashi uchun sertifikat tekshiruvini
-   yumshatamiz — ulanish baribir shifrlangan. */
+/* Bulutli bazalar (Neon, Supabase, Render) SSL talab qiladi.
+   Sertifikat tekshiruvini yumshatamiz — ba'zi hostinglar o'z
+   sertifikatini ishlatadi; ulanish baribir shifrlangan.
+   Mahalliy bazada SSL kerak emas. */
 function sslSozlama(){
   if(/localhost|127\.0\.0\.1/.test(URL)) return false;
   return { rejectUnauthorized: false };
@@ -39,7 +39,22 @@ async function tayyorla(){
   }
 
   const { Pool } = require('pg');
-  havza = new Pool({ connectionString: URL, ssl: sslSozlama(), max: 5 });
+  havza = new Pool({
+    connectionString: URL,
+    ssl: sslSozlama(),
+    max: 5,
+    /* Neon bepul rejada 5 daqiqa harakatsizlikdan keyin uxlaydi.
+       Uyg'onishi bir necha soniya olishi mumkin — standart 30
+       soniyalik kutish yetarli, lekin aniq yozib qo'yamiz. */
+    connectionTimeoutMillis: 30000,
+    idleTimeoutMillis: 30000
+  });
+
+  /* Ulanish uzilsa (Neon uxlaganda bo'ladi) — dastur qulamasin.
+     pg keyingi so'rovda yangi ulanish ochadi. */
+  havza.on('error', function(e){
+    console.warn('Baza ulanishi uzildi:', e.message);
+  });
 
   await havza.query(`
     CREATE TABLE IF NOT EXISTS arizalar (
