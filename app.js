@@ -4252,9 +4252,14 @@ $('promoBtn').addEventListener('click', function(){
    25) RO'YXAT QATORLARI — batafsil oyna
    ========================================================= */
 
-/* barcha ro'yxatlarni bitta indeksga yig'amiz: id -> element */
+/* barcha ro'yxatlarni bitta indeksga yig'amiz: id -> element
+
+   DIQQAT: ma'lumot API'dan keladi, ya'ni bu fayl o'qilganda LIBRARY va
+   JOBS hali bo'sh. Shuning uchun indeks funksiyaga olingan va
+   malumotlarniQoy() ichida qayta chaqiriladi — aks holda kitob
+   bosilganda ITEMS bo'sh bo'lib, oyna ochilmaydi. */
 const ITEMS = {};
-(function indexItems(){
+function indexItems(){
   function qo(list){
     if(!list) return;
     list.forEach(function(x){ if(x && x.id) ITEMS[x.id] = x; });
@@ -4262,7 +4267,8 @@ const ITEMS = {};
   qo(LIBRARY);
   qo(JOBS);
   Object.keys(CAREER).forEach(function(k){ qo(CAREER[k].items); });
-})();
+}
+indexItems();
 
 /* fakt qatori */
 function factRow(label, val){
@@ -4619,6 +4625,10 @@ function malumotlarniQoy(d){
     CAREER.ishlar.items = JOBS;
     if(typeof DATA !== 'undefined') DATA.ishlar = CAREER.ishlar;
   }
+
+  /* endi ma'lumot bor — id -> element indeksini qayta quramiz,
+     shunda qatorlar bosilganda batafsil oyna ochiladi */
+  indexItems();
 
   /* ma'lumotga tayanadigan ro'yxatlarni qayta chizamiz */
   const lib = document.getElementById('libList');
