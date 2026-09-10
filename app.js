@@ -117,6 +117,8 @@ const I18N = {
     required:"To'ldirilishi shart", groupHint:"Guruhni dekanat o'zgartiradi",
     exitTitle:"Tizimdan chiqish", exitSub:"Rostdan ham hisobingizdan chiqmoqchimisiz?",
     sessionEnded:"Sessiya muddati tugadi — qayta kiring",
+    justNow:"Hozirgina", minAgo:"daqiqa oldin", hourAgo:"soat oldin",
+    yesterday:"Kecha", dayAgo:"kun oldin",
 
     /* toast */
     saved:"Ma'lumotlar saqlandi", checkData:"Ma'lumotlarni tekshiring",
@@ -368,6 +370,8 @@ const I18N = {
     required:"Обязательное поле", groupHint:"Группу меняет деканат",
     exitTitle:"Выход из системы", exitSub:"Вы действительно хотите выйти?",
     sessionEnded:"Сеанс истёк — войдите снова",
+    justNow:"Только что", minAgo:"мин. назад", hourAgo:"ч. назад",
+    yesterday:"Вчера", dayAgo:"дн. назад",
 
     saved:"Данные сохранены", checkData:"Проверьте данные",
     passChanged:"Пароль изменён", checkPass:"Проверьте пароли",
@@ -605,6 +609,8 @@ const I18N = {
     required:"This field is required", groupHint:"The group is set by the dean's office",
     exitTitle:"Log out", exitSub:"Are you sure you want to log out?",
     sessionEnded:"Session expired — please sign in again",
+    justNow:"Just now", minAgo:"min ago", hourAgo:"h ago",
+    yesterday:"Yesterday", dayAgo:"d ago",
 
     saved:"Details saved", checkData:"Please check the details",
     passChanged:"Password changed", checkPass:"Please check the passwords",
@@ -1037,6 +1043,40 @@ function mondayOf(d){
 
 /* bugungi sana (ISO) */
 function todayIso(){ return isoDate(new Date()); }
+
+/* "qachon" matnini sanadan hisoblaymiz: "2 soat oldin", "Kecha", ...
+
+   E'lonlarda ilgari bu matn qo'lda yozilgan edi ("2 soat oldin"),
+   shuning uchun vaqt o'tsa ham o'zgarmasdi. Endi db.json dagi
+   `at` (ISO vaqt) dan hisoblanadi va tanlangan tilda chiqadi.
+   `at` bo'lmasa — eski `when` matni ishlatiladi. */
+function qachonMatn(n){
+  const xom = n && n.at;
+  if(!xom) return (n && n.when) ? n.when : '';
+
+  /* diqqat: t() — tarjima funksiyasi, shuning uchun sana boshqa nomda */
+  const vaqt = new Date(xom);
+  if(isNaN(vaqt.getTime())) return n.when || '';
+
+  const daq = Math.floor((Date.now() - vaqt.getTime()) / 60000);
+
+  if(daq < 1)   return t('justNow');
+  if(daq < 60)  return daq + ' ' + t('minAgo');
+
+  const soat = Math.floor(daq / 60);
+  if(soat < 24) return soat + ' ' + t('hourAgo');
+
+  /* kun farqi kalendar bo'yicha: soatlarga qarab emas */
+  const bugun = new Date(); bugun.setHours(0,0,0,0);
+  const kun   = new Date(vaqt); kun.setHours(0,0,0,0);
+  const farq  = Math.round((bugun - kun) / 86400000);
+
+  if(farq === 1) return t('yesterday');
+  if(farq < 7)   return farq + ' ' + t('dayAgo');
+
+  /* eski e'lonlar: "3-sentabr" */
+  return kun.getDate() + '-' + I18N[LANG].months[kun.getMonth()];
+}
 
 /* bir kunning darslari, vaqt bo'yicha tartiblangan */
 function lessonsOn(iso){
@@ -1595,7 +1635,7 @@ function buildNews(){
         '<span class="post__ic"><svg viewBox="0 0 24 24">'+ICONS[n.ic]+'</svg></span>'+
         '<span class="post__from">'+
           '<span class="post__who">'+esc(n.who)+'</span>'+
-          '<span class="post__when">'+esc(n.when)+'</span>'+
+          '<span class="post__when">'+esc(qachonMatn(n))+'</span>'+
         '</span>'+
         (n.isNew ? '<span class="post__new">'+esc(t('newTag'))+'</span>' : '')+
       '</span>'+
@@ -1619,7 +1659,7 @@ function openNews(id){
     return p.trim() ? '<p class="nwx__p">'+esc(p)+'</p>' : '';
   }).join('');
 
-  openModal(n.t, n.who + ' \u00b7 ' + n.when,
+  openModal(n.t, n.who + ' \u00b7 ' + qachonMatn(n),
     '<div class="nwx">'+matn+'</div>'+
     '<button class="btn btn--ghost" id="nwClose">'+esc(t('close'))+'</button>');
 
@@ -3532,7 +3572,7 @@ $('bellBtn').addEventListener('click', function(){
       return '<div class="row"><div class="row__top">'+
         '<div class="row__title">'+esc(n.t)+'</div>'+
         '<span class="badge badge--ok">'+esc(t('newTag'))+'</span></div>'+
-        '<div class="row__meta">'+esc(n.who+' · '+n.when)+'</div></div>';
+        '<div class="row__meta">'+esc(n.who+' · '+qachonMatn(n))+'</div></div>';
     }).join('');
     html += '<button class="btn btn--ghost" id="markRead">'+esc(t('markRead'))+'</button>';
   } else {
