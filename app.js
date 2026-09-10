@@ -116,6 +116,7 @@ const I18N = {
     min6:"Kamida 6 ta belgi", passMismatch:"Parollar mos kelmadi",
     required:"To'ldirilishi shart", groupHint:"Guruhni dekanat o'zgartiradi",
     exitTitle:"Tizimdan chiqish", exitSub:"Rostdan ham hisobingizdan chiqmoqchimisiz?",
+    sessionEnded:"Sessiya muddati tugadi — qayta kiring",
 
     /* toast */
     saved:"Ma'lumotlar saqlandi", checkData:"Ma'lumotlarni tekshiring",
@@ -366,6 +367,7 @@ const I18N = {
     min6:"Минимум 6 символов", passMismatch:"Пароли не совпадают",
     required:"Обязательное поле", groupHint:"Группу меняет деканат",
     exitTitle:"Выход из системы", exitSub:"Вы действительно хотите выйти?",
+    sessionEnded:"Сеанс истёк — войдите снова",
 
     saved:"Данные сохранены", checkData:"Проверьте данные",
     passChanged:"Пароль изменён", checkPass:"Проверьте пароли",
@@ -602,6 +604,7 @@ const I18N = {
     min6:"At least 6 characters", passMismatch:"Passwords do not match",
     required:"This field is required", groupHint:"The group is set by the dean's office",
     exitTitle:"Log out", exitSub:"Are you sure you want to log out?",
+    sessionEnded:"Session expired — please sign in again",
 
     saved:"Details saved", checkData:"Please check the details",
     passChanged:"Password changed", checkPass:"Please check the passwords",
@@ -4644,6 +4647,16 @@ async function ilovaniBoshla(){
     yuklanmoqdaYop();
     checkAuth();
   }catch(e){
+    /* Sessiya eskirgan bo'lsa — xato ekranida qamab qo'ymaymiz.
+       Token allaqachon tozalangan, saqlangan sessiyani ham o'chirib
+       kirish ekranini ko'rsatamiz: foydalanuvchi qayta kira oladi. */
+    if(e && e.qaytaKirish){
+      try{ localStorage.removeItem('ms.auth'); }catch(x){}
+      yuklanmoqdaYop();
+      checkAuth();
+      toast(t('sessionEnded'));
+      return;
+    }
     yuklashXatosi(e && e.message ? e.message : 'Noma\'lum xato');
   }
 }

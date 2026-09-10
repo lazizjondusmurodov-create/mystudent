@@ -91,7 +91,15 @@ async function apiGet(yol){
   }catch(e){
     throw new Error('Tarmoqqa ulanib bo\'lmadi: ' + yol);
   }
-  if(res.status === 401) throw new Error('Sessiya tugagan, qayta kiring');
+  /* Token yaroqsiz (masalan server qayta ishga tushgan — tokenlar
+     xotirada turadi). Uni darhol tozalaymiz, aks holda har bir
+     qayta yuklashda yana 401 keladi va foydalanuvchi qamalib qoladi. */
+  if(res.status === 401){
+    apiLogout();
+    const e = new Error('Sessiya tugagan, qayta kiring');
+    e.qaytaKirish = true;
+    throw e;
+  }
   if(!res.ok) throw new Error('Server xatosi (' + res.status + '): ' + yol);
   try{
     return await res.json();
