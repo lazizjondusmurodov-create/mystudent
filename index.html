@@ -30,7 +30,7 @@
 <meta property="og:url" content="https://lazizjondusmurodov-create.github.io/mystudent/">
 <meta name="twitter:card" content="summary_large_image">
 
-<link rel="stylesheet" href="style.css?v=5.6">
+<link rel="stylesheet" href="style.css?v=5.8">
 </head>
 <body>
 
@@ -339,15 +339,35 @@
   </div>
 </aside>
 
-<script src="api.js?v=5.6"></script>
-<script src="app.js?v=5.6"></script>
+<script src="api.js?v=5.8"></script>
+<script src="app.js?v=5.8"></script>
 
 <!-- internetsiz ishlash uchun service worker.
      file:// orqali ochilganda ro'yxatdan o'tkazilmaydi. -->
 <script>
 if('serviceWorker' in navigator && location.protocol.startsWith('http')){
   window.addEventListener('load', function(){
-    navigator.serviceWorker.register('sw.js').catch(function(){ /* jim: majburiy emas */ });
+    /* updateViaCache:'none' — brauzer sw.js ni o'z keshidan olmasin.
+       Aks holda yangi versiya chiqsa ham eski service worker faol
+       qolib, foydalanuvchi eski app.js/style.css bilan qolib ketadi. */
+    navigator.serviceWorker.register('sw.js', { updateViaCache: 'none' })
+      .then(function(reg){
+        /* har ochilishda yangilanish bor-yo'qligini so'raymiz */
+        reg.update();
+
+        /* yangi versiya tayyor bo'lsa — sahifani bir marta yangilaymiz,
+           shunda foydalanuvchi qo'lda tozalamasdan yangi kodni oladi */
+        reg.addEventListener('updatefound', function(){
+          var yangi = reg.installing;
+          if(!yangi) return;
+          yangi.addEventListener('statechange', function(){
+            if(yangi.state === 'activated' && navigator.serviceWorker.controller){
+              location.reload();
+            }
+          });
+        });
+      })
+      .catch(function(){ /* jim: majburiy emas */ });
   });
 }
 </script>

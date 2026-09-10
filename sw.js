@@ -10,16 +10,16 @@
 
    Versiyani o'zgartirsangiz — eski kesh o'chiriladi.
    ========================================================= */
-const VERSIYA = 'mystudent-v7';
+const VERSIYA = 'mystudent-v9';
 /* index.html qanday so'rasa — shunday keshlaymiz.
    ?v= raqami index.html dagi bilan bir xil bo'lishi shart,
    aks holda brauzer boshqa URL deb biladi va kesh ishlamaydi. */
 const ASOSIY = [
   './',
   './index.html',
-  './style.css?v=5.6',
-  './api.js?v=5.6',
-  './app.js?v=5.6',
+  './style.css?v=5.8',
+  './api.js?v=5.8',
+  './app.js?v=5.8',
   './data/talabalar.json',
   './data/jadval.json',
   './data/imtihonlar.json',
@@ -78,6 +78,40 @@ self.addEventListener('fetch', function(e){
         .catch(function(){
           return caches.match(req).then(function(r){ return r || caches.match('./index.html'); });
         })
+    );
+    return;
+  }
+
+  /* API javoblari: avval tarmoq, ulanmasa keshdan.
+     Bular jonli ma'lumot (baholar, kitoblar, arizalar) — keshdan
+     berilsa foydalanuvchi eskisini ko'rib qoladi. Token bilan
+     kelgan javob ham shu yerda: internetsiz qolganda oxirgi
+     nusxa ko'rsatiladi. */
+  if(new URL(req.url).pathname.indexOf('/api/') === 0){
+    e.respondWith(
+      fetch(req).then(function(res){
+        if(res && res.status === 200){
+          const nusxa = res.clone();
+          caches.open(VERSIYA).then(function(c){ c.put(req, nusxa); });
+        }
+        return res;
+      }).catch(function(){ return caches.match(req); })
+    );
+    return;
+  }
+
+  /* Ma'lumot fayllari: avval tarmoq, ulanmasa keshdan.
+     Bular tez-tez o'zgaradi (yangi kitob, yangi baho) — keshdan
+     berilsa foydalanuvchi eski ma'lumotni ko'rib qoladi. */
+  if(/\/data\/.*\.json$/.test(new URL(req.url).pathname)){
+    e.respondWith(
+      fetch(req).then(function(res){
+        if(res && res.status === 200){
+          const nusxa = res.clone();
+          caches.open(VERSIYA).then(function(c){ c.put(req, nusxa); });
+        }
+        return res;
+      }).catch(function(){ return caches.match(req); })
     );
     return;
   }
