@@ -50,6 +50,10 @@
   --brand-tint:rgba(192,57,43,.05);    /* tanlangan katakcha foni */
   --desk-bg:#EAE4E4;        /* keng ekranda ilova atrofidagi maydon */
 
+  /* desktop tarhi (min-width:1000px) */
+  --side-w:248px;           /* chapdagi doimiy menyu kengligi */
+  --read-w:720px;           /* o'qish qulay bo'lgan mazmun kengligi */
+
   /* burchaklar — yumshoqroq, zamonaviy */
   --r-sm:14px; --r:20px; --r-lg:26px; --r-xl:32px;
 
@@ -1676,16 +1680,123 @@ button.row:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
 .toast.is-on{opacity:1;transform:translate(-50%,0)}
 
 /* ---------- DESKTOP ---------- */
+/* Planshet: ustun biroz kengayadi, mobil ko'rinish saqlanadi.
+   Atrofdagi maydonga fon beramiz — aks holda brauzerning
+   oq foni ko'rinib, ilova chegarasi bilinmay qoladi. */
 @media (min-width:560px){
-  /* keng ekranda ilova telefon kengligida qoladi.
-     Atrofdagi maydonga fon beramiz — aks holda brauzerning
-     oq foni ko'rinib, ilova chegarasi bilinmay qoladi. */
   html{background:var(--desk-bg);min-height:100%}
-  body{max-width:430px;margin:0 auto;background:var(--bg);box-shadow:0 0 0 1px var(--line),0 24px 70px rgba(28,21,23,.10)}
+  body{max-width:560px;margin:0 auto;background:var(--bg);box-shadow:0 0 0 1px var(--line),0 24px 70px rgba(28,21,23,.10)}
   .appbar,.detail__bar{background:var(--glass-bar-2)}
-  .tabbar{left:50%;transform:translateX(-50%);width:406px}
-  .detail{left:50%;right:auto;width:430px;background:var(--surface);transform:translateX(calc(-50% + 460px))}
+  .tabbar{left:50%;transform:translateX(-50%);width:536px}
+  .detail{left:50%;right:auto;width:560px;background:var(--surface);transform:translateX(calc(-50% + 600px))}
   .detail.is-open{transform:translateX(-50%)}
+}
+
+/* =========================================================
+   DESKTOP: ikki ustun — chapda doimiy yon menyu, o'ngda mazmun.
+
+   HTML o'zgarmaydi: pastdagi .tabbar shu yerda chap ustunga
+   aylanadi (tugmalar yonma-yon matn bilan). Ichki sahifa
+   (.detail) telefondagidek ustidan sirg'anib chiqmaydi —
+   o'ng ustunni to'ldiradi.
+   ========================================================= */
+@media (min-width:1000px){
+  body{
+    max-width:none;margin:0;box-shadow:none;background:var(--bg);
+    padding-bottom:0;
+    display:grid;
+    grid-template-columns:var(--side-w) minmax(0,1fr);
+    /* appbar tepada, mazmun ostida — ikkalasi ham o'ng ustunda */
+    grid-template-rows:auto minmax(0,1fr);
+    grid-template-areas:
+      "menyu shapka"
+      "menyu mazmun";
+    min-height:100dvh;
+  }
+  /* menyu ikkala qatorni egallaydi */
+  .tabbar{grid-area:menyu}
+  .appbar{grid-area:shapka}
+  /* barcha ekranlar bitta mazmun katagida joylashadi */
+  .view{grid-area:mazmun;min-width:0}
+
+  /* --- chap ustun: doimiy yon menyu --- */
+  .tabbar{
+    position:sticky;top:0;left:auto;right:auto;bottom:auto;
+    /* 560px blokidagi markazlash bekor qilinadi */
+    transform:none;
+    width:auto;align-self:stretch;
+    display:flex;flex-direction:column;gap:4px;
+    padding:22px 12px;
+    border:0;border-right:1px solid var(--line);border-radius:0;
+    box-shadow:none;background:var(--surface);
+    backdrop-filter:none;-webkit-backdrop-filter:none;
+  }
+  /* menyu tepasidagi nom — ::before bilan, HTML'ga tegmasdan */
+  .tabbar::before{
+    content:"MyStudent";
+    padding:6px 12px 18px;font-size:17px;font-weight:750;
+    letter-spacing:-.03em;color:var(--ink);
+  }
+  .tab{
+    flex-direction:row;justify-content:flex-start;gap:12px;
+    padding:11px 12px;border-radius:14px;font-size:14px;font-weight:600;
+  }
+  .tab svg{width:20px;height:20px;flex:0 0 20px}
+  .tab:active{transform:none}
+  .tab:hover:not(.is-active){background:var(--surface-3);color:var(--ink-2)}
+
+  /* --- o'ng ustun: mazmun --- */
+  .appbar{background:var(--glass-bar-2);padding-left:22px;padding-right:22px}
+  /* menyu doim ochiq — burger tugmasi keraksiz */
+  #openBtn{display:none}
+  .appbar__title{text-align:left;padding-left:2px}
+
+  /* mazmun o'ng ustunda markazlashadi */
+  .view.is-active{display:flex;flex-direction:column;align-items:center}
+  /* har bir ekranning to'g'ridan-to'g'ri bolalari mazmun kengligini oladi
+     (kutubxona/karyera/kabinet ichida .feed yo'q — ular ham kirsin) */
+  .view.is-active>*{width:100%;max-width:var(--read-w)}
+  .feedhead,.strip,.feed{width:100%;max-width:var(--read-w)}
+
+  /* chiplar qatori: desktopda joy bor — aylantirish o'rniga o'raladi,
+     shuning uchun o'ngdagi so'nish maskasi ham kerak emas */
+  .strip{flex-wrap:wrap;overflow:visible;mask-image:none;-webkit-mask-image:none}
+  .strip>.pill:last-child{margin-right:0}
+
+  /* --- ichki sahifa: o'ng ustunni to'ldiradi --- */
+  .detail{
+    position:fixed;top:0;bottom:0;left:var(--side-w);right:0;
+    width:auto;transform:translateX(30px);opacity:0;
+    background:var(--bg);padding-bottom:24px;
+    transition:transform .24s var(--ease),opacity .24s var(--ease),visibility .24s;
+  }
+  .detail.is-open{transform:none;opacity:1}
+  /* sarlavha qatori ham mazmun ustuni bilan tekislanadi —
+     aks holda "Yangilash" tugmasi ekran chetiga yopishib qoladi */
+  .detail__body{max-width:var(--read-w);margin:0 auto;padding-left:22px;padding-right:22px}
+
+  /* appbar mazmun bilan tekislanadi, lekin fon butun kenglikni qoplaydi:
+     shuning uchun fonni grid katakka, tekislashni ichki elementga beramiz */
+  .appbar{
+    max-width:none;width:auto;margin:0;
+    padding-left:max(22px, calc((100% - var(--read-w)) / 2));
+    padding-right:max(22px, calc((100% - var(--read-w)) / 2));
+    border-bottom:1px solid var(--line);
+  }
+  .detail__bar{
+    max-width:none;width:auto;margin:0;
+    padding-left:max(22px, calc((100% - var(--read-w)) / 2));
+    padding-right:max(22px, calc((100% - var(--read-w)) / 2));
+    border-bottom:1px solid var(--line);
+  }
+
+  /* burger menyusi desktopda ochilmaydi */
+  .drawer,.scrim{display:none}
+}
+
+/* Juda keng ekran: mazmun ustuni cheklanadi, ko'z charchamaydi */
+@media (min-width:1600px){
+  .view,.feed,.feedhead,.strip,.detail__body{max-width:900px}
 }
 @media (prefers-reduced-motion:reduce){*{transition-duration:.01ms!important;animation-duration:.01ms!important}}
 
