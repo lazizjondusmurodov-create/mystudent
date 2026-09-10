@@ -32,6 +32,8 @@ const fs   = require('fs');
 const path = require('path');
 const crypto = require('crypto');
 
+const baza = require('./baza');
+
 const PORT = process.env.PORT || 3000;
 const ROOT = path.join(__dirname, '..');     /* loyiha ildizi */
 const DB   = path.join(__dirname, 'db.json');
@@ -211,9 +213,12 @@ async function api(req, res, yol){
   if(yol === '/api/yotoqxona')  return json(res, 200, { yotoqxona: d.yotoqxona });
 
   if(yol === '/api/qarzdorlik'){
+    /* Baza rejimida arizalar PostgreSQL dan keladi (doimiy saqlanadi),
+       aks holda db.json dagi ro'yxatdan. */
+    const arizalar = baza.BAZA_BOR ? await baza.arizalarOl() : d.arizalar;
     return json(res, 200, {
       yillar: d.yillar, akademik: d.akademik,
-      arizalar: d.arizalar, shartnoma: d.shartnoma
+      arizalar: arizalar, shartnoma: d.shartnoma
     });
   }
 
@@ -233,8 +238,12 @@ async function api(req, res, yol){
       holat: 'kutilmoqda',
       sana: new Date().toISOString().slice(0, 10)
     };
-    d.arizalar.unshift(yangi);
-    dbYoz(d);
+    if(baza.BAZA_BOR){
+      await baza.arizaQosh(yangi);
+    }else{
+      d.arizalar.unshift(yangi);
+      dbYoz(d);
+    }
     return json(res, 201, { ariza: yangi });
   }
 
@@ -270,6 +279,21 @@ const server = http.createServer(function(req, res){
 /* 0.0.0.0 — barcha tarmoq interfeyslari.
    Bulutli hostinglar (Render, Railway) so'rovni tashqaridan
    yuboradi; faqat localhost tinglansa javob yetib bormaydi. */
+/* Avval bazani tayyorlaymiz, keyin so'rov qabul qilamiz — aks holda
+   birinchi so'rov jadval yaratilishidan oldin kelib qolishi mumkin.
+   Baza ulanmasa server baribir ko'tariladi: ilova ochiladi, faqat
+   arizalar vaqtinchalik bo'ladi. */
+baza.tayyorla()
+  .then(function(ulandi){
+    if(ulandi) return baza.boshlangichKochir(dbOqi().arizalar);
+  })
+  .catch(function(e){
+    console.warn('  Baza ulanmadi (' + e.message + ') — arizalar vaqtinchalik');
+    baza.BAZA_BOR = false;
+  })
+  .then(ishgaTushir, ishgaTushir);
+
+function ishgaTushir(){
 server.listen(PORT, '0.0.0.0', function(){
   console.log('');
   console.log('  MyStudent server ishga tushdi');
@@ -279,3 +303,4 @@ server.listen(PORT, '0.0.0.0', function(){
   console.log('  To\'xtatish: Ctrl+C');
   console.log('');
 });
+}

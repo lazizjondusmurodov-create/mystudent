@@ -1,10 +1,28 @@
 # Render.com uchun sozlama — bepul reja.
+#
+# Bu fayl ikki narsani yaratadi:
+#   1) veb-servis  — ilovaning o'zi
+#   2) PostgreSQL  — arizalar doimiy saqlanadigan baza
+#
+# Render bazani o'zi yaratib, DATABASE_URL ni servisga uzatadi.
+# Qo'lda hech narsa nusxalash shart emas.
+
+databases:
+  - name: mystudent-baza
+    plan: free
+    databaseName: mystudent
+    user: mystudent
+
 services:
   - type: web
     name: mystudent
     runtime: node
     plan: free
-    # Tashqi kutubxona yo'q, lekin Render bo'sh buyruqni yoqtirmaydi
-    buildCommand: echo "qurish shart emas"
+    buildCommand: npm install
     startCommand: npm start
     healthCheckPath: /api/yangiliklar
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: mystudent-baza
+          property: connectionString
