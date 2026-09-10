@@ -5,10 +5,16 @@ kutubxona va karyera bo'limlari bitta joyda. O'zbek, rus va ingliz tillarida.
 
 ### 👉 [Ilovani ochish](https://mystudent-lspe.onrender.com)
 
-Telefondan ham, kompyuterdan ham ochiladi. Ro'yxatdan o'tish shart emas.
+To'liq versiya: backend, ma'lumotlar bazasi, kirish himoyasi, dekanat
+paneli. Telefondan ham, kompyuterdan ham ochiladi.
 
-> **Eslatma:** bepul hostingda server 15 daqiqa harakatsizlikdan keyin
-> uxlaydi — birinchi ochilish ~50 soniya olishi mumkin, keyingilari tez.
+> Bepul hostingda server 15 daqiqa harakatsizlikdan keyin uxlaydi —
+> birinchi ochilish ~50 soniya olishi mumkin, keyingilari tez.
+
+Faqat interfeysni tez ko'rish uchun —
+[statik demo](https://lazizjondusmurodov-create.github.io/mystudent/)
+(darhol ochiladi, lekin serversiz: ariza yuborish saqlanmaydi, dekanat
+paneli ishlamaydi).
 
 **Nima bor:** haqiqiy backend (Node.js), doimiy ma'lumotlar bazasi
 (PostgreSQL), token bilan himoya, dekanat paneli, uch til, qorong'i

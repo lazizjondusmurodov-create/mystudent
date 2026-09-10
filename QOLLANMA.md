@@ -214,7 +214,33 @@ shart emas.
 
 ---
 
-## 8. Muammo bo'lsa
+## 8. Ikkita manzil
+
+Ilova ikki joyda turadi — farqini bilib qo'ying:
+
+| | Render | GitHub Pages |
+|---|---|---|
+| Manzil | `mystudent-lspe.onrender.com` | `...github.io/mystudent/` |
+| Backend | bor | **yo'q** |
+| Ariza yuborish | bazaga yoziladi | saqlanmaydi |
+| Dekanat paneli | ishlaydi | **ishlamaydi** |
+| Kirish himoyasi | server tekshiradi | yo'q |
+| Ma'lumot manbai | `server/db.json` | `data/*.json` |
+| Uxlaydimi | 15 daqiqadan keyin | yo'q, doim tez |
+
+**Odamlarga Render havolasini bering.** Pages faqat interfeysni tez
+ko'rsatish uchun.
+
+Ikkalasi ham `main` shoxidan avtomatik yangilanadi — `git push` qilsangiz
+2-3 daqiqada ikkalasi ham yangilanadi. Shuning uchun `data/*.json` ni
+`server/db.json` bilan mos tutish muhim (2-bo'limga qarang).
+
+Pages kerak bo'lmasa: GitHub → repo → **Settings** → **Pages** →
+**Source: None**.
+
+---
+
+## 9. Muammo bo'lsa
 
 **Render → Logs** birinchi qaraladigan joy. Ishga tushishda quyidagi
 satrlar chiqadi:
