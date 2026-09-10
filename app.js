@@ -925,6 +925,25 @@ function td(s){
   return str;
 }
 
+/* tdm(obyekt, 'maydon') — ma'lumotdagi matnni joriy tilga o'giradi.
+
+   Yangiliklar, kitoblar va ish e'lonlari uzun matnlardan iborat —
+   ularni lug'at orqali o'girib bo'lmaydi. Shuning uchun tarjima
+   ma'lumotning o'zida yonma-yon saqlanadi:
+
+     { "t": "Sessiya jadvali", "t_ru": "Расписание сессии",
+                               "t_en": "Exam schedule" }
+
+   Tarjima yo'q bo'lsa asl matn qaytadi — ilova baribir ishlaydi,
+   faqat o'sha bo'lak o'zbekcha ko'rinadi. */
+function tdm(obj, maydon){
+  if(!obj) return '';
+  const asl = obj[maydon];
+  if(LANG === 'uz') return asl;
+  const tarjima = obj[maydon + '_' + LANG];
+  return (tarjima !== undefined && tarjima !== '') ? tarjima : td(asl);
+}
+
 /* qavat matni: uz "4-qavat", ru "этаж 4", en "floor 4" */
 function qavatText(n){
   if(LANG === 'uz') return n + '-' + t('dormFloor').toLowerCase();
@@ -1368,14 +1387,14 @@ const CAREER = {
 function badgeHTML(r){
   if(!r.b) return '';
   const cls = r.no ? 'badge--no' : r.mute ? 'badge--mute' : r.ok ? 'badge--ok' : 'badge--warn';
-  return '<span class="badge '+cls+'">'+esc(td(r.b))+'</span>';
+  return '<span class="badge '+cls+'">'+esc(tdm(r,'b'))+'</span>';
 }
 function rowHTML(r){
   const badge = badgeHTML(r);
   const right = r.s ? '<div class="row__sum">'+esc(r.s)+'</div>' : badge;
   const extra = (r.s && r.b) ? '<div style="margin-top:9px">'+badge+'</div>' : '';
-  const ichi  = '<div class="row__top"><div class="row__title">'+esc(td(r.t))+'</div>'+right+
-                '</div><div class="row__meta">'+esc(td(r.m))+'</div>'+extra;
+  const ichi  = '<div class="row__top"><div class="row__title">'+esc(tdm(r,'t'))+'</div>'+right+
+                '</div><div class="row__meta">'+esc(tdm(r,'m'))+'</div>'+extra;
 
   /* id bo'lsa — bosiladigan tugma */
   if(r.id) return '<button class="row" data-item="'+esc(r.id)+'">'+ichi+'</button>';
@@ -1634,13 +1653,13 @@ function buildNews(){
       '<span class="post__top">'+
         '<span class="post__ic"><svg viewBox="0 0 24 24">'+ICONS[n.ic]+'</svg></span>'+
         '<span class="post__from">'+
-          '<span class="post__who">'+esc(n.who)+'</span>'+
+          '<span class="post__who">'+esc(tdm(n,'who'))+'</span>'+
           '<span class="post__when">'+esc(qachonMatn(n))+'</span>'+
         '</span>'+
         (n.isNew ? '<span class="post__new">'+esc(t('newTag'))+'</span>' : '')+
       '</span>'+
-      '<span class="post__t">'+esc(n.t)+'</span>'+
-      '<span class="post__x">'+esc(n.x)+'</span>'+
+      '<span class="post__t">'+esc(tdm(n,'t'))+'</span>'+
+      '<span class="post__x">'+esc(tdm(n,'x'))+'</span>'+
       (n.full ? '<span class="post__more">'+esc(t('readMore'))+
                 '<svg viewBox="0 0 8 14"><path d="M1 1l6 6-6 6"/></svg></span>' : '')+
     '</button>';
@@ -1655,11 +1674,11 @@ function openNews(id){
   haptic();
 
   /* to'liq matn: qatorlarga ajratamiz */
-  const matn = (n.full || n.x).split('\n').map(function(p){
+  const matn = (tdm(n,'full') || tdm(n,'x')).split('\n').map(function(p){
     return p.trim() ? '<p class="nwx__p">'+esc(p)+'</p>' : '';
   }).join('');
 
-  openModal(n.t, n.who + ' \u00b7 ' + qachonMatn(n),
+  openModal(tdm(n,'t'), tdm(n,'who') + ' \u00b7 ' + qachonMatn(n),
     '<div class="nwx">'+matn+'</div>'+
     '<button class="btn btn--ghost" id="nwClose">'+esc(t('close'))+'</button>');
 
@@ -3607,9 +3626,9 @@ $('bellBtn').addEventListener('click', function(){
   if(yangi.length){
     html = yangi.map(function(n){
       return '<div class="row"><div class="row__top">'+
-        '<div class="row__title">'+esc(n.t)+'</div>'+
+        '<div class="row__title">'+esc(tdm(n,'t'))+'</div>'+
         '<span class="badge badge--ok">'+esc(t('newTag'))+'</span></div>'+
-        '<div class="row__meta">'+esc(n.who+' · '+qachonMatn(n))+'</div></div>';
+        '<div class="row__meta">'+esc(tdm(n,'who')+' · '+qachonMatn(n))+'</div></div>';
     }).join('');
     html += '<button class="btn btn--ghost" id="markRead">'+esc(t('markRead'))+'</button>';
   } else {
@@ -4362,39 +4381,43 @@ function factRow(label, val){
 function itemFacts(x){
   let f = '';
 
+  /* fakt qiymati ham tarjima qilinadi: avval ma'lumotdagi
+     tarjima maydoni (mode_ru), bo'lmasa lug'at (td). */
+  const F = function(label, maydon){ return factRow(label, tdm(x, maydon)); };
+
   /* kutubxona */
-  f += factRow(t('author'),   x.author);
-  f += factRow(t('year'),     x.year);
-  f += factRow(t('format'),   x.fmt);
-  f += factRow(t('pages'),    x.pages);
-  f += factRow(t('bookLang'), x.lang);
-  f += factRow(t('backOn'),   x.back);
+  f += F(t('author'), 'author');
+  f += F(t('year'), 'year');
+  f += F(t('format'), 'fmt');
+  f += F(t('pages'), 'pages');
+  f += F(t('bookLang'), 'lang');
+  f += F(t('backOn'), 'back');
 
   /* ish o'rni */
-  f += factRow(t('company'),  x.company);
-  f += factRow(t('place'),    x.place);
-  f += factRow(t('workMode'), x.mode);
-  f += factRow(t('salary'),   x.salary);
+  f += F(t('company'), 'company');
+  f += F(t('place'), 'place');
+  f += F(t('workMode'), 'mode');
+  f += F(t('salary'), 'salary');
 
   /* yutuq */
-  f += factRow(t('result'),   x.result);
-  f += factRow(t('organizer'),x.org);
-  f += factRow(t('dateWord'), x.date);
+  f += F(t('result'), 'result');
+  f += F(t('organizer'), 'org');
+  f += F(t('dateWord'), 'date');
 
   /* mahorat darsi */
-  f += factRow(t('teacher'),  x.teacher);
-  f += factRow(t('lessons'),  x.count);
-  f += factRow(t('duration'), x.dur);
-  f += factRow(t('level'),    x.level);
+  f += F(t('teacher'), 'teacher');
+  f += F(t('lessons'), 'count');
+  f += F(t('duration'), 'dur');
+  f += F(t('level'), 'level');
 
   /* maqola */
-  f += factRow(t('source'),   x.source);
-  f += factRow(t('advisor'),  x.coauthor);
+  f += F(t('source'), 'source');
+  f += F(t('advisor'), 'coauthor');
 
   /* blog */
-  f += factRow(t('readTime'), x.read);
-  f += factRow(t('views'),    x.views);
-  if(x.read) f += factRow(t('dateWord'), x.date);
+  f += F(t('readTime'), 'read');
+  f += F(t('views'), 'views');
+  if(x.read) f += F(t('dateWord'), 'date');
 
   return f ? '<div class="dt__facts">'+f+'</div>' : '';
 }
@@ -4423,7 +4446,7 @@ function openItem(id){
   haptic();
 
   let html = '';
-  if(x.x) html += '<p class="dt__x">'+esc(x.x)+'</p>';
+  if(x.x) html += '<p class="dt__x">'+esc(tdm(x,'x'))+'</p>';
 
   /* mahorat darsi — progress */
   if(x.progress !== undefined && x.progress > 0){
@@ -4444,7 +4467,7 @@ function openItem(id){
   html += itemAction(x);
   html += '<button class="btn btn--ghost" id="itemClose">'+esc(t('close'))+'</button>';
 
-  openModal(x.t, x.m, html);
+  openModal(tdm(x,'t'), tdm(x,'m'), html);
 
   $('itemClose').addEventListener('click', closeModal);
 
@@ -4618,7 +4641,13 @@ function showDemoCode(){
   const box = $('demoBox');
   if(!box) return;
 
-  const royxat = DEMO_ROYXAT.length ? DEMO_ROYXAT : TALABALAR;
+  /* Server rejimida ro'yxat faqat /api/demo dan keladi. Server uni
+     bo'sh qaytarsa (DEMO=off) — kodlar ko'rsatilmaydi. TALABALAR ga
+     qaytish faqat statik rejimda o'rinli, aks holda o'chirilgan
+     namuna rejimi baribir kodlarni ochib qo'yardi. */
+  const serverRejimi = (typeof API_SERVER_BOR !== 'undefined') && API_SERVER_BOR;
+  const royxat = serverRejimi ? DEMO_ROYXAT
+                              : (DEMO_ROYXAT.length ? DEMO_ROYXAT : TALABALAR);
   if(!royxat.length){ box.innerHTML = ''; return; }
 
   /* namuna rejimi: har bir talabaning kodi ko'rsatiladi */

@@ -12,7 +12,17 @@
       "pages": 312,
       "lang": "O'zbek",
       "x": "Relatsion ma'lumotlar bazalari nazariyasi, SQL tili va normallashtirish qoidalari. Amaliy misollar bilan.",
-      "act": "download"
+      "act": "download",
+      "t_ru": "Основы баз данных",
+      "t_en": "Database Fundamentals",
+      "m_ru": "А. Каримов · 2024 · PDF, 312 стр.",
+      "m_en": "A. Karimov · 2024 · PDF, 312 pages",
+      "b_ru": "В наличии",
+      "b_en": "Available",
+      "lang_ru": "Узбекский",
+      "lang_en": "Uzbek",
+      "x_ru": "Теория реляционных баз данных, язык SQL и правила нормализации. С практическими примерами.",
+      "x_en": "Relational database theory, SQL and normalisation rules, with practical examples."
     },
     {
       "id": "lib2",
@@ -26,7 +36,15 @@
       "pages": 248,
       "lang": "O'zbek",
       "x": "Zamonaviy veb-sahifa yaratish: semantik HTML, moslashuvchan CSS va JavaScript asoslari.",
-      "act": "download"
+      "act": "download",
+      "t_ru": "Веб-разработка: HTML, CSS, JS",
+      "t_en": "Web Development: HTML, CSS, JS",
+      "b_ru": "В наличии",
+      "b_en": "Available",
+      "lang_ru": "Узбекский",
+      "lang_en": "Uzbek",
+      "x_ru": "Создание современных веб-интерфейсов: вёрстка, стили и работа с JavaScript.",
+      "x_en": "Building modern web interfaces: markup, styling and working with JavaScript."
     },
     {
       "id": "lib3",
@@ -41,7 +59,15 @@
       "lang": "O'zbek",
       "x": "Python sintaksisi, ma'lumot tuzilmalari va standart kutubxona. Boshlang'ich daraja uchun.",
       "act": "busy",
-      "back": "18.09.2026"
+      "back": "18.09.2026",
+      "t_ru": "Язык программирования Python",
+      "t_en": "The Python Programming Language",
+      "b_ru": "Занята",
+      "b_en": "On loan",
+      "lang_ru": "Русский",
+      "lang_en": "Russian",
+      "x_ru": "Основы Python: типы данных, функции, работа с файлами и модулями.",
+      "x_en": "Python basics: data types, functions, files and modules."
     },
     {
       "id": "lib4",
@@ -55,7 +81,15 @@
       "pages": 190,
       "lang": "O'zbek",
       "x": "Jarayonlar, xotira boshqaruvi, fayl tizimlari va ko'p vazifali ishlash tamoyillari.",
-      "act": "download"
+      "act": "download",
+      "t_ru": "Операционные системы",
+      "t_en": "Operating Systems",
+      "b_ru": "В наличии",
+      "b_en": "Available",
+      "lang_ru": "Узбекский",
+      "lang_en": "Uzbek",
+      "x_ru": "Процессы, память, файловые системы и основы многозадачности.",
+      "x_en": "Processes, memory, file systems and the basics of multitasking."
     }
   ]
 }

@@ -17,7 +17,21 @@
         "JavaScript",
         "Git"
       ],
-      "act": "apply"
+      "act": "apply",
+      "t_ru": "Frontend-разработчик (стажёр)",
+      "t_en": "Frontend Developer (intern)",
+      "m_ru": "Самарканд · Неполный день · HTML, CSS, JS",
+      "m_en": "Samarkand · Part-time · HTML, CSS, JS",
+      "b_ru": "Открыта",
+      "b_en": "Open",
+      "place_ru": "Самарканд",
+      "place_en": "Samarkand",
+      "mode_ru": "Неполный рабочий день",
+      "mode_en": "Part-time",
+      "salary_ru": "от 3 000 000 сум",
+      "salary_en": "from 3,000,000 UZS",
+      "x_ru": "Разработка и поддержка интерфейсов существующих веб-приложений под руководством опытного разработчика.",
+      "x_en": "Building and maintaining interfaces for existing web applications under the guidance of a senior developer."
     },
     {
       "id": "job2",
@@ -36,7 +50,17 @@
         "PostgreSQL",
         "Docker"
       ],
-      "act": "apply"
+      "act": "apply",
+      "t_ru": "Backend-разработчик (junior)",
+      "t_en": "Backend Developer (junior)",
+      "b_ru": "Открыта",
+      "b_en": "Open",
+      "place_ru": "Самарканд",
+      "place_en": "Samarkand",
+      "mode_ru": "Полный рабочий день",
+      "mode_en": "Full-time",
+      "x_ru": "Разработка серверной части и API. Работа с базой данных.",
+      "x_en": "Server-side and API development, working with the database."
     },
     {
       "id": "job3",
@@ -54,7 +78,17 @@
         "Tarmoq",
         "Texnik xizmat"
       ],
-      "act": "closed"
+      "act": "closed",
+      "t_ru": "Специалист технической поддержки",
+      "t_en": "Technical Support Specialist",
+      "b_ru": "Закрыта",
+      "b_en": "Closed",
+      "place_ru": "Самарканд",
+      "place_en": "Samarkand",
+      "mode_ru": "Сменный график",
+      "mode_en": "Shift work",
+      "x_ru": "Помощь пользователям, настройка оборудования и программного обеспечения.",
+      "x_en": "Helping users, setting up hardware and software."
     }
   ]
 }

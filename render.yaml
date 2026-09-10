@@ -21,7 +21,7 @@ services:
     plan: free
     buildCommand: npm install
     startCommand: npm start
-    healthCheckPath: /api/yangiliklar
+    healthCheckPath: /api/salom
     envVars:
       # Qiymat Render panelidan kiritiladi (sync: false — bu yerda
       # yozilmaydi, chunki maxfiy parol git'ga tushmasligi kerak).

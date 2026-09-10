@@ -35,6 +35,10 @@ const crypto = require('crypto');
 const baza = require('./baza');
 
 const PORT = process.env.PORT || 3000;
+
+/* Namuna (demo) rejimi: kirish kodlari ilovada ochiq ko'rsatiladimi.
+   Haqiqiy foydalanishda hostingda DEMO=off qo'ying. */
+const DEMO_YONIQ = String(process.env.DEMO || 'on').toLowerCase() !== 'off';
 const ROOT = path.join(__dirname, '..');     /* loyiha ildizi */
 const DB   = path.join(__dirname, 'db.json');
 
@@ -173,13 +177,33 @@ async function api(req, res, yol){
   }
 
   /* --- namuna kodlari (demo ilova uchun) ---
-     Haqiqiy tizimda bu endpoint BO'LMAYDI: kirish kodlari
-     hech qachon ochiq ko'rsatilmaydi. Bu faqat namoyish uchun. */
+
+     Bu endpoint kirish kodlarini ochiq ko'rsatadi — namoyish uchun
+     qulay, haqiqiy tizim uchun xavfli.
+
+     O'chirish: hostingda DEMO=off muhit o'zgaruvchisini qo'ying.
+     Shunda ro'yxat ham, ilovadagi "namuna kodlar" oynasi ham
+     yo'qoladi va kirish faqat haqiqiy kod bilan bo'ladi. */
   if(yol === '/api/demo'){
+    if(!DEMO_YONIQ) return json(res, 200, { demo: [] });
     return json(res, 200, {
       demo: d.talabalar.map(function(t){
         return { kod: t.kod, name: t.name, group: t.group };
       })
+    });
+  }
+
+  /* --- hayot belgisi ---
+     Bepul hostingda server 15 daqiqa harakatsizlikdan keyin uxlaydi
+     va keyingi tashrifchi ~50 soniya kutadi. Tashqi xizmat (masalan
+     cron-job.org) shu manzilni har 10 daqiqada so'rab tursa, server
+     uyg'oq qoladi. Endpoint ataylab yengil: bazaga ham, diskka ham
+     tegmaydi. */
+  if(yol === '/api/salom'){
+    return json(res, 200, {
+      holat: 'ishlayapti',
+      vaqt: new Date().toISOString(),
+      baza: baza.BAZA_BOR ? 'ulangan' : 'yo\'q'
     });
   }
 
@@ -306,6 +330,9 @@ server.listen(PORT, '0.0.0.0', function(){
   console.log('  MyStudent server ishga tushdi');
   console.log('  Ilova:  http://localhost:' + PORT);
   console.log('  API:    http://localhost:' + PORT + '/api/');
+  console.log('  Namuna rejimi: ' + (DEMO_YONIQ
+    ? 'YONIQ — kirish kodlari ochiq (o\'chirish: DEMO=off)'
+    : 'o\'chiq — kodlar ko\'rsatilmaydi'));
   console.log('');
   console.log('  To\'xtatish: Ctrl+C');
   console.log('');

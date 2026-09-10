@@ -376,7 +376,21 @@
         "JavaScript",
         "Git"
       ],
-      "act": "apply"
+      "act": "apply",
+      "t_ru": "Frontend-разработчик (стажёр)",
+      "t_en": "Frontend Developer (intern)",
+      "m_ru": "Самарканд · Неполный день · HTML, CSS, JS",
+      "m_en": "Samarkand · Part-time · HTML, CSS, JS",
+      "b_ru": "Открыта",
+      "b_en": "Open",
+      "place_ru": "Самарканд",
+      "place_en": "Samarkand",
+      "mode_ru": "Неполный рабочий день",
+      "mode_en": "Part-time",
+      "salary_ru": "от 3 000 000 сум",
+      "salary_en": "from 3,000,000 UZS",
+      "x_ru": "Разработка и поддержка интерфейсов существующих веб-приложений под руководством опытного разработчика.",
+      "x_en": "Building and maintaining interfaces for existing web applications under the guidance of a senior developer."
     },
     {
       "id": "job2",
@@ -395,7 +409,17 @@
         "PostgreSQL",
         "Docker"
       ],
-      "act": "apply"
+      "act": "apply",
+      "t_ru": "Backend-разработчик (junior)",
+      "t_en": "Backend Developer (junior)",
+      "b_ru": "Открыта",
+      "b_en": "Open",
+      "place_ru": "Самарканд",
+      "place_en": "Samarkand",
+      "mode_ru": "Полный рабочий день",
+      "mode_en": "Full-time",
+      "x_ru": "Разработка серверной части и API. Работа с базой данных.",
+      "x_en": "Server-side and API development, working with the database."
     },
     {
       "id": "job3",
@@ -413,7 +437,17 @@
         "Tarmoq",
         "Texnik xizmat"
       ],
-      "act": "closed"
+      "act": "closed",
+      "t_ru": "Специалист технической поддержки",
+      "t_en": "Technical Support Specialist",
+      "b_ru": "Закрыта",
+      "b_en": "Closed",
+      "place_ru": "Самарканд",
+      "place_en": "Samarkand",
+      "mode_ru": "Сменный график",
+      "mode_en": "Shift work",
+      "x_ru": "Помощь пользователям, настройка оборудования и программного обеспечения.",
+      "x_en": "Helping users, setting up hardware and software."
     }
   ],
   "semestrlar": [
@@ -631,7 +665,17 @@
       "pages": 312,
       "lang": "O'zbek",
       "x": "Relatsion ma'lumotlar bazalari nazariyasi, SQL tili va normallashtirish qoidalari. Amaliy misollar bilan.",
-      "act": "download"
+      "act": "download",
+      "t_ru": "Основы баз данных",
+      "t_en": "Database Fundamentals",
+      "m_ru": "А. Каримов · 2024 · PDF, 312 стр.",
+      "m_en": "A. Karimov · 2024 · PDF, 312 pages",
+      "b_ru": "В наличии",
+      "b_en": "Available",
+      "lang_ru": "Узбекский",
+      "lang_en": "Uzbek",
+      "x_ru": "Теория реляционных баз данных, язык SQL и правила нормализации. С практическими примерами.",
+      "x_en": "Relational database theory, SQL and normalisation rules, with practical examples."
     },
     {
       "id": "lib2",
@@ -645,7 +689,15 @@
       "pages": 248,
       "lang": "O'zbek",
       "x": "Zamonaviy veb-sahifa yaratish: semantik HTML, moslashuvchan CSS va JavaScript asoslari.",
-      "act": "download"
+      "act": "download",
+      "t_ru": "Веб-разработка: HTML, CSS, JS",
+      "t_en": "Web Development: HTML, CSS, JS",
+      "b_ru": "В наличии",
+      "b_en": "Available",
+      "lang_ru": "Узбекский",
+      "lang_en": "Uzbek",
+      "x_ru": "Создание современных веб-интерфейсов: вёрстка, стили и работа с JavaScript.",
+      "x_en": "Building modern web interfaces: markup, styling and working with JavaScript."
     },
     {
       "id": "lib3",
@@ -660,7 +712,15 @@
       "lang": "O'zbek",
       "x": "Python sintaksisi, ma'lumot tuzilmalari va standart kutubxona. Boshlang'ich daraja uchun.",
       "act": "busy",
-      "back": "18.09.2026"
+      "back": "18.09.2026",
+      "t_ru": "Язык программирования Python",
+      "t_en": "The Python Programming Language",
+      "b_ru": "Занята",
+      "b_en": "On loan",
+      "lang_ru": "Русский",
+      "lang_en": "Russian",
+      "x_ru": "Основы Python: типы данных, функции, работа с файлами и модулями.",
+      "x_en": "Python basics: data types, functions, files and modules."
     },
     {
       "id": "lib4",
@@ -674,7 +734,15 @@
       "pages": 190,
       "lang": "O'zbek",
       "x": "Jarayonlar, xotira boshqaruvi, fayl tizimlari va ko'p vazifali ishlash tamoyillari.",
-      "act": "download"
+      "act": "download",
+      "t_ru": "Операционные системы",
+      "t_en": "Operating Systems",
+      "b_ru": "В наличии",
+      "b_en": "Available",
+      "lang_ru": "Узбекский",
+      "lang_en": "Uzbek",
+      "x_ru": "Процессы, память, файловые системы и основы многозадачности.",
+      "x_en": "Processes, memory, file systems and the basics of multitasking."
     }
   ],
   "yillar": [
@@ -801,7 +869,15 @@
       "tone": "",
       "isNew": true,
       "full": "Hurmatli talabalar!\n\n2026-2027 o'quv yili qishki imtihon sessiyasi jadvali tasdiqlandi. Imtihonlar 10-yanvardan 28-yanvarga qadar davom etadi.\n\nHar bir fan bo'yicha imtihon sanasi, vaqti va xonasi \"Imtihonlar\" bo'limida ko'rsatilgan. Imtihonga kirish uchun talaba guvohnomasi majburiy.\n\nAkademik qarzdorligi bo'lgan talabalar sessiya boshlanishidan oldin dekanatga murojaat qilishlari shart.",
-      "at": "2026-09-10T12:44:11.331Z"
+      "at": "2026-09-10T12:44:11.331Z",
+      "who_ru": "Деканат",
+      "who_en": "Dean's office",
+      "t_ru": "Опубликовано расписание зимней сессии",
+      "t_en": "Winter exam schedule published",
+      "x_ru": "Экзамены начинаются 10 января. Подробное расписание можно скачать в кабинете.",
+      "x_en": "Exams start on 10 January. The full schedule is available in your account.",
+      "full_ru": "Уважаемые студенты!\n\nРасписание зимней экзаменационной сессии 2026-2027 учебного года утверждено. Экзамены продлятся с 10 по 28 января.\n\nДата, время и аудитория экзамена по каждому предмету указаны в разделе «Экзамены». Студенческий билет обязателен для допуска к экзамену.\n\nСтуденты с академической задолженностью обязаны обратиться в деканат до начала сессии.",
+      "full_en": "Dear students,\n\nThe winter examination schedule for the 2026-2027 academic year has been approved. Exams run from 10 to 28 January.\n\nThe date, time and room for each subject are listed in the \"Exams\" section. Your student ID is required for admission to every exam.\n\nStudents with academic debt must contact the dean's office before the session begins."
     },
     {
       "id": "n2",
@@ -813,7 +889,13 @@
       "tone": "ok",
       "isNew": true,
       "full": "Elektron kutubxona fondi yangilandi.\n\nDasturlash, ma'lumotlar bazasi va axborot xavfsizligi yo'nalishlari bo'yicha 12 ta yangi nashr qo'shildi. Ular orasida 2025-2026 yillarda chop etilgan darsliklar va o'quv qo'llanmalari bor.\n\nKitoblarni \"Kutubxona\" bo'limidan yuklab olishingiz mumkin. Bosma nashrlar uchun kutubxonaga shaxsan murojaat qiling.",
-      "at": "2026-09-09T12:44:11.332Z"
+      "at": "2026-09-09T12:44:11.332Z",
+      "who_ru": "Библиотека",
+      "who_en": "Library",
+      "t_ru": "Добавлены новые электронные книги",
+      "t_en": "New e-books added",
+      "x_ru": "В электронный каталог добавлены учебники по программированию и базам данных.",
+      "x_en": "Programming and database textbooks have been added to the digital catalogue."
     },
     {
       "id": "n3",
@@ -825,7 +907,13 @@
       "tone": "warn",
       "isNew": false,
       "full": "Ishlab chiqarish amaliyoti hisobotlarini topshirish muddati — 20-sentabr.\n\nHisobot quyidagilarni o'z ichiga olishi kerak:\n• Amaliyot o'tagan tashkilot haqida ma'lumot\n• Bajarilgan ishlar tavsifi\n• Rahbar tomonidan tasdiqlangan tavsifnoma\n• Kundalik daftar\n\nBelgilangan muddatda topshirilmagan hisobotlar qabul qilinmaydi.",
-      "at": "2026-09-07T14:44:11.332Z"
+      "at": "2026-09-07T14:44:11.332Z",
+      "who_ru": "Учебный отдел",
+      "who_en": "Academic office",
+      "t_ru": "Срок сдачи отчёта по практике",
+      "t_en": "Internship report deadline",
+      "x_ru": "Отчёты принимаются до конца месяца. Форму можно скачать в разделе «Библиотека».",
+      "x_en": "Reports are accepted until the end of the month. The form is in the Library section."
     }
   ],
   "yotoqxona": {
