@@ -30,7 +30,7 @@
 <meta property="og:url" content="https://lazizjondusmurodov-create.github.io/mystudent/">
 <meta name="twitter:card" content="summary_large_image">
 
-<link rel="stylesheet" href="style.css?v=6.1">
+<link rel="stylesheet" href="style.css?v=6.2">
 </head>
 <body>
 
@@ -49,19 +49,45 @@
   <div class="auth__top">
     <div class="auth__logo">MS</div>
     <div class="auth__name">MyStudent</div>
-    <p class="auth__sub" data-i18n="authSub">Davom etish uchun kirish kodini kiriting</p>
+    <p class="auth__sub" data-i18n="authSub">Davom etish uchun telefon raqam va parolni kiriting</p>
   </div>
 
   <div class="auth__form">
-    <div class="code" id="codeBox">
+
+    <!-- USUL 1: telefon raqam + parol -->
+    <div id="telBox">
+      <div class="field">
+        <label for="telInp" data-i18n="phoneLabel">Telefon raqam</label>
+        <input type="tel" id="telInp" inputmode="tel"
+               autocomplete="username" placeholder="+998 90 123 45 67">
+      </div>
+
+      <div class="field field--pass">
+        <label for="passInp" data-i18n="passLabel">Parol</label>
+        <input type="password" id="passInp"
+               autocomplete="current-password" placeholder="••••••••">
+        <button type="button" class="field__eye" id="passEye"
+                aria-label="Parolni ko'rsatish">
+          <svg viewBox="0 0 24 24"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- USUL 2: 4 xonali kod (pastdagi havola orqali ochiladi) -->
+    <div class="code" id="codeBox" hidden>
       <input type="tel" inputmode="numeric" maxlength="1" aria-label="1">
       <input type="tel" inputmode="numeric" maxlength="1" aria-label="2">
       <input type="tel" inputmode="numeric" maxlength="1" aria-label="3">
       <input type="tel" inputmode="numeric" maxlength="1" aria-label="4">
     </div>
+
     <div class="auth__err" id="err2"></div>
 
     <button class="btn btn--primary" id="doLogin" data-i18n="enter">Kirish</button>
+
+    <button class="linkbtn auth__switch" id="usulBtn" data-i18n="useCode">
+      Kirish kodi bilan kirish
+    </button>
 
     <div class="auth__demo" id="demoBox"></div>
   </div>
@@ -340,8 +366,8 @@
   </div>
 </aside>
 
-<script src="api.js?v=6.1"></script>
-<script src="app.js?v=6.1"></script>
+<script src="api.js?v=6.2"></script>
+<script src="app.js?v=6.2"></script>
 
 <!-- internetsiz ishlash uchun service worker.
      file:// orqali ochilganda ro'yxatdan o'tkazilmaydi. -->

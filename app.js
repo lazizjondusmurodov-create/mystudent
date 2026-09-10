@@ -73,6 +73,7 @@ const I18N = {
     /* kabinet */
     infoTitle:"Ma'lumotlar", settings:"Sozlamalar",
     changePass:"Parolni o'zgartirish", logout:"Tizimdan chiqish",
+    serverNeeded:"Bu amal uchun server ulanishi kerak",
     faculty:"Fakultet", eduForm:"Ta'lim shakli", course:"Bosqich",
     studentId:"Talaba ID", status:"Holat", phone:"Telefon", email:"E-pochta",
     group:"Guruh", fullName:"F.I.SH.",
@@ -219,7 +220,15 @@ const I18N = {
     noToday:"Bugun dars yo'q",
 
     /* kirish */
-    authSub:"Davom etish uchun kirish kodini kiriting",
+    authSub:"Davom etish uchun telefon raqam va parolni kiriting",
+    authSubCode:"Davom etish uchun kirish kodini kiriting",
+    phoneLabel:"Telefon raqam", passLabel:"Parol",
+    useCode:"Kirish kodi bilan kirish", usePhone:"Telefon raqam bilan kirish",
+    needPhone:"Telefon raqamni kiriting", needPass:"Parolni kiriting",
+    badPhone:"Telefon raqam noto'g'ri",
+    wrongLogin:"Telefon raqam yoki parol noto'g'ri",
+    tooMany:"Juda ko'p urinish. Birozdan keyin qayta urinib ko'ring",
+    showPass:"Parolni ko'rsatish", hidePass:"Parolni yashirish",
     enter:"Kirish", checking:"Tekshirilmoqda...",
     badCode:"4 xonali kodni kiriting",
     wrongCode:"Kod noto'g'ri", welcome:"Xush kelibsiz!",
@@ -329,6 +338,7 @@ const I18N = {
 
     infoTitle:"Данные", settings:"Настройки",
     changePass:"Изменить пароль", logout:"Выйти из системы",
+    serverNeeded:"Для этого действия нужно соединение с сервером",
     faculty:"Факультет", eduForm:"Форма обучения", course:"Курс",
     studentId:"ID студента", status:"Статус", phone:"Телефон", email:"Эл. почта",
     group:"Группа", fullName:"Ф.И.О.",
@@ -466,7 +476,15 @@ const I18N = {
     noLessons:"На выбранную неделю расписание не загружено.",
     noToday:"Сегодня занятий нет",
 
-    authSub:"Введите код доступа, чтобы продолжить",
+    authSub:"Введите номер телефона и пароль, чтобы продолжить",
+    authSubCode:"Введите код доступа, чтобы продолжить",
+    phoneLabel:"Номер телефона", passLabel:"Пароль",
+    useCode:"Войти по коду доступа", usePhone:"Войти по номеру телефона",
+    needPhone:"Введите номер телефона", needPass:"Введите пароль",
+    badPhone:"Неверный номер телефона",
+    wrongLogin:"Неверный номер телефона или пароль",
+    tooMany:"Слишком много попыток. Повторите позже",
+    showPass:"Показать пароль", hidePass:"Скрыть пароль",
     enter:"Войти", checking:"Проверка...",
     badCode:"Введите 4-значный код",
     wrongCode:"Неверный код", welcome:"Добро пожаловать!",
@@ -568,6 +586,7 @@ const I18N = {
 
     infoTitle:"Details", settings:"Settings",
     changePass:"Change password", logout:"Log out",
+    serverNeeded:"This action needs a server connection",
     faculty:"Faculty", eduForm:"Study mode", course:"Year",
     studentId:"Student ID", status:"Status", phone:"Phone", email:"Email",
     group:"Group", fullName:"Full name",
@@ -704,7 +723,15 @@ const I18N = {
     noLessons:"No schedule has been published for the selected week.",
     noToday:"No classes today",
 
-    authSub:"Enter the access code to continue",
+    authSub:"Enter your phone number and password to continue",
+    authSubCode:"Enter the access code to continue",
+    phoneLabel:"Phone number", passLabel:"Password",
+    useCode:"Sign in with access code", usePhone:"Sign in with phone number",
+    needPhone:"Enter your phone number", needPass:"Enter your password",
+    badPhone:"Invalid phone number",
+    wrongLogin:"Wrong phone number or password",
+    tooMany:"Too many attempts. Try again later",
+    showPass:"Show password", hidePass:"Hide password",
     enter:"Log in", checking:"Checking...",
     badCode:"Enter the 4-digit code",
     wrongCode:"Wrong code", welcome:"Welcome!",
@@ -780,6 +807,24 @@ let LANG = 'uz';
 try{
   const sv = localStorage.getItem('ms.lang');
   if(sv && I18N[sv]) LANG = sv;
+}catch(e){}
+
+/* =========================================================
+   KIRISH USULI
+
+   'tel'  — telefon raqam + parol (asosiy usul)
+   'kod'  — 4 xonali kirish kodi (eski usul; dekanat ham shu bilan)
+
+   Tanlov qurilmada saqlanadi — keyingi safar o'sha usul ochiladi.
+
+   Bu yerda e'lon qilinadi, chunki applyLang() kirish ekranidagi
+   matnlarni shu qiymatga qarab tanlaydi va u fayl o'qilishi
+   bilanoq ishga tushadi.
+   ========================================================= */
+let KIRISH_USULI = 'tel';
+try{
+  const sv = localStorage.getItem('ms.kirishUsuli');
+  if(sv === 'kod' || sv === 'tel') KIRISH_USULI = sv;
 }catch(e){}
 
 /* =========================================================
@@ -971,7 +1016,18 @@ const USER = {
 
 /* kod bo'yicha talabani topish */
 function talabaTop(kod){
+  if(!kod) return null;
   return TALABALAR.filter(function(x){ return x.kod === kod; })[0] || null;
+}
+
+/* Telefon raqam bo'yicha topish — raqam har xil yozilishi mumkin,
+   shuning uchun ikkalasi ham yagona ko'rinishga keltiriladi. */
+function talabaTopTel(raqam){
+  const q = raqamTozala(raqam);
+  if(!q) return null;
+  return TALABALAR.filter(function(x){
+    return raqamTozala(x.phone) === q;
+  })[0] || null;
 }
 
 /* USER ni tanlangan talaba bilan to'ldirish */
@@ -3761,9 +3817,30 @@ $('btnPass').addEventListener('click', function(){
     if(newP !== reP || !reP){ markBad('pRe', true); ok = false; } else markBad('pRe', false);
     if(!ok){ toast(t('checkPass')); return; }
 
-    closeModal();
-    haptic(14);
-    toast(t('passChanged'));
+    /* Statik rejimda parolni saqlaydigan joy yo'q — izlar serverda.
+       Foydalanuvchini chalg'itmaslik uchun ochiq aytamiz. */
+    if(!API_SERVER_BOR){
+      closeModal();
+      toast(t('serverNeeded'));
+      return;
+    }
+
+    const btn = this;
+    btn.classList.add('is-busy');
+    btn.textContent = t('checking');
+
+    apiParolOzgartir(oldP, newP).then(function(){
+      closeModal();
+      haptic(14);
+      toast(t('passChanged'));
+    }).catch(function(e){
+      btn.classList.remove('is-busy');
+      btn.textContent = t('change');
+      /* server aniq sababni aytadi: eski parol xato, yangisi zaif... */
+      markBad('pOld', /eski|старый|old/i.test(e.message || ''));
+      toast(e.message || t('checkPass'));
+      haptic(20);
+    });
   });
 });
 
@@ -3820,6 +3897,14 @@ function applyLang(){
   $('feedDate').textContent = L.dateFmt(new Date(), L);
 
 
+
+  /* Kirish ekranidagi ikki matn joriy usulga bog'liq, shuning uchun
+     data-i18n qo'ygan qiymatni ustidan yozamiz. */
+  const kodRejimi = (KIRISH_USULI === 'kod');
+  const authSub = document.querySelector('.auth__sub');
+  if(authSub) authSub.textContent = t(kodRejimi ? 'authSubCode' : 'authSub');
+  const usulTugma = $('usulBtn');
+  if(usulTugma) usulTugma.textContent = t(kodRejimi ? 'usePhone' : 'useCode');
 
   /* qayta chiziladigan qismlar */
   fillUserUI();
@@ -4548,6 +4633,68 @@ const auth     = $('auth');
 const codeBox  = $('codeBox');
 const codeInps = Array.prototype.slice.call(codeBox.querySelectorAll('input'));
 
+/* Telefon raqamni yagona ko'rinishga keltirish: 998901234567.
+   Serverdagi server/parol.js dagi bilan bir xil qoida. */
+function raqamTozala(raqam){
+  let s = String(raqam || '').replace(/\D/g, '');
+  if(!s) return '';
+  if(s.length === 9) s = '998' + s;
+  if(s.length === 10 && s[0] === '0') s = '998' + s.slice(1);
+  return s;
+}
+
+const telBox = $('telBox');
+const telInp = $('telInp');
+const passInp = $('passInp');
+
+function usulniQoy(usul){
+  KIRISH_USULI = usul;
+  try{ localStorage.setItem('ms.kirishUsuli', usul); }catch(e){}
+
+  const kodRejimi = (usul === 'kod');
+  telBox.hidden  = kodRejimi;
+  codeBox.hidden = !kodRejimi;
+
+  /* tavsif va almashtirish havolasi matni */
+  const sub = document.querySelector('.auth__sub');
+  if(sub) sub.textContent = t(kodRejimi ? 'authSubCode' : 'authSub');
+  const btn = $('usulBtn');
+  if(btn) btn.textContent = t(kodRejimi ? 'usePhone' : 'useCode');
+
+  /* xato va kiritilganlarni tozalaymiz */
+  $('err2').textContent = '';
+  codeBox.classList.remove('is-bad');
+  codeInps.forEach(function(x){ x.value = ''; });
+
+  /* kursorni birinchi maydonga qo'yamiz (telefonda klaviatura
+     o'z-o'zidan chiqmasin — faqat almashtirilganda) */
+  if(document.activeElement === btn){
+    (kodRejimi ? codeInps[0] : telInp).focus();
+  }
+}
+
+$('usulBtn').addEventListener('click', function(){
+  haptic();
+  usulniQoy(KIRISH_USULI === 'kod' ? 'tel' : 'kod');
+});
+
+/* parolni ko'rsatish/yashirish */
+$('passEye').addEventListener('click', function(){
+  const ochiq = passInp.type === 'text';
+  passInp.type = ochiq ? 'password' : 'text';
+  this.classList.toggle('is-on', !ochiq);
+  this.setAttribute('aria-label', t(ochiq ? 'showPass' : 'hidePass'));
+  passInp.focus();
+});
+
+/* Enter bosilsa kirish; yozilganda eski xato yo'qoladi */
+[telInp, passInp].forEach(function(inp){
+  inp.addEventListener('input', function(){ $('err2').textContent = ''; });
+  inp.addEventListener('keydown', function(e){
+    if(e.key === 'Enter') $('doLogin').click();
+  });
+});
+
 /* --- kod maydonlari --- */
 codeInps.forEach(function(inp, i){
   inp.addEventListener('input', function(){
@@ -4585,13 +4732,33 @@ codeInps.forEach(function(inp, i){
 let loginBusy = false;
 $('doLogin').addEventListener('click', function(){
   if(loginBusy) return;
-  const code = codeInps.map(function(x){ return x.value; }).join('');
 
-  if(code.length !== 4){
-    codeBox.classList.add('is-bad');
-    $('err2').textContent = t('badCode');
-    haptic(20);
-    return;
+  const telRejimi = (KIRISH_USULI === 'tel');
+  const code = codeInps.map(function(x){ return x.value; }).join('');
+  const raqam = telInp.value.trim();
+  const kirParol = passInp.value;
+
+  /* --- kiritilganini tekshiramiz --- */
+  if(telRejimi){
+    if(!raqam){
+      $('err2').textContent = t('needPhone');
+      telInp.focus(); haptic(20); return;
+    }
+    if(raqamTozala(raqam).length < 12){
+      $('err2').textContent = t('badPhone');
+      telInp.focus(); haptic(20); return;
+    }
+    if(!kirParol){
+      $('err2').textContent = t('needPass');
+      passInp.focus(); haptic(20); return;
+    }
+  }else{
+    if(code.length !== 4){
+      codeBox.classList.add('is-bad');
+      $('err2').textContent = t('badCode');
+      haptic(20);
+      return;
+    }
   }
 
   loginBusy = true;
@@ -4600,8 +4767,48 @@ $('doLogin').addEventListener('click', function(){
   btn.textContent = t('checking');
 
   (async function(){
-    const dekanat = (code === DEKANAT_KODI);
+    const dekanat = (!telRejimi && code === DEKANAT_KODI);
     let talaba = null;
+    let xatoMatni = null;
+
+    /* --- TELEFON + PAROL (faqat server rejimida) --- */
+    if(telRejimi){
+      if(!API_SERVER_BOR){
+        /* Statik rejimda parolni tekshiradigan hech narsa yo'q —
+           izlar serverda qoladi. Foydalanuvchini kod usuliga
+           yo'naltiramiz, aks holda u sababini tushunmay qoladi. */
+        xatoMatni = t('useCode');
+      }else{
+        try{
+          const j = await apiLoginTel(raqam, kirParol);
+          const q = await apiQolganini();
+          malumotlarniQoy(q);
+
+          /* Server javobida kod bo'lmaydi (ataylab — maxfiy).
+             Shuning uchun talabani telefon raqami bo'yicha topamiz:
+             /api/talabalar kirgan foydalanuvchining o'z yozuvini
+             kod bilan qaytaradi, u sessiyani saqlash uchun kerak. */
+          talaba = talabaTopTel(raqam) || j.talaba || null;
+        }catch(e){
+          xatoMatni = e.tooMany ? t('tooMany') : t('wrongLogin');
+        }
+      }
+
+      loginBusy = false;
+      btn.classList.remove('is-busy');
+      btn.textContent = t('enter');
+
+      if(!talaba){
+        $('err2').textContent = xatoMatni || t('wrongLogin');
+        passInp.value = '';
+        passInp.focus();
+        haptic(20);
+        return;
+      }
+
+      kirdi(talaba);
+      return;
+    }
 
     /* SERVER REJIMI: kod serverga yuboriladi, token qaytadi.
 
@@ -4641,28 +4848,33 @@ $('doLogin').addEventListener('click', function(){
       return;
     }
 
-    /* topilgan talaba ma'lumotlarini yuklaymiz */
-    userYukla(talaba);
-
-    try{
-      localStorage.setItem('ms.auth', JSON.stringify({at:Date.now(), kod:talaba.kod}));
-    }catch(e){}
-
-    /* dekanat kodi bilan kirilsa — admin rejimi yoqiladi */
-    adminMode = dekanat;
-    try{
-      if(dekanat) localStorage.setItem('ms.admin', '1');
-      else        localStorage.removeItem('ms.admin');
-    }catch(e){}
-
-    hideAuth();
-    /* talaba ma'lumotlari bilan butun ekranni qayta chizamiz */
-    applyLang();
-    haptic(16);
-    toast(dekanat ? t('adminOn') : t('welcome'));
-    if(dekanat) setTimeout(openAdmin, 400);
+    kirdi(talaba, dekanat);
   })();
 });
+
+/* Kirish muvaffaqiyatli tugadi: ma'lumotni yuklab, ekranni ochamiz.
+   Ikkala usul (telefon+parol va kod) shu funksiyaga keladi. */
+function kirdi(talaba, dekanat){
+  userYukla(talaba);
+
+  try{
+    localStorage.setItem('ms.auth', JSON.stringify({at:Date.now(), kod:talaba.kod}));
+  }catch(e){}
+
+  /* dekanat kodi bilan kirilsa — admin rejimi yoqiladi */
+  adminMode = !!dekanat;
+  try{
+    if(dekanat) localStorage.setItem('ms.admin', '1');
+    else        localStorage.removeItem('ms.admin');
+  }catch(e){}
+
+  hideAuth();
+  /* talaba ma'lumotlari bilan butun ekranni qayta chizamiz */
+  applyLang();
+  haptic(16);
+  toast(dekanat ? t('adminOn') : t('welcome'));
+  if(dekanat) setTimeout(openAdmin, 400);
+}
 
 /* --- kirish sahifasini ko'rsatish / yashirish --- */
 function hideAuth(){
@@ -4673,10 +4885,17 @@ function showAuth(){
   auth.classList.remove('is-gone');
   codeInps.forEach(function(x){ x.value = ''; });
   codeBox.classList.remove('is-bad');
+  passInp.value = '';
   $('err2').textContent = '';
   document.body.style.overflow = 'hidden';
+
+  /* Statik rejimda parolni tekshirib bo'lmaydi (izlar serverda),
+     shuning uchun u yerda faqat kod usuli ko'rsatiladi. */
+  const faqatKod = (typeof API_SERVER_BOR !== 'undefined') && !API_SERVER_BOR;
+  $('usulBtn').hidden = faqatKod;
+  usulniQoy(faqatKod ? 'kod' : KIRISH_USULI);
+
   showDemoCode();          /* talabalar ro'yxatini qayta chizamiz */
-  setTimeout(function(){ codeInps[0].focus(); }, 300);
 }
 
 /* kodni ekranda ko'rsatish (namuna rejimi) */
@@ -4711,6 +4930,9 @@ function showDemoCode(){
   box.querySelectorAll('[data-demo]').forEach(function(b){
     b.addEventListener('click', function(){
       const kod = b.dataset.demo;
+      /* Namuna ro'yxati kod bilan ishlaydi — telefon rejimida
+         bo'lsak, avval kod usuliga o'tamiz. */
+      if(KIRISH_USULI !== 'kod') usulniQoy('kod');
       codeInps.forEach(function(x, i){ x.value = kod[i] || ''; });
       haptic(8);
       $('doLogin').click();
@@ -4749,8 +4971,13 @@ function checkAuth(){
     return;
   }
   document.body.style.overflow = 'hidden';
+
+  /* Statik rejimda parol tekshiruvi yo'q — faqat kod usuli qoladi. */
+  const faqatKod = (typeof API_SERVER_BOR !== 'undefined') && !API_SERVER_BOR;
+  $('usulBtn').hidden = faqatKod;
+  usulniQoy(faqatKod ? 'kod' : KIRISH_USULI);
+
   showDemoCode();
-  setTimeout(function(){ codeInps[0].focus(); }, 300);
 }
 
 /* =========================================================

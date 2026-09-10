@@ -43,7 +43,8 @@ const fs   = require('fs');
 const path = require('path');
 const crypto = require('crypto');
 
-const baza = require('./baza');
+const baza  = require('./baza');
+const parol = require('./parol');
 
 const PORT = process.env.PORT || 3000;
 
@@ -56,6 +57,62 @@ const DEMO_YONIQ = String(process.env.DEMO || 'on').toLowerCase() !== 'off';
    Hostingda DEKANAT_KODI bilan almashtiring — odatiy qiymat hammaga
    ma'lum va faqat namoyish uchun. */
 const DEKANAT_KODI = String(process.env.DEKANAT_KODI || '9999');
+
+/* 4 xonali kod bilan kirish yoqilganmi.
+
+   Telefon + parol usuli qo'shilgandan keyin eski kod usuli ortiqcha
+   bo'lib qoladi va xavfsizligi pastroq (kod qisqa, almashtirib
+   bo'lmaydi). Hamma talaba parol o'rnatgach KOD_KIRISH=off qo'ying.
+
+   Dekanat kodi bunga bog'liq emas — u har doim ishlaydi. */
+const KOD_BILAN_KIRISH = String(process.env.KOD_KIRISH || 'on').toLowerCase() !== 'off';
+
+/* ---------- kirish urinishlari chegarasi ----------
+
+   Parolni taxminlab topish (brute force) — eng oddiy hujum turi.
+   Dastur soniyasiga minglab parol sinab ko'rishi mumkin.
+
+   Shuning uchun bitta raqamdan ketma-ket 5 marta xato bo'lsa,
+   o'sha raqam 15 daqiqaga bloklanadi. Muvaffaqiyatli kirishdan
+   keyin hisob tozalanadi.
+
+   Xotirada saqlanadi: server qayta ishga tushsa tozalanadi. Bu
+   yetarli — hujumchi serverni qayta ishga tushira olmaydi. */
+const URINISHLAR = new Map();      /* raqam -> {soni, vaqt} */
+const CHEGARA = 5;
+const BLOK_VAQTI = 15 * 60 * 1000;
+
+/* Necha urinish qolgani. 0 — bloklangan. */
+function urinishTekshir(raqam){
+  const y = URINISHLAR.get(raqam);
+  if(!y) return CHEGARA;
+  if(Date.now() - y.vaqt > BLOK_VAQTI){
+    URINISHLAR.delete(raqam);      /* muddat o'tdi */
+    return CHEGARA;
+  }
+  return Math.max(0, CHEGARA - y.soni);
+}
+
+function urinishQoshildi(raqam){
+  const y = URINISHLAR.get(raqam);
+  if(y && Date.now() - y.vaqt <= BLOK_VAQTI){
+    y.soni++;
+    y.vaqt = Date.now();
+  }else{
+    URINISHLAR.set(raqam, { soni: 1, vaqt: Date.now() });
+  }
+}
+
+function urinishTozala(raqam){ URINISHLAR.delete(raqam); }
+
+/* Eski yozuvlarni vaqti-vaqti bilan tozalaymiz, aks holda
+   xotira o'sib boraveradi. */
+setInterval(function(){
+  const hozir = Date.now();
+  URINISHLAR.forEach(function(y, k){
+    if(hozir - y.vaqt > BLOK_VAQTI) URINISHLAR.delete(k);
+  });
+}, BLOK_VAQTI).unref();
 const ROOT = path.join(__dirname, '..');     /* loyiha ildizi */
 const DB   = path.join(__dirname, 'db.json');
 
@@ -180,6 +237,47 @@ async function api(req, res, yol){
     try{ tana = await tanaOqi(req); }
     catch(e){ return xato(res, 400, 'So\'rov noto\'g\'ri'); }
 
+    /* --- USUL 1: telefon raqam + parol --- */
+    if(tana.telefon){
+      const raqam = parol.raqamTozala(tana.telefon);
+      const kiritilgan = String(tana.parol || '');
+
+      if(!raqam) return xato(res, 400, 'Telefon raqam noto\'g\'ri');
+      if(!kiritilgan) return xato(res, 400, 'Parol kiritilmadi');
+
+      /* Urinishlar chegarasi — parolni taxminlab topishga yo'l qo'ymaslik */
+      const qoldi = urinishTekshir(raqam);
+      if(qoldi === 0){
+        return xato(res, 429, 'Juda ko\'p urinish. ' +
+                    Math.ceil(BLOK_VAQTI / 60000) + ' daqiqadan keyin urinib ko\'ring');
+      }
+
+      const talaba = d.talabalar.find(function(t){
+        return parol.raqamTeng(t.phone, raqam);
+      });
+
+      /* Raqam topilmasa ham, parol noto'g'ri bo'lsa ham — bir xil javob.
+         Aks holda qaysi raqamlar ro'yxatda borligini bilib olish mumkin. */
+      if(!talaba || !parol.izTekshir(kiritilgan, talaba.parolIzi)){
+        urinishQoshildi(raqam);
+        return xato(res, 401, 'Telefon raqam yoki parol noto\'g\'ri');
+      }
+
+      urinishTozala(raqam);
+
+      const ochiq = Object.assign({}, talaba);
+      delete ochiq.kod;
+      delete ochiq.parolIzi;
+
+      return json(res, 200, {
+        token: tokenYarat(talaba.kod),
+        talaba: ochiq,
+        /* parol hali o'rnatilmagan bo'lsa ilova buni biladi */
+        parolYangilansin: !talaba.parolIzi
+      });
+    }
+
+    /* --- USUL 2: kirish kodi (eski usul, dekanat uchun ham) --- */
     const kod = String(tana.kod || '').trim();
     if(!kod) return xato(res, 400, 'Kod kiritilmadi');
 
@@ -189,14 +287,52 @@ async function api(req, res, yol){
       return json(res, 200, { token: tokenYarat(kod), dekanat: true });
     }
 
+    /* Kod bilan kirish o'chirilgan bo'lsa — faqat telefon+parol qoladi */
+    if(!KOD_BILAN_KIRISH){
+      return xato(res, 403, 'Kod bilan kirish o\'chirilgan — ' +
+                            'telefon raqam va parol bilan kiring');
+    }
+
     const talaba = d.talabalar.find(function(t){ return t.kod === kod; });
     if(!talaba) return xato(res, 401, 'Kod noto\'g\'ri');
 
-    /* kodni javobda qaytarmaymiz */
+    /* maxfiy maydonlarni javobda qaytarmaymiz */
     const ochiq = Object.assign({}, talaba);
     delete ochiq.kod;
+    delete ochiq.parolIzi;
 
     return json(res, 200, { token: tokenYarat(kod), talaba: ochiq });
+  }
+
+  /* --- parolni o'zgartirish (token kerak) --- */
+  if(yol === '/api/parol' && req.method === 'POST'){
+    const kod = tokenTekshir(req);
+    if(!kod) return xato(res, 401, 'Avval tizimga kiring');
+
+    let tana;
+    try{ tana = await tanaOqi(req); }
+    catch(e){ return xato(res, 400, 'So\'rov noto\'g\'ri'); }
+
+    const talaba = d.talabalar.find(function(t){ return t.kod === kod; });
+    if(!talaba) return xato(res, 401, 'Talaba topilmadi');
+
+    /* Parol allaqachon o'rnatilgan bo'lsa — eskisini so'raymiz.
+       Aks holda birovning ochiq qolgan telefonidan parol
+       almashtirib qo'yish mumkin bo'lardi. */
+    if(talaba.parolIzi){
+      if(!parol.izTekshir(String(tana.eski || ''), talaba.parolIzi)){
+        return xato(res, 401, 'Eski parol noto\'g\'ri');
+      }
+    }
+
+    const yangi = String(tana.yangi || '');
+    const kamchilik = parol.parolTekshir(yangi);
+    if(kamchilik) return xato(res, 400, kamchilik);
+
+    talaba.parolIzi = parol.izYasa(yangi);
+    dbYoz(d);
+
+    return json(res, 200, { ok: true });
   }
 
   /* --- namuna kodlari (demo ilova uchun) ---
@@ -292,12 +428,26 @@ async function api(req, res, yol){
   if(yol === '/api/men'){
     const ochiq = Object.assign({}, men);
     delete ochiq.kod;
+    delete ochiq.parolIzi;
     return json(res, 200, { talaba: ochiq });
   }
 
-  /* Ilova kirish kodiga qarab talabani topadi, shuning uchun
-     ro'yxat kod bilan qaytadi — faqat kirgan foydalanuvchiga. */
-  if(yol === '/api/talabalar') return json(res, 200, { talabalar: d.talabalar });
+  /* Talabalar ro'yxati.
+
+     Ilova kirgan talabani shu ro'yxatdan topadi, shuning uchun
+     kirgan foydalanuvchining o'z yozuvi kod bilan qaytadi.
+     Boshqalarniki kodsiz — birovning kodini bilib olish mumkin
+     bo'lmasin. Parol izi hech kimga qaytmaydi. */
+  if(yol === '/api/talabalar'){
+    return json(res, 200, {
+      talabalar: d.talabalar.map(function(t){
+        const ochiq = Object.assign({}, t);
+        delete ochiq.parolIzi;
+        if(t.kod !== kod) delete ochiq.kod;
+        return ochiq;
+      })
+    });
+  }
 
   if(yol === '/api/jadval')     return json(res, 200, { semestrlar: d.semestrlar, darslar: d.darslar });
   if(yol === '/api/imtihonlar') return json(res, 200, { imtihonlar: d.imtihonlar });

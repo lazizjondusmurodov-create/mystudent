@@ -17,11 +17,12 @@ O'zgartirgandan keyin **Save** bosiladi, server o'zi qayta ishga tushadi.
 | `DATABASE_URL` | PostgreSQL ulanish satri. Bo'lmasa arizalar vaqtinchalik saqlanadi | — |
 | `DEMO` | `off` bo'lsa kirish kodlari ro'yxati yashiriladi | `on` |
 | `DEKANAT_KODI` | Dekanat paneliga kirish kodi | `9999` |
+| `KOD_KIRISH` | `off` bo'lsa 4 xonali kod bilan kirish o'chadi | `on` |
 | `PORT` | Port. Render uni o'zi qo'yadi, tegmang | `3000` |
 
 ### Haqiqiy foydalanishga o'tishda
 
-Ikkalasini albatta qo'ying:
+Avval ikkitasi:
 
 ```
 DEMO          = off
@@ -30,6 +31,14 @@ DEKANAT_KODI  = (o'zingiz o'ylab topgan kod)
 
 Birinchisisiz kirish kodlari kirish ekranida hammaga ko'rinadi.
 Ikkinchisisiz istalgan odam `9999` bilan dekanat paneliga kiradi.
+
+Keyin, hamma talaba parol olgandan so'ng (3-bo'limga qarang):
+
+```
+KOD_KIRISH    = off
+```
+
+Shunda eski 4 xonali kod usuli o'chadi va faqat telefon+parol qoladi.
 
 ---
 
@@ -82,8 +91,15 @@ ikki manba orasidagi farqni topadi. `XATO` chiqsa — tuzatish shart;
 }
 ```
 
-`kod` — talabaning kirish paroli. **Har talabada boshqacha** bo'lishi
-shart, aks holda ikki kishi bir kabinetga kiradi.
+**`phone`** — talaba shu raqam bilan kiradi, shuning uchun majburiy va
+**har talabada boshqacha** bo'lishi shart. `kod` esa eski usul uchun
+(3-bo'limga qarang) — u ham takrorlanmasin.
+
+Yangi talaba qo'shgach unga parol bering:
+
+```bash
+node tools_parol.js 998901234567 UningParoli
+```
 
 ### Yangilik (e'lon) qo'shish
 
@@ -115,7 +131,69 @@ inglizcha rejimda ham o'zbekcha matn ko'rinadi — ilova baribir ishlaydi.
 
 ---
 
-## 3. Dekanat paneli
+## 3. Parollar
+
+Talabalar **telefon raqam + parol** bilan kiradi.
+
+Parollar hech qachon ochiq saqlanmaydi — `db.json` da faqat ularning
+"izi" (hash) turadi. Shuning uchun unutilgan parolni **ko'rish mumkin
+emas**, faqat yangisini qo'yish mumkin. Bu ataylab shunday: fayl
+GitHub'da ochiq turadi.
+
+### Holatni ko'rish
+
+```bash
+node tools_parol.js
+```
+
+Kimda parol bor, kimda yo'q — ro'yxat chiqaradi.
+
+### Bitta talabaga parol qo'yish
+
+```bash
+node tools_parol.js 998901234567 YangiParol2026
+```
+
+Raqamni istalgan shaklda yozsangiz bo'ladi — `+998 90 123 45 67` ham,
+`901234567` ham ishlaydi.
+
+### Hammasiga birdan
+
+```bash
+node tools_parol.js --hammasi
+```
+
+Parolsizlarning har biriga tasodifiy parol yasaydi va ekranga
+chiqaradi. **Ro'yxatni o'sha zahoti nusxalab oling** — qayta
+ko'rsatilmaydi.
+
+Keyin yuboring:
+
+```bash
+git add server/db.json && git commit -m "Parollar" && git push
+```
+
+### Talaba parolni o'zgartirishi
+
+Kabinet → **Parolni o'zgartirish**. Eski parolni bilishi shart.
+
+### Kod bilan kirishni o'chirish
+
+Eski 4 xonali kod usuli hali ishlaydi — o'tish davri uchun. Hamma
+talaba parol olgach, Render'da `KOD_KIRISH=off` qo'ying. Shunda faqat
+telefon+parol qoladi.
+
+Dekanat kodi bunga bog'liq emas — u har doim ishlayveradi.
+
+### Himoya
+
+Bitta raqamdan ketma-ket 5 marta xato parol kiritilsa, o'sha raqam
+15 daqiqaga bloklanadi. Bu parolni taxminlab topishga yo'l qo'ymaydi.
+Boshqa talabalar bundan zarar ko'rmaydi.
+
+---
+
+## 4. Dekanat paneli
 
 **Kirish:** kirish ekraniga `DEKANAT_KODI` ni kiriting.
 
@@ -125,7 +203,7 @@ arizani yuborgan talaba uni o'z telefonida ko'radi.
 
 ---
 
-## 4. Baza (Neon)
+## 5. Baza (Neon)
 
 Arizalar **Neon** dagi PostgreSQL bazasida. Panel: [neon.tech](https://neon.tech)
 
@@ -157,7 +235,7 @@ FROM arizalar WHERE data->>'holat' = 'kutilmoqda';
 
 ---
 
-## 5. Server uxlab qolishi
+## 6. Server uxlab qolishi
 
 Bepul rejada server 15 daqiqa harakatsizlikdan keyin uxlaydi. Keyingi
 tashrifchi ~50 soniya kutadi.
@@ -176,7 +254,7 @@ Bu manzil ataylab yengil qilingan — bazaga ham, diskka ham tegmaydi.
 
 ---
 
-## 6. O'z domenini ulash
+## 7. O'z domenini ulash
 
 Masalan `mystudent.uz`:
 
@@ -199,7 +277,7 @@ havola ulashilganda eski manzil ko'rinadi:
 
 ---
 
-## 7. Kesh (foydalanuvchida eski nusxa qolsa)
+## 8. Kesh (foydalanuvchida eski nusxa qolsa)
 
 Ilova PWA — fayllar telefonda saqlanadi. `app.js`, `style.css` yoki
 `index.html` ni o'zgartirsangiz, **ikkala joyda** versiyani ko'taring:
@@ -214,7 +292,7 @@ shart emas.
 
 ---
 
-## 8. Ikkita manzil
+## 9. Ikkita manzil
 
 Ilova ikki joyda turadi — farqini bilib qo'ying:
 
@@ -240,7 +318,7 @@ Pages kerak bo'lmasa: GitHub → repo → **Settings** → **Pages** →
 
 ---
 
-## 9. Muammo bo'lsa
+## 10. Muammo bo'lsa
 
 **Render → Logs** birinchi qaraladigan joy. Ishga tushishda quyidagi
 satrlar chiqadi:

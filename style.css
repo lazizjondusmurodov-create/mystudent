@@ -1559,6 +1559,11 @@ button.row:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
 .phone input:focus{outline:0}
 
 /* kod maydonlari */
+/* hidden atributi har qanday display dan ustun turishi kerak —
+   aks holda .code{display:flex} uni bekor qiladi va yashirilgan
+   element ekranda qolib ketadi. */
+[hidden]{display:none !important}
+
 .code{display:flex;gap:10px;justify-content:center;margin-bottom:6px}
 .code input{
   width:56px;height:62px;text-align:center;border:1px solid var(--line);
@@ -1658,6 +1663,21 @@ button.row:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
 .field .hint{margin-top:6px;font-size:11.5px;color:var(--ink-4)}
 .field .err{margin-top:6px;font-size:11.5px;color:var(--danger);font-weight:600;display:none}
 .field.is-bad input{border-color:var(--danger)}
+
+/* parol maydoni: o'ng chekkada "ko'rsatish" tugmasi */
+.field--pass{position:relative}
+.field--pass input{padding-right:46px}
+.field__eye{
+  position:absolute;right:6px;bottom:5px;width:36px;height:36px;
+  display:grid;place-items:center;border:0;background:none;cursor:pointer;
+  color:var(--ink-4);border-radius:10px;transition:color .15s var(--ease);
+}
+.field__eye svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.7}
+.field__eye:hover{color:var(--ink-3)}
+.field__eye.is-on{color:var(--brand)}
+
+/* kirish ekrani: usulni almashtirish havolasi */
+.auth__switch{display:block;width:100%;text-align:center;margin-top:12px}
 .field.is-bad .err{display:block}
 
 .btn{

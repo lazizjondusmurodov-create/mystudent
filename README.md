@@ -39,6 +39,7 @@ domen ulash — [QOLLANMA.md](QOLLANMA.md) da.
 
 ## Imkoniyatlar
 
+- **Kirish** — telefon raqam va parol; parollar scrypt izi bilan saqlanadi
 - **Dars jadvali** — haftalik ko'rinish, joriy kun ajratilgan, dars tafsilotlari
 - **Davomat** — foiz, qoldirilgan soatlar, fanlar bo'yicha tafsilot
 - **Baholar** — semestr bo'yicha, o'rtacha ball, kredit va eng yuqori/past fanlar
@@ -70,20 +71,24 @@ ma'lumot `data/*.json` dan o'qiladi, ariza yuborish saqlanmaydi:
 python -m http.server 8899
 ```
 
-## Namuna kirish kodlari
+## Namuna kirish
 
-Ilovadagi ma'lumot — namuna. Kodni kirish ekranida qo'lda kiriting:
+Ilovadagi ma'lumot — namuna. Parol hammasida bir xil: **`Talaba2026`**
 
-| Kod | Talaba | Guruh |
-|---|---|---|
-| `2024` | Aliyev Jasur | ATT-06-24 |
-| `3050` | Yusupova Nilufar | KIF-04-25 |
-| `7788` | Rahmonov Sardor | IQT-02-23 |
-| `1111` | Dusmurodov Lazizjon | ATT-06-24 |
+| Telefon | Kod | Talaba | Guruh |
+|---|---|---|---|
+| `901234567` | `2024` | Aliyev Jasur | ATT-06-24 |
+| `912345678` | `3050` | Yusupova Nilufar | KIF-04-25 |
+| `937778899` | `7788` | Rahmonov Sardor | IQT-02-23 |
+| `905816667` | `1111` | Dusmurodov Lazizjon | ATT-06-24 |
 
-Mahalliy ishga tushirilganda kodlar kirish ekranida ro'yxat bo'lib ham
-ko'rinadi — bosish kifoya. Haqiqiy foydalanishda bu ro'yxat `DEMO=off`
-bilan o'chiriladi.
+Raqamni istalgan shaklda kiritsangiz bo'ladi — `+998 90 123 45 67` ham,
+`901234567` ham ishlaydi.
+
+Kod ustuni — eski usul uchun (kirish ekranida «Kirish kodi bilan
+kirish»). Mahalliy ishga tushirilganda kodlar ro'yxat bo'lib ham
+ko'rinadi — bosish kifoya. Haqiqiy foydalanishda `DEMO=off` bilan
+o'chiriladi.
 
 ### Dekanat paneli
 
@@ -102,6 +107,7 @@ style.css       — uslublar (ranglar CSS o'zgaruvchilarida)
 server/
   server.js     — backend: API va statik fayllar
   baza.js       — PostgreSQL qatlami (DATABASE_URL bo'lsa)
+  parol.js      — parol izi (scrypt) va telefon raqam bilan ishlash
   db.json       — asosiy ma'lumot manbai
 
 data/           — statik rejim uchun ma'lumot (server bo'lmaganda)
@@ -117,6 +123,7 @@ docs/           — README uchun skrinshotlar
 tools_check.js  — versiya, kesh, manifest, tarjima kalitlarini tekshiradi
 tools_sinov.js  — ma'lumotni tekshiradi: takroriy kodlar, yetishmayotgan
                   maydonlar, db.json va data/ orasidagi farq
+tools_parol.js  — talabalarga parol qo'yadi va holatni ko'rsatadi
 tools_shot.js   — skrinshotlarni avtomatik yangilash
 ```
 
@@ -161,12 +168,22 @@ kutubxona kerak: `pg`. Mahalliy ishlashda u ishlatilmaydi, shuning uchun
 | `DATABASE_URL` | PostgreSQL. Bo'lmasa `db.json` ishlatiladi | — |
 | `DEMO` | `off` — kirish kodlari ro'yxati yashiriladi | `on` |
 | `DEKANAT_KODI` | Dekanat paneli kodi | `9999` |
+| `KOD_KIRISH` | `off` — 4 xonali kod bilan kirish o'chadi | `on` |
 
 ### Kirish va himoya
 
 ```
-POST /api/login  {kod:"2024"}  →  {token, talaba}
+POST /api/login  {telefon:"901234567", parol:"..."}  →  {token, talaba}
+POST /api/login  {kod:"2024"}                        →  {token, talaba}
 ```
+
+Asosiy usul — **telefon raqam va parol**. Parollar ochiq saqlanmaydi:
+`db.json` da faqat scrypt izi turadi, shuning uchun unutilgan parolni
+tiklab bo'lmaydi — faqat yangisini qo'yish mumkin (`tools_parol.js`).
+Bitta raqamdan 5 marta xato urinishdan keyin 15 daqiqaga blok.
+
+4 xonali kod — eski usul, o'tish davri uchun; `KOD_KIRISH=off` bilan
+o'chiriladi. Dekanat kodi undan qat'i nazar ishlayveradi.
 
 Token olingandan keyin himoyalangan endpointlarga `Authorization: Bearer <token>`
 sarlavhasi bilan murojaat qilinadi. Tokensiz ular **401** qaytaradi.
@@ -204,6 +221,7 @@ ni to'ldiring.
 | `GET /yotoqxona` | `{yotoqxona:{...}}` |
 | `POST /arizalar` | yangi ariza yozadi → `{ariza}` |
 | `GET /salom` | hayot belgisi → `{holat, vaqt, baza}` |
+| `POST /parol` | parolni o'zgartiradi (token kerak) |
 
 Token talab qilmaydiganlar: `yangiliklar`, `kutubxona`, `ishlar`,
 `fotolar`, `salom`.

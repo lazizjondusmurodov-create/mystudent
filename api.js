@@ -137,6 +137,60 @@ async function apiLogin(kod){
   return j;
 }
 
+/* Telefon raqam va parol bilan kirish.
+
+   Faqat server rejimida ishlaydi: parol izi serverda saqlanadi va
+   uni brauzerda tekshirib bo'lmaydi. */
+async function apiLoginTel(telefon, parol){
+  if(!API_SERVER_BOR){
+    const e = new Error('Server rejimi kerak');
+    e.serverKerak = true;
+    throw e;
+  }
+
+  let res;
+  try{
+    res = await fetch(apiIldiz() + '/api/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({ telefon: telefon, parol: parol })
+    });
+  }catch(e){
+    throw new Error('Serverga ulanib bo\'lmadi');
+  }
+
+  const j = await res.json().catch(function(){ return {}; });
+  if(!res.ok){
+    const e = new Error(j.xato || 'Kirish amalga oshmadi');
+    /* 429 — urinishlar chegarasi; ilova buni alohida ko'rsatadi */
+    if(res.status === 429) e.tooMany = true;
+    throw e;
+  }
+
+  API_TOKEN = j.token;
+  try{ localStorage.setItem('ms.token', API_TOKEN); }catch(e){}
+  return j;
+}
+
+/* Parolni o'zgartirish. Parol hali qo'yilmagan bo'lsa eskisi shart emas. */
+async function apiParolOzgartir(eski, yangi){
+  if(!API_SERVER_BOR) throw new Error('Server rejimi kerak');
+
+  const res = await fetch(apiIldiz() + '/api/parol', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': 'Bearer ' + API_TOKEN
+    },
+    body: JSON.stringify({ eski: eski || '', yangi: yangi })
+  });
+
+  const j = await res.json().catch(function(){ return {}; });
+  if(!res.ok) throw new Error(j.xato || 'Parol o\'zgartirilmadi');
+  return j;
+}
+
 function apiLogout(){
   API_TOKEN = null;
   try{ localStorage.removeItem('ms.token'); }catch(e){}
