@@ -44,7 +44,9 @@
       "lang_ru": "Узбекский",
       "lang_en": "Uzbek",
       "x_ru": "Создание современных веб-интерфейсов: вёрстка, стили и работа с JavaScript.",
-      "x_en": "Building modern web interfaces: markup, styling and working with JavaScript."
+      "x_en": "Building modern web interfaces: markup, styling and working with JavaScript.",
+      "m_ru": "Н. Юсупова · 2025 · PDF, 248 стр.",
+      "m_en": "N. Yusupova · 2025 · PDF, 248 pages"
     },
     {
       "id": "lib3",
@@ -67,7 +69,9 @@
       "lang_ru": "Русский",
       "lang_en": "Russian",
       "x_ru": "Основы Python: типы данных, функции, работа с файлами и модулями.",
-      "x_en": "Python basics: data types, functions, files and modules."
+      "x_en": "Python basics: data types, functions, files and modules.",
+      "m_ru": "М. Тухтаев · 2023 · Печатное издание",
+      "m_en": "M. Tukhtayev · 2023 · Print edition"
     },
     {
       "id": "lib4",
@@ -89,7 +93,9 @@
       "lang_ru": "Узбекский",
       "lang_en": "Uzbek",
       "x_ru": "Процессы, память, файловые системы и основы многозадачности.",
-      "x_en": "Processes, memory, file systems and the basics of multitasking."
+      "x_en": "Processes, memory, file systems and the basics of multitasking.",
+      "m_ru": "С. Рахмонов · 2022 · PDF, 190 стр.",
+      "m_en": "S. Rahmonov · 2022 · PDF, 190 pages"
     }
   ]
 }

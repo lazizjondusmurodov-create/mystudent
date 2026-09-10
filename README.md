@@ -3,7 +3,11 @@
 Talabalar uchun mobil veb-ilova: dars jadvali, davomat, baholar, imtihonlar,
 kutubxona va karyera bo'limlari bitta joyda. O'zbek, rus va ingliz tillarida.
 
-**Demo:** https://lazizjondusmurodov-create.github.io/mystudent/
+**Ishlab turgan ilova:** https://mystudent-lspe.onrender.com
+**Statik demo:** https://lazizjondusmurodov-create.github.io/mystudent/
+
+Ilovani boshqarish — ma'lumot almashtirish, dekanat kodi, baza, domen —
+[QOLLANMA.md](QOLLANMA.md) da.
 
 ## Ekranlar
 

@@ -419,7 +419,11 @@
       "mode_ru": "Полный рабочий день",
       "mode_en": "Full-time",
       "x_ru": "Разработка серверной части и API. Работа с базой данных.",
-      "x_en": "Server-side and API development, working with the database."
+      "x_en": "Server-side and API development, working with the database.",
+      "m_ru": "Удалённо · Python, Django, PostgreSQL",
+      "m_en": "Remote · Python, Django, PostgreSQL",
+      "salary_ru": "от 5 000 000 сум",
+      "salary_en": "from 5,000,000 UZS"
     },
     {
       "id": "job3",
@@ -447,7 +451,11 @@
       "mode_ru": "Сменный график",
       "mode_en": "Shift work",
       "x_ru": "Помощь пользователям, настройка оборудования и программного обеспечения.",
-      "x_en": "Helping users, setting up hardware and software."
+      "x_en": "Helping users, setting up hardware and software.",
+      "m_ru": "Самарканд · Полный рабочий день",
+      "m_en": "Samarkand · Full-time",
+      "salary_ru": "2 500 000 сум",
+      "salary_en": "2,500,000 UZS"
     }
   ],
   "semestrlar": [
@@ -697,7 +705,9 @@
       "lang_ru": "Узбекский",
       "lang_en": "Uzbek",
       "x_ru": "Создание современных веб-интерфейсов: вёрстка, стили и работа с JavaScript.",
-      "x_en": "Building modern web interfaces: markup, styling and working with JavaScript."
+      "x_en": "Building modern web interfaces: markup, styling and working with JavaScript.",
+      "m_ru": "Н. Юсупова · 2025 · PDF, 248 стр.",
+      "m_en": "N. Yusupova · 2025 · PDF, 248 pages"
     },
     {
       "id": "lib3",
@@ -720,7 +730,9 @@
       "lang_ru": "Русский",
       "lang_en": "Russian",
       "x_ru": "Основы Python: типы данных, функции, работа с файлами и модулями.",
-      "x_en": "Python basics: data types, functions, files and modules."
+      "x_en": "Python basics: data types, functions, files and modules.",
+      "m_ru": "М. Тухтаев · 2023 · Печатное издание",
+      "m_en": "M. Tukhtayev · 2023 · Print edition"
     },
     {
       "id": "lib4",
@@ -742,7 +754,9 @@
       "lang_ru": "Узбекский",
       "lang_en": "Uzbek",
       "x_ru": "Процессы, память, файловые системы и основы многозадачности.",
-      "x_en": "Processes, memory, file systems and the basics of multitasking."
+      "x_en": "Processes, memory, file systems and the basics of multitasking.",
+      "m_ru": "С. Рахмонов · 2022 · PDF, 190 стр.",
+      "m_en": "S. Rahmonov · 2022 · PDF, 190 pages"
     }
   ],
   "yillar": [
@@ -895,7 +909,9 @@
       "t_ru": "Добавлены новые электронные книги",
       "t_en": "New e-books added",
       "x_ru": "В электронный каталог добавлены учебники по программированию и базам данных.",
-      "x_en": "Programming and database textbooks have been added to the digital catalogue."
+      "x_en": "Programming and database textbooks have been added to the digital catalogue.",
+      "full_ru": "Фонд электронной библиотеки обновлён.\n\nДобавлены новые учебники по программированию, базам данных и операционным системам. Материалы доступны в разделе «Библиотека».\n\nКниги в формате PDF можно скачать, печатные издания — заказать на выдачу.",
+      "full_en": "The digital library has been updated.\n\nNew textbooks on programming, databases and operating systems have been added. You can find them in the Library section.\n\nPDF titles are available for download; printed copies can be reserved for pickup."
     },
     {
       "id": "n3",
@@ -913,7 +929,9 @@
       "t_ru": "Срок сдачи отчёта по практике",
       "t_en": "Internship report deadline",
       "x_ru": "Отчёты принимаются до конца месяца. Форму можно скачать в разделе «Библиотека».",
-      "x_en": "Reports are accepted until the end of the month. The form is in the Library section."
+      "x_en": "Reports are accepted until the end of the month. The form is in the Library section.",
+      "full_ru": "Отчёты по производственной практике принимаются до конца месяца.\n\nФорму отчёта можно скачать в разделе «Библиотека». Отчёт сдаётся научному руководителю в печатном виде вместе с отзывом от места практики.\n\nСтуденты, не сдавшие отчёт в срок, не допускаются к сессии.",
+      "full_en": "Internship reports are accepted until the end of the month.\n\nThe report template is available in the Library section. Submit a printed copy to your supervisor together with the reference from your placement.\n\nStudents who miss the deadline will not be admitted to the exam session."
     }
   ],
   "yotoqxona": {

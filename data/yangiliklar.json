@@ -36,7 +36,9 @@
       "t_ru": "Добавлены новые электронные книги",
       "t_en": "New e-books added",
       "x_ru": "В электронный каталог добавлены учебники по программированию и базам данных.",
-      "x_en": "Programming and database textbooks have been added to the digital catalogue."
+      "x_en": "Programming and database textbooks have been added to the digital catalogue.",
+      "full_ru": "Фонд электронной библиотеки обновлён.\n\nДобавлены новые учебники по программированию, базам данных и операционным системам. Материалы доступны в разделе «Библиотека».\n\nКниги в формате PDF можно скачать, печатные издания — заказать на выдачу.",
+      "full_en": "The digital library has been updated.\n\nNew textbooks on programming, databases and operating systems have been added. You can find them in the Library section.\n\nPDF titles are available for download; printed copies can be reserved for pickup."
     },
     {
       "id": "n3",
@@ -54,7 +56,9 @@
       "t_ru": "Срок сдачи отчёта по практике",
       "t_en": "Internship report deadline",
       "x_ru": "Отчёты принимаются до конца месяца. Форму можно скачать в разделе «Библиотека».",
-      "x_en": "Reports are accepted until the end of the month. The form is in the Library section."
+      "x_en": "Reports are accepted until the end of the month. The form is in the Library section.",
+      "full_ru": "Отчёты по производственной практике принимаются до конца месяца.\n\nФорму отчёта можно скачать в разделе «Библиотека». Отчёт сдаётся научному руководителю в печатном виде вместе с отзывом от места практики.\n\nСтуденты, не сдавшие отчёт в срок, не допускаются к сессии.",
+      "full_en": "Internship reports are accepted until the end of the month.\n\nThe report template is available in the Library section. Submit a printed copy to your supervisor together with the reference from your placement.\n\nStudents who miss the deadline will not be admitted to the exam session."
     }
   ]
 }

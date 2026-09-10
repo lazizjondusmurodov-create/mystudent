@@ -60,7 +60,11 @@
       "mode_ru": "Полный рабочий день",
       "mode_en": "Full-time",
       "x_ru": "Разработка серверной части и API. Работа с базой данных.",
-      "x_en": "Server-side and API development, working with the database."
+      "x_en": "Server-side and API development, working with the database.",
+      "m_ru": "Удалённо · Python, Django, PostgreSQL",
+      "m_en": "Remote · Python, Django, PostgreSQL",
+      "salary_ru": "от 5 000 000 сум",
+      "salary_en": "from 5,000,000 UZS"
     },
     {
       "id": "job3",
@@ -88,7 +92,11 @@
       "mode_ru": "Сменный график",
       "mode_en": "Shift work",
       "x_ru": "Помощь пользователям, настройка оборудования и программного обеспечения.",
-      "x_en": "Helping users, setting up hardware and software."
+      "x_en": "Helping users, setting up hardware and software.",
+      "m_ru": "Самарканд · Полный рабочий день",
+      "m_en": "Samarkand · Full-time",
+      "salary_ru": "2 500 000 сум",
+      "salary_en": "2,500,000 UZS"
     }
   ]
 }
