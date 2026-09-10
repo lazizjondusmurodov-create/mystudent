@@ -36,12 +36,30 @@ const PORT = process.env.PORT || 3000;
 const ROOT = path.join(__dirname, '..');     /* loyiha ildizi */
 const DB   = path.join(__dirname, 'db.json');
 
-/* ---------- ma'lumotlar bazasi (JSON fayl) ---------- */
+/* ---------- ma'lumotlar bazasi (JSON fayl) ----------
+
+   Bulutli hostingda (Render, Railway) disk vaqtinchalik:
+   yozilgan narsa server qayta ishga tushganda yo'qoladi, ba'zan
+   esa disk umuman faqat o'qish uchun bo'ladi. Shuning uchun
+   ma'lumotni xotirada ham saqlaymiz va yozish xatosi serverni
+   qulatmasin — ariza baribir qabul qilinadi, faqat vaqtinchalik. */
+let XOTIRA = null;          /* yozishdan keyingi holat */
+let DISK_YOZILADI = true;   /* birinchi xatodan keyin false bo'ladi */
+
 function dbOqi(){
+  if(XOTIRA) return XOTIRA;
   return JSON.parse(fs.readFileSync(DB, 'utf8'));
 }
 function dbYoz(d){
-  fs.writeFileSync(DB, JSON.stringify(d, null, 2), 'utf8');
+  XOTIRA = d;               /* har doim xotirada yangilanadi */
+  if(!DISK_YOZILADI) return;
+  try{
+    fs.writeFileSync(DB, JSON.stringify(d, null, 2), 'utf8');
+  }catch(e){
+    DISK_YOZILADI = false;
+    console.warn('db.json ga yozilmadi (' + e.code + ') — ' +
+                 'malumot faqat xotirada saqlanadi');
+  }
 }
 
 /* ---------- tokenlar (xotirada) ----------

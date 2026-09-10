@@ -1,0 +1,13 @@
+# Render.com uchun sozlama — bepul reja.
+# Bu fayl repozitoriyda tursa, Render loyihani o'zi tanib oladi.
+services:
+  - type: web
+    name: mystudent
+    runtime: node
+    plan: free
+    buildCommand: ""      # tashqi kutubxona yo'q — qurish shart emas
+    startCommand: node server/server.js
+    healthCheckPath: /api/yangiliklar
+    envVars:
+      - key: NODE_VERSION
+        value: "22"

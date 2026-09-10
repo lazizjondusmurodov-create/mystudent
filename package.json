@@ -1,0 +1,12 @@
+{
+  "name": "mystudent",
+  "version": "1.0.0",
+  "description": "Talabalar uchun mobil veb-ilova: dars jadvali, davomat, baholar, kutubxona va karyera",
+  "private": true,
+  "scripts": {
+    "start": "node server/server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
