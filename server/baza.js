@@ -82,19 +82,33 @@ async function tayyorla(){
     console.warn('Baza ulanishi uzildi:', e.message);
   });
 
+  /* Ariza butunligicha JSON da saqlanadi.
+
+     Nega alohida ustunlar emas: arizaning shakli turlicha bo'ladi —
+     ilova yuborgani {fan, turi}, db.json dagi namunada esa {t,
+     fanlar, kredit, holatT, files, fanlarRoyxat...} bor. Qat'iy
+     ustunlar bo'lsa ulardan biri albatta yiqiladi va ma'lumot
+     yo'qoladi. JSON da har qanday maydon buzilmay saqlanadi. */
   await havza.query(`
     CREATE TABLE IF NOT EXISTS arizalar (
-      id    TEXT PRIMARY KEY,
-      kod   TEXT NOT NULL,
-      fan   TEXT NOT NULL,
-      turi  TEXT NOT NULL,
-      holat TEXT NOT NULL DEFAULT 'kutilmoqda',
-      sana  DATE NOT NULL DEFAULT CURRENT_DATE,
-      vaqt  TIMESTAMPTZ NOT NULL DEFAULT NOW()
+      id   TEXT PRIMARY KEY,
+      kod  TEXT NOT NULL DEFAULT '',
+      data JSONB NOT NULL,
+      vaqt TIMESTAMPTZ NOT NULL DEFAULT NOW()
     )
   `);
   /* talaba o'z arizalarini tez topsin */
   await havza.query(`CREATE INDEX IF NOT EXISTS arizalar_kod ON arizalar (kod)`);
+
+  /* Eski tor jadval qolgan bo'lsa — yangi ustunlarni qo'shamiz va
+     majburiy shartlarni yumshatamiz, aks holda eski NOT NULL
+     ustunlar yangi yozuvlarni rad etadi. */
+  await havza.query(`ALTER TABLE arizalar ADD COLUMN IF NOT EXISTS data JSONB`);
+  for(const ustun of ['fan', 'turi', 'holat', 'sana']){
+    await havza.query(
+      `ALTER TABLE arizalar ALTER COLUMN ${ustun} DROP NOT NULL`
+    ).catch(function(){ /* bunday ustun yo'q — muammo emas */ });
+  }
 
   console.log('  Baza: PostgreSQL ulandi — arizalar doimiy saqlanadi');
   return true;
@@ -104,20 +118,21 @@ async function tayyorla(){
    Sana YYYY-MM-DD ko'rinishida qaytadi (ilova shuni kutadi). */
 async function arizalarOl(){
   const r = await havza.query(
-    `SELECT id, kod, fan, turi, holat,
-            TO_CHAR(sana, 'YYYY-MM-DD') AS sana
-       FROM arizalar
-      ORDER BY vaqt DESC`
+    `SELECT id, kod, data FROM arizalar ORDER BY vaqt DESC`
   );
-  return r.rows;
+  /* data ichida arizaning to'liq mazmuni; id va kod ustundan
+     olinadi, chunki ular qidiruvda ishlatiladi. */
+  return r.rows.map(function(q){
+    return Object.assign({}, q.data, { id: q.id, kod: q.kod });
+  });
 }
 
 /* Yangi ariza qo'shish */
 async function arizaQosh(a){
   await havza.query(
-    `INSERT INTO arizalar (id, kod, fan, turi, holat, sana)
-     VALUES ($1, $2, $3, $4, $5, $6)`,
-    [a.id, a.kod, a.fan, a.turi, a.holat, a.sana]
+    `INSERT INTO arizalar (id, kod, data) VALUES ($1, $2, $3)
+     ON CONFLICT (id) DO UPDATE SET data = EXCLUDED.data`,
+    [a.id, a.kod || '', JSON.stringify(a)]
   );
   return a;
 }
@@ -127,13 +142,18 @@ async function arizaQosh(a){
 async function boshlangichKochir(arizalar){
   if(!arizalar || !arizalar.length) return;
   for(const a of arizalar){
-    await havza.query(
-      `INSERT INTO arizalar (id, kod, fan, turi, holat, sana)
-       VALUES ($1, $2, $3, $4, $5, $6)
-       ON CONFLICT (id) DO NOTHING`,
-      [a.id, a.kod || '', a.fan, a.turi, a.holat || 'kutilmoqda',
-       a.sana || new Date().toISOString().slice(0, 10)]
-    );
+    /* Bitta yozuv ko'chmasa ham qolganini davom ettiramiz va
+       bazani o'chirmaymiz — namuna ma'lumot tufayli butun
+       saqlash tizimidan voz kechish noto'g'ri bo'lardi. */
+    try{
+      await havza.query(
+        `INSERT INTO arizalar (id, kod, data) VALUES ($1, $2, $3)
+         ON CONFLICT (id) DO NOTHING`,
+        [a.id, a.kod || '', JSON.stringify(a)]
+      );
+    }catch(e){
+      console.warn('  Ariza ko\'chmadi (' + a.id + '): ' + e.message);
+    }
   }
 }
 

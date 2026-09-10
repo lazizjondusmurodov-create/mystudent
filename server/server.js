@@ -284,12 +284,19 @@ const server = http.createServer(function(req, res){
    Baza ulanmasa server baribir ko'tariladi: ilova ochiladi, faqat
    arizalar vaqtinchalik bo'ladi. */
 baza.tayyorla()
-  .then(function(ulandi){
-    if(ulandi) return baza.boshlangichKochir(dbOqi().arizalar);
-  })
   .catch(function(e){
+    /* Faqat ULANISH xatosi bazadan voz kechishga sabab bo'ladi. */
     console.warn('  Baza ulanmadi (' + e.message + ') — arizalar vaqtinchalik');
     baza.BAZA_BOR = false;
+    return false;
+  })
+  .then(function(ulandi){
+    if(!ulandi) return;
+    /* Boshlang'ich ko'chirish yiqilsa baza baribir ishlaydi —
+       bu faqat namuna ma'lumotni ko'chirish, ulanish emas. */
+    return baza.boshlangichKochir(dbOqi().arizalar).catch(function(e){
+      console.warn('  Boshlang\'ich ko\'chirish to\'liq bo\'lmadi: ' + e.message);
+    });
   })
   .then(ishgaTushir, ishgaTushir);
 
