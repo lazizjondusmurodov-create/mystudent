@@ -16,7 +16,13 @@
    ========================================================= */
 'use strict';
 
-const URL = process.env.DATABASE_URL || '';
+/* Muhit o'zgaruvchisi panelga qo'lda kiritilganda ichiga ko'rinmas
+   belgilar tushib qolishi mumkin: bosh/oxirgi bo'sh joy, qator
+   uzilishi, qo'shtirnoq. Ular ulanishni jimgina buzadi —
+   shuning uchun boshidayoq tozalaymiz. */
+const URL = String(process.env.DATABASE_URL || '')
+  .replace(/\s+/g, '')             /* bo'sh joy va qator uzilishlari */
+  .replace(/^["']|["']$/g, '');    /* tasodifiy qo'shtirnoq */
 let BAZA_BOR = !!URL;   /* ulanish uzilsa o'chiriladi */
 
 let havza = null;   /* pg.Pool — faqat baza rejimida */
@@ -39,6 +45,17 @@ async function tayyorla(){
   }
 
   const { Pool } = require('pg');
+
+  /* Tashxis uchun: ulanish satrining xavfsiz qismini chiqaramiz.
+     Parol hech qachon logga tushmaydi. Muammo bo'lsa shu satrdan
+     manzil to'g'ri kelganini darrov ko'rish mumkin. */
+  try{
+    const u = new (require('url').URL)(URL);
+    console.log('  Baza manzili: ' + u.hostname + u.pathname +
+                ' (foydalanuvchi: ' + u.username + ')');
+  }catch(e){
+    console.warn('  DIQQAT: DATABASE_URL noto\'g\'ri shaklda — ' + e.message);
+  }
 
   /* URL ichidagi sslmode/channel_binding parametrlarini olib tashlaymiz.
      Sabab: pg ularni 'verify-full' deb talqin qiladi va Neon
