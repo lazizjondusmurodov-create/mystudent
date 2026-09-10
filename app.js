@@ -2140,28 +2140,60 @@ function adminHTML(){
   return h;
 }
 
-/* arizaga javob berish: 'ok' yoki 'no' */
+/* arizaga javob berish: 'ok' yoki 'no'
+
+   Server rejimida javob bazaga yoziladi — shunda arizani yuborgan
+   talaba uni o'z telefonida ko'radi. Statik rejimda (server yo'q)
+   avvalgidek brauzer xotirasida qoladi. */
 function javobBer(id, holat, sabab){
   const list = arizaOqi();
   const a = list.filter(function(x){ return x.id === id; })[0];
-  if(!a) return;
 
-  a.holat  = holat;
-  a.holatT = holatMatn(holat);
-  a.vaqt   = hozirVaqt();
-
+  /* javob matnini tayyorlaymiz — ikkala rejimda ham bir xil */
+  const ozgarish = {
+    holat: holat,
+    holatT: holatMatn(holat),
+    vaqt: hozirVaqt()
+  };
   if(holat === 'ok'){
-    a.x = t('appApproved');
-    a.files = ['ariza', 'shartnoma'];   /* qabul qilinsa hujjat beriladi */
+    ozgarish.x = t('appApproved');
+    ozgarish.files = ['ariza', 'shartnoma'];   /* qabul qilinsa hujjat beriladi */
   }else{
-    a.x = sabab ? t('rejectWhy') + ': ' + sabab : t('appRejected');
-    a.files = [];
+    ozgarish.x = sabab ? t('rejectWhy') + ': ' + sabab : t('appRejected');
+    ozgarish.files = [];
   }
 
+  if(typeof API_SERVER_BOR !== 'undefined' && API_SERVER_BOR){
+    apiDekanatJavob(id, holat, sabab).then(function(){
+      /* serverdagi ro'yxatni qayta olamiz — boshqa dekanat ham
+         javob bergan bo'lishi mumkin */
+      return dekanatYukla();
+    }).then(function(){
+      haptic(16);
+      renderAdmin();
+      toast(holat === 'ok' ? t('decidedOk') : t('decidedNo'));
+    }).catch(function(e){
+      toast(e.message || t('errNet'));
+    });
+    return;
+  }
+
+  if(!a) return;
+  Object.assign(a, ozgarish);
   arizaYoz(list);
   haptic(16);
   renderAdmin();
   toast(holat === 'ok' ? t('decidedOk') : t('decidedNo'));
+}
+
+/* Serverdan barcha arizalarni olib, dekanat ro'yxatini yangilaydi.
+   Ro'yxat arizaOqi() o'qiydigan joyga yoziladi, shunda adminHTML()
+   o'zgarishsiz ishlayveradi. */
+function dekanatYukla(){
+  if(typeof apiDekanatArizalar !== 'function') return Promise.resolve();
+  return apiDekanatArizalar().then(function(list){
+    if(list) arizaYoz(list);
+  });
 }
 
 /* dekanat panelini ochish */
@@ -2171,6 +2203,13 @@ function openAdmin(){
   detailTitle.textContent = t('adminMode');
   $('refBtn').hidden = true;
   renderAdmin();
+
+  /* Server rejimida ro'yxat barcha talabalardan yig'iladi.
+     Avval mavjud ro'yxat ko'rsatiladi (ekran bo'sh turmasin),
+     server javobi kelgach yangilanadi. */
+  dekanatYukla().then(function(){
+    if(curPage === 'admin') renderAdmin();
+  }).catch(function(){ /* server yo'q — mahalliy ro'yxat qoladi */ });
 
   detail.classList.add('is-open');
   detail.setAttribute('aria-hidden','false');
@@ -4565,14 +4604,22 @@ $('doLogin').addEventListener('click', function(){
     let talaba = null;
 
     /* SERVER REJIMI: kod serverga yuboriladi, token qaytadi.
-       Dekanat kodi mahalliy tekshiriladi (demo uchun). */
-    if(API_SERVER_BOR && !dekanat){
+
+       Dekanat kodi ham serverga boradi — aks holda token bo'lmay,
+       dekanat paneli barcha talabalarning arizalarini ololmasdi.
+       Server dekanat uchun {dekanat:true} qaytaradi (talaba emas). */
+    if(API_SERVER_BOR){
       try{
         const j = await apiLogin(code);
-        /* kirgandan keyin himoyalangan ma'lumotni yuklaymiz */
-        const q = await apiQolganini();
-        malumotlarniQoy(q);
-        talaba = talabaTop(code) || j.talaba || null;
+        if(j.dekanat){
+          /* dekanat talaba emas — panel uchun shartli yozuv */
+          talaba = { kod: code, name: t('adminMode'), group: '' };
+        }else{
+          /* kirgandan keyin himoyalangan ma'lumotni yuklaymiz */
+          const q = await apiQolganini();
+          malumotlarniQoy(q);
+          talaba = talabaTop(code) || j.talaba || null;
+        }
       }catch(e){
         talaba = null;
       }

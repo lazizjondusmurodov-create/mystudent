@@ -137,6 +137,20 @@ async function arizaQosh(a){
   return a;
 }
 
+/* Ariza holatini o'zgartirish (dekanat qabul qiladi yoki rad etadi).
+
+   Ariza JSONB da butunligicha saqlanadi, shuning uchun uni o'qib,
+   kerakli maydonlarni qo'shib, qaytib yozamiz. Topilmasa null. */
+async function arizaHolat(id, ozgarish){
+  const r = await havza.query('SELECT data FROM arizalar WHERE id = $1', [id]);
+  if(!r.rowCount) return null;
+
+  const yangi = Object.assign({}, r.rows[0].data, ozgarish, { id: id });
+  await havza.query('UPDATE arizalar SET data = $2 WHERE id = $1',
+                    [id, JSON.stringify(yangi)]);
+  return yangi;
+}
+
 /* db.json dagi boshlang'ich arizalarni bazaga bir marta ko'chirish.
    ON CONFLICT — ikkinchi marta ishga tushsa takrorlanmaydi. */
 async function boshlangichKochir(arizalar){
@@ -164,5 +178,6 @@ module.exports = {
   tayyorla,
   arizalarOl,
   arizaQosh,
+  arizaHolat,
   boshlangichKochir
 };

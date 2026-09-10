@@ -164,6 +164,35 @@ async function apiArizaYubor(fan, turi){
   return j;
 }
 
+/* ---------- DEKANAT ----------
+   Dekanat barcha talabalarning arizalarini ko'radi va ularga
+   javob beradi. Statik rejimda server yo'q — u yerda dekanat
+   paneli avvalgidek brauzer xotirasi bilan ishlaydi. */
+
+/* Barcha arizalar (faqat dekanat tokeni bilan) */
+async function apiDekanatArizalar(){
+  if(!API_SERVER_BOR) return null;    /* null = statik rejim */
+  const d = await apiGet('dekanat/arizalar');
+  return d.arizalar || [];
+}
+
+/* Arizani qabul qilish ('ok') yoki rad etish ('no') */
+async function apiDekanatJavob(id, holat, sabab){
+  if(!API_SERVER_BOR) return null;
+  const res = await fetch(apiIldiz() + '/api/dekanat/holat', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': 'Bearer ' + API_TOKEN
+    },
+    body: JSON.stringify({ id: id, holat: holat, sabab: sabab || '' })
+  });
+  const j = await res.json().catch(function(){ return {}; });
+  if(!res.ok) throw new Error(j.xato || 'Javob saqlanmadi');
+  return j.ariza;
+}
+
 /* Ilova ishga tushganda kerak bo'ladigan hamma ma'lumot.
    Barchasi parallel yuklanadi. */
 async function apiHammasi(){

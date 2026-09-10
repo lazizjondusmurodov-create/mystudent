@@ -24,6 +24,17 @@
      GET  /api/fotolar
      GET  /api/yotoqxona        (token kerak)
      POST /api/arizalar         (token kerak)  -> yangi ariza qo'shadi
+     GET  /api/salom                           -> hayot belgisi
+
+     Dekanat (DEKANAT_KODI bilan kirgan):
+     GET  /api/dekanat/arizalar                -> barcha arizalar
+     POST /api/dekanat/holat    {id, holat}    -> qabul / rad etish
+
+   Muhit o'zgaruvchilari:
+     PORT           — port (odatiy 3000)
+     DATABASE_URL   — PostgreSQL; bo'lmasa db.json ishlatiladi
+     DEMO           — 'off' bo'lsa kirish kodlari ko'rsatilmaydi
+     DEKANAT_KODI   — dekanat kirish kodi (odatiy 9999)
    ========================================================= */
 'use strict';
 
@@ -39,6 +50,12 @@ const PORT = process.env.PORT || 3000;
 /* Namuna (demo) rejimi: kirish kodlari ilovada ochiq ko'rsatiladimi.
    Haqiqiy foydalanishda hostingda DEMO=off qo'ying. */
 const DEMO_YONIQ = String(process.env.DEMO || 'on').toLowerCase() !== 'off';
+
+/* Dekanat (admin) kirish kodi. Bu koddan kirgan foydalanuvchi barcha
+   talabalarning arizalarini ko'radi va ularga javob beradi.
+   Hostingda DEKANAT_KODI bilan almashtiring — odatiy qiymat hammaga
+   ma'lum va faqat namoyish uchun. */
+const DEKANAT_KODI = String(process.env.DEKANAT_KODI || '9999');
 const ROOT = path.join(__dirname, '..');     /* loyiha ildizi */
 const DB   = path.join(__dirname, 'db.json');
 
@@ -166,6 +183,12 @@ async function api(req, res, yol){
     const kod = String(tana.kod || '').trim();
     if(!kod) return xato(res, 400, 'Kod kiritilmadi');
 
+    /* Dekanat kodi talabalar ro'yxatida bo'lmaydi — alohida yo'l.
+       Token beriladi, lekin talaba ma'lumoti o'rniga dekanat belgisi. */
+    if(kod === DEKANAT_KODI){
+      return json(res, 200, { token: tokenYarat(kod), dekanat: true });
+    }
+
     const talaba = d.talabalar.find(function(t){ return t.kod === kod; });
     if(!talaba) return xato(res, 401, 'Kod noto\'g\'ri');
 
@@ -216,6 +239,52 @@ async function api(req, res, yol){
   /* --- bundan keyingilari token talab qiladi --- */
   const kod = tokenTekshir(req);
   if(!kod) return xato(res, 401, 'Avval tizimga kiring');
+
+  /* --- DEKANAT yo'llari ---
+     Talaba qidiruvidan OLDIN turadi: dekanat kodi talabalar
+     ro'yxatida yo'q, aks holda quyidagi tekshiruv uni to'sib qo'yardi. */
+  if(kod === DEKANAT_KODI){
+    /* barcha talabalarning arizalari */
+    if(yol === '/api/dekanat/arizalar'){
+      const arizalar = baza.BAZA_BOR ? await baza.arizalarOl() : d.arizalar;
+      return json(res, 200, { arizalar: arizalar, dekanat: true });
+    }
+
+    /* arizani qabul qilish yoki rad etish */
+    if(yol === '/api/dekanat/holat' && req.method === 'POST'){
+      let tana;
+      try{ tana = await tanaOqi(req); }
+      catch(e){ return xato(res, 400, 'So\'rov noto\'g\'ri'); }
+
+      const id = String(tana.id || '').trim();
+      const holat = String(tana.holat || '').trim();
+      if(!id) return xato(res, 400, 'id kerak');
+      if(holat !== 'ok' && holat !== 'no'){
+        return xato(res, 400, 'holat "ok" yoki "no" bo\'lishi kerak');
+      }
+
+      const ozgarish = {
+        holat: holat,
+        sabab: String(tana.sabab || '').slice(0, 300),
+        javobVaqti: new Date().toISOString()
+      };
+
+      if(baza.BAZA_BOR){
+        const a = await baza.arizaHolat(id, ozgarish);
+        if(!a) return xato(res, 404, 'Ariza topilmadi');
+        return json(res, 200, { ariza: a });
+      }
+
+      const a = d.arizalar.find(function(x){ return x.id === id; });
+      if(!a) return xato(res, 404, 'Ariza topilmadi');
+      Object.assign(a, ozgarish);
+      dbYoz(d);
+      return json(res, 200, { ariza: a });
+    }
+
+    /* dekanat talaba emas — qolgan endpointlar unga tegishli emas */
+    return xato(res, 403, 'Bu bo\'lim talabalar uchun');
+  }
 
   const men = d.talabalar.find(function(t){ return t.kod === kod; });
   if(!men) return xato(res, 401, 'Talaba topilmadi');
