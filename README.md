@@ -78,10 +78,10 @@ yetarli, parol so'ralmaydi.
 
 | Telefon | Kod | Talaba | Guruh |
 |---|---|---|---|
+| `505816667` | `1111` | Dusmurodov Lazizjon | ATT-06-24 |
 | `901234567` | `2024` | Aliyev Jasur | ATT-06-24 |
 | `912345678` | `3050` | Yusupova Nilufar | KIF-04-25 |
 | `937778899` | `7788` | Rahmonov Sardor | IQT-02-23 |
-| `505816667` | `1111` | Dusmurodov Lazizjon | ATT-06-24 |
 
 Raqamni istalgan shaklda kiritsangiz bo'ladi — `+998 90 123 45 67` ham,
 `901234567` ham, `0901234567` ham ishlaydi.

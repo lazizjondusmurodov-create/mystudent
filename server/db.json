@@ -820,6 +820,19 @@
   ],
   "talabalar": [
     {
+      "kod": "1111",
+      "name": "Dusmurodov Lazizjon",
+      "group": "ATT-06-24",
+      "faculty": "Axborot tizimlari va texnologiyalari",
+      "form": "Sirtqi",
+      "course": "3-kurs",
+      "studentId": "ATT-06-24",
+      "status": "O'qimoqda",
+      "phone": "+998 50 581 66 67",
+      "email": "lazizjondusmurodov26@gmail.com",
+      "sem": 5
+    },
+    {
       "kod": "2024",
       "name": "Aliyev Jasur Bekzod o‘g‘li",
       "group": "ATT-06-24",
@@ -857,19 +870,6 @@
       "phone": "+998 93 777 88 99",
       "email": "s.rahmonov@student.uz",
       "sem": 7
-    },
-    {
-      "kod": "1111",
-      "name": "Dusmurodov Lazizjon",
-      "group": "ATT-06-24",
-      "faculty": "Axborot tizimlari va texnologiyalari",
-      "form": "Sirtqi",
-      "course": "3-kurs",
-      "studentId": "ATT-06-24",
-      "status": "O'qimoqda",
-      "phone": "+998 50 581 66 67",
-      "email": "lazizjondusmurodov26@gmail.com",
-      "sem": 5
     }
   ],
   "yangiliklar": [
