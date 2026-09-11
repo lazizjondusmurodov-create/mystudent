@@ -1036,7 +1036,24 @@ function esc(s){
     return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];
   });
 }
-function haptic(ms){ if(navigator.vibrate) navigator.vibrate(ms || 8); }
+/* Qisqa titrash (telefonda).
+
+   Chrome sahifaga hali tegilmagan bo'lsa vibrate() ni bekor qiladi
+   va konsolga [Intervention] yozadi. Bu xato emas (reklama saytlari
+   telefonni o'z-o'zidan titratmasligi uchun qo'yilgan qoida), lekin
+   konsolni kiraytiradi — try/catch ham yordam bermaydi, chunki
+   Chrome istisno tashlamaydi, jimgina bekor qiladi.
+
+   Shuning uchun birinchi tegishni o'zimiz kutamiz. */
+let TEGILDI = false;
+['pointerdown', 'keydown', 'touchstart'].forEach(function(hodisa){
+  document.addEventListener(hodisa, function(){ TEGILDI = true; },
+                            { once: true, capture: true });
+});
+
+function haptic(ms){
+  if(TEGILDI && navigator.vibrate) navigator.vibrate(ms || 8);
+}
 function toMin(s){ const p = s.split(':'); return (+p[0])*60 + (+p[1]); }
 
 
