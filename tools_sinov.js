@@ -6,7 +6,7 @@
 
    Nimani tekshiradi:
      1) db.json va data/*.json bir-biriga mos keladimi
-     2) talaba kodlari takrorlanmaydimi
+     2) talaba kodlari va telefon raqamlari takrorlanmaydimi
      3) id lar takrorlanmaydimi
      4) yangiliklarda kerakli maydonlar bormi
      5) tarjima maydonlari to'liqmi (ogohlantirish)
@@ -36,6 +36,36 @@ const kodlar = {};
   kodlar[t.kod] = t.name;
 });
 console.log('  ' + (db.talabalar || []).length + ' ta, kodlar takrorlanmagan');
+
+/* ---------- telefon raqamlar ----------
+
+   Kirish telefon raqam bilan bo'ladi, shuning uchun har talabada
+   raqam bo'lishi va takrorlanmasligi shart. Takrorlansa — ikkinchi
+   talaba hech qachon kira olmaydi (qidiruv birinchisini topadi). */
+function raqamTozala(raqam){
+  let r = String(raqam || '').replace(/\D/g, '');
+  if(!r) return '';
+  if(r.length === 9) r = '998' + r;
+  if(r.length === 10 && r[0] === '0') r = '998' + r.slice(1);
+  return r;
+}
+
+const raqamlar = {};
+const xatoOldin = xato;
+(db.talabalar || []).forEach(function(t){
+  const r = raqamTozala(t.phone);
+  if(!r) return XATO('telefon raqamsiz talaba: ' + (t.name || '?') +
+                     ' — u tizimga kira olmaydi');
+  if(r.length !== 12){
+    XATO('telefon raqam noto\'g\'ri shaklda (' + t.phone + '): ' + t.name);
+    return;
+  }
+  if(raqamlar[r]) XATO('telefon raqam takrorlangan (' + t.phone + '): ' +
+                       raqamlar[r] + ' va ' + t.name +
+                       ' — ikkinchisi kira olmaydi');
+  raqamlar[r] = t.name;
+});
+if(xato === xatoOldin) console.log('  telefon raqamlar joyida, takrorlanmagan');
 
 /* dekanat kodi bilan to'qnashuv */
 const dekanat = process.env.DEKANAT_KODI || '9999';

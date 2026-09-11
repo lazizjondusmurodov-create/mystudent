@@ -5,8 +5,8 @@ kutubxona va karyera bo'limlari bitta joyda. O'zbek, rus va ingliz tillarida.
 
 ### 👉 [Ilovani ochish](https://mystudent-lspe.onrender.com)
 
-To'liq versiya: backend, ma'lumotlar bazasi, kirish himoyasi, dekanat
-paneli. Telefondan ham, kompyuterdan ham ochiladi.
+To'liq versiya: backend, ma'lumotlar bazasi, dekanat paneli.
+Telefondan ham, kompyuterdan ham ochiladi.
 
 > Bepul hostingda server 15 daqiqa harakatsizlikdan keyin uxlaydi —
 > birinchi ochilish ~50 soniya olishi mumkin, keyingilari tez.
@@ -39,7 +39,7 @@ domen ulash — [QOLLANMA.md](QOLLANMA.md) da.
 
 ## Imkoniyatlar
 
-- **Kirish** — telefon raqam va parol; parollar scrypt izi bilan saqlanadi
+- **Kirish** — telefon raqam bilan; parol so'ralmaydi
 - **Dars jadvali** — haftalik ko'rinish, joriy kun ajratilgan, dars tafsilotlari
 - **Davomat** — foiz, qoldirilgan soatlar, fanlar bo'yicha tafsilot
 - **Baholar** — semestr bo'yicha, o'rtacha ball, kredit va eng yuqori/past fanlar
@@ -73,22 +73,24 @@ python -m http.server 8899
 
 ## Namuna kirish
 
-Ilovadagi ma'lumot — namuna. Parol hammasida bir xil: **`Talaba2026`**
+Ilovadagi ma'lumot — namuna. Kirish uchun telefon raqamning o'zi
+yetarli, parol so'ralmaydi.
 
 | Telefon | Kod | Talaba | Guruh |
 |---|---|---|---|
 | `901234567` | `2024` | Aliyev Jasur | ATT-06-24 |
 | `912345678` | `3050` | Yusupova Nilufar | KIF-04-25 |
 | `937778899` | `7788` | Rahmonov Sardor | IQT-02-23 |
-| `905816667` | `1111` | Dusmurodov Lazizjon | ATT-06-24 |
+| `505816667` | `1111` | Dusmurodov Lazizjon | ATT-06-24 |
 
 Raqamni istalgan shaklda kiritsangiz bo'ladi — `+998 90 123 45 67` ham,
-`901234567` ham ishlaydi.
+`901234567` ham, `0901234567` ham ishlaydi.
+
+Namuna rejimida raqamlar kirish ekranida ro'yxat bo'lib ko'rinadi —
+bosish kifoya. `DEMO=off` bilan ro'yxat yashiriladi.
 
 Kod ustuni — eski usul uchun (kirish ekranida «Kirish kodi bilan
-kirish»). Mahalliy ishga tushirilganda kodlar ro'yxat bo'lib ham
-ko'rinadi — bosish kifoya. Haqiqiy foydalanishda `DEMO=off` bilan
-o'chiriladi.
+kirish»); `KOD_KIRISH=off` bilan o'chiriladi.
 
 ### Dekanat paneli
 
@@ -107,7 +109,7 @@ style.css       — uslublar (ranglar CSS o'zgaruvchilarida)
 server/
   server.js     — backend: API va statik fayllar
   baza.js       — PostgreSQL qatlami (DATABASE_URL bo'lsa)
-  parol.js      — parol izi (scrypt) va telefon raqam bilan ishlash
+  raqam.js      — telefon raqamni yagona ko'rinishga keltirish
   db.json       — asosiy ma'lumot manbai
 
 data/           — statik rejim uchun ma'lumot (server bo'lmaganda)
@@ -123,7 +125,6 @@ docs/           — README uchun skrinshotlar
 tools_check.js  — versiya, kesh, manifest, tarjima kalitlarini tekshiradi
 tools_sinov.js  — ma'lumotni tekshiradi: takroriy kodlar, yetishmayotgan
                   maydonlar, db.json va data/ orasidagi farq
-tools_parol.js  — talabalarga parol qo'yadi va holatni ko'rsatadi
 tools_shot.js   — skrinshotlarni avtomatik yangilash
 ```
 
@@ -173,17 +174,23 @@ kutubxona kerak: `pg`. Mahalliy ishlashda u ishlatilmaydi, shuning uchun
 ### Kirish va himoya
 
 ```
-POST /api/login  {telefon:"901234567", parol:"..."}  →  {token, talaba}
-POST /api/login  {kod:"2024"}                        →  {token, talaba}
+POST /api/login  {telefon:"901234567"}  →  {token, talaba}
+POST /api/login  {kod:"2024"}           →  {token, talaba}
 ```
 
-Asosiy usul — **telefon raqam va parol**. Parollar ochiq saqlanmaydi:
-`db.json` da faqat scrypt izi turadi, shuning uchun unutilgan parolni
-tiklab bo'lmaydi — faqat yangisini qo'yish mumkin (`tools_parol.js`).
-Bitta raqamdan 5 marta xato urinishdan keyin 15 daqiqaga blok.
+Asosiy usul — **telefon raqam**. Parol so'ralmaydi: raqamning o'zi
+kirish kaliti.
 
-4 xonali kod — eski usul, o'tish davri uchun; `KOD_KIRISH=off` bilan
-o'chiriladi. Dekanat kodi undan qat'i nazar ishlayveradi.
+> **Diqqat:** bu kirishni ochiq qoldiradi. Telefon raqam maxfiy
+> ma'lumot emas — uni bilgan har kim o'sha talabaning baholari,
+> davomati va arizalarini ko'ra oladi. Namoyish uchun qulay, haqiqiy
+> talabalar ma'lumoti uchun yetarli emas.
+
+Bitta raqamdan 5 marta topilmagan urinishdan keyin 15 daqiqaga blok —
+bu faqat raqamlarni ketma-ket terib qidirishni sekinlashtiradi.
+
+4 xonali kod — eski usul; `KOD_KIRISH=off` bilan o'chiriladi.
+Dekanat kodi undan qat'i nazar ishlayveradi.
 
 Token olingandan keyin himoyalangan endpointlarga `Authorization: Bearer <token>`
 sarlavhasi bilan murojaat qilinadi. Tokensiz ular **401** qaytaradi.
@@ -197,8 +204,9 @@ Ilova o'zi aniqlaydi qaysi rejimda ishlashini:
 | **Server** | backend ishlab tursa | `/api/...` |
 | **Statik** | server bo'lmasa | `data/*.json` fayllari |
 
-Statik rejimda ariza yuborish, dekanat paneli va kirish himoyasi
-ishlamaydi — u faqat interfeysni ko'rsatish uchun.
+Statik rejimda ariza yuborish va dekanat paneli ishlamaydi — u faqat
+interfeysni ko'rsatish uchun. Telefon raqam bilan kirish esa u yerda
+ham ishlaydi: raqamlar `data/talabalar.json` da turadi.
 
 Majburiy tanlash uchun [api.js](api.js) da `API_REJIM` ni `'server'`
 yoki `'statik'` qiling. Boshqa domendagi serverga ulash uchun `API_BASE`
@@ -221,7 +229,6 @@ ni to'ldiring.
 | `GET /yotoqxona` | `{yotoqxona:{...}}` |
 | `POST /arizalar` | yangi ariza yozadi → `{ariza}` |
 | `GET /salom` | hayot belgisi → `{holat, vaqt, baza}` |
-| `POST /parol` | parolni o'zgartiradi (token kerak) |
 
 Token talab qilmaydiganlar: `yangiliklar`, `kutubxona`, `ishlar`,
 `fotolar`, `salom`.

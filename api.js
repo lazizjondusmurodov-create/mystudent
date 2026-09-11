@@ -137,15 +137,21 @@ async function apiLogin(kod){
   return j;
 }
 
-/* Telefon raqam va parol bilan kirish.
+/* Telefon raqam bilan kirish (asosiy usul).
 
-   Faqat server rejimida ishlaydi: parol izi serverda saqlanadi va
-   uni brauzerda tekshirib bo'lmaydi. */
-async function apiLoginTel(telefon, parol){
+   Parol so'ralmaydi — raqamning o'zi kirish kaliti. Server
+   rejimida serverga boradi, statikda data/talabalar.json ichidan
+   qidiriladi. */
+async function apiLoginTel(telefon){
   if(!API_SERVER_BOR){
-    const e = new Error('Server rejimi kerak');
-    e.serverKerak = true;
-    throw e;
+    /* statik rejim: raqam data/talabalar.json ichidan topiladi */
+    const d = await apiGet('talabalar');
+    const izlangan = apiRaqamTozala(telefon);
+    const t = (d.talabalar || []).find(function(x){
+      return apiRaqamTozala(x.phone) === izlangan;
+    });
+    if(!t) throw new Error('Bu raqam ro\'yxatda topilmadi');
+    return { talaba: t };
   }
 
   let res;
@@ -153,7 +159,7 @@ async function apiLoginTel(telefon, parol){
     res = await fetch(apiIldiz() + '/api/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-      body: JSON.stringify({ telefon: telefon, parol: parol })
+      body: JSON.stringify({ telefon: telefon })
     });
   }catch(e){
     throw new Error('Serverga ulanib bo\'lmadi');
@@ -172,23 +178,14 @@ async function apiLoginTel(telefon, parol){
   return j;
 }
 
-/* Parolni o'zgartirish. Parol hali qo'yilmagan bo'lsa eskisi shart emas. */
-async function apiParolOzgartir(eski, yangi){
-  if(!API_SERVER_BOR) throw new Error('Server rejimi kerak');
-
-  const res = await fetch(apiIldiz() + '/api/parol', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
-      'Authorization': 'Bearer ' + API_TOKEN
-    },
-    body: JSON.stringify({ eski: eski || '', yangi: yangi })
-  });
-
-  const j = await res.json().catch(function(){ return {}; });
-  if(!res.ok) throw new Error(j.xato || 'Parol o\'zgartirilmadi');
-  return j;
+/* Telefon raqamni yagona ko'rinishga keltirish: 998901234567.
+   Serverdagi server/raqam.js dagi bilan bir xil qoida. */
+function apiRaqamTozala(raqam){
+  let s = String(raqam || '').replace(/\D/g, '');
+  if(!s) return '';
+  if(s.length === 9) s = '998' + s;
+  if(s.length === 10 && s[0] === '0') s = '998' + s.slice(1);
+  return s;
 }
 
 function apiLogout(){

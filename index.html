@@ -30,7 +30,7 @@
 <meta property="og:url" content="https://lazizjondusmurodov-create.github.io/mystudent/">
 <meta name="twitter:card" content="summary_large_image">
 
-<link rel="stylesheet" href="style.css?v=6.2">
+<link rel="stylesheet" href="style.css?v=6.3">
 </head>
 <body>
 
@@ -49,27 +49,17 @@
   <div class="auth__top">
     <div class="auth__logo">MS</div>
     <div class="auth__name">MyStudent</div>
-    <p class="auth__sub" data-i18n="authSub">Davom etish uchun telefon raqam va parolni kiriting</p>
+    <p class="auth__sub" data-i18n="authSub">Davom etish uchun telefon raqamingizni kiriting</p>
   </div>
 
   <div class="auth__form">
 
-    <!-- USUL 1: telefon raqam + parol -->
+    <!-- USUL 1: telefon raqam (asosiy usul) -->
     <div id="telBox">
       <div class="field">
         <label for="telInp" data-i18n="phoneLabel">Telefon raqam</label>
         <input type="tel" id="telInp" inputmode="tel"
-               autocomplete="username" placeholder="+998 90 123 45 67">
-      </div>
-
-      <div class="field field--pass">
-        <label for="passInp" data-i18n="passLabel">Parol</label>
-        <input type="password" id="passInp"
-               autocomplete="current-password" placeholder="••••••••">
-        <button type="button" class="field__eye" id="passEye"
-                aria-label="Parolni ko'rsatish">
-          <svg viewBox="0 0 24 24"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></svg>
-        </button>
+               autocomplete="tel" placeholder="+998 90 123 45 67">
       </div>
     </div>
 
@@ -245,11 +235,6 @@
       <span data-i18n="personalData">Shaxsiy ma'lumotlar</span>
       <svg class="chev" viewBox="0 0 8 14"><path d="M1 1l6 6-6 6"/></svg>
     </button>
-    <button class="action" id="btnPass">
-      <span class="action__ic"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span>
-      <span data-i18n="changePass">Parolni o'zgartirish</span>
-      <svg class="chev" viewBox="0 0 8 14"><path d="M1 1l6 6-6 6"/></svg>
-    </button>
     <button class="action action--exit" id="btnExit">
       <span class="action__ic"><svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg></span>
       <span data-i18n="logout">Tizimdan chiqish</span>
@@ -366,8 +351,8 @@
   </div>
 </aside>
 
-<script src="api.js?v=6.2"></script>
-<script src="app.js?v=6.2"></script>
+<script src="api.js?v=6.3"></script>
+<script src="app.js?v=6.3"></script>
 
 <!-- internetsiz ishlash uchun service worker.
      file:// orqali ochilganda ro'yxatdan o'tkazilmaydi. -->

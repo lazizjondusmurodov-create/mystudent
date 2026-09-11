@@ -29,16 +29,17 @@ DEMO          = off
 DEKANAT_KODI  = (o'zingiz o'ylab topgan kod)
 ```
 
-Birinchisisiz kirish kodlari kirish ekranida hammaga ko'rinadi.
-Ikkinchisisiz istalgan odam `9999` bilan dekanat paneliga kiradi.
+Birinchisisiz talabalar ro'yxati (raqamlari bilan) kirish ekranida
+hammaga ko'rinadi. Ikkinchisisiz istalgan odam `9999` bilan dekanat
+paneliga kiradi.
 
-Keyin, hamma talaba parol olgandan so'ng (3-bo'limga qarang):
+Eski 4 xonali kod usuli keraksiz bo'lsa:
 
 ```
 KOD_KIRISH    = off
 ```
 
-Shunda eski 4 xonali kod usuli o'chadi va faqat telefon+parol qoladi.
+Shunda faqat telefon raqam bilan kirish qoladi.
 
 ---
 
@@ -95,11 +96,8 @@ ikki manba orasidagi farqni topadi. `XATO` chiqsa — tuzatish shart;
 **har talabada boshqacha** bo'lishi shart. `kod` esa eski usul uchun
 (3-bo'limga qarang) — u ham takrorlanmasin.
 
-Yangi talaba qo'shgach unga parol bering:
-
-```bash
-node tools_parol.js 998901234567 UningParoli
-```
+Raqamni yozib qo'ysangiz — talaba shu bilan kiradi, boshqa hech nima
+kerak emas.
 
 ### Yangilik (e'lon) qo'shish
 
@@ -131,65 +129,43 @@ inglizcha rejimda ham o'zbekcha matn ko'rinadi — ilova baribir ishlaydi.
 
 ---
 
-## 3. Parollar
+## 3. Kirish
 
-Talabalar **telefon raqam + parol** bilan kiradi.
+Talabalar **telefon raqam** bilan kiradi. Parol so'ralmaydi —
+raqamning o'zi kirish kaliti.
 
-Parollar hech qachon ochiq saqlanmaydi — `db.json` da faqat ularning
-"izi" (hash) turadi. Shuning uchun unutilgan parolni **ko'rish mumkin
-emas**, faqat yangisini qo'yish mumkin. Bu ataylab shunday: fayl
-GitHub'da ochiq turadi.
+> **Buni bilib qo'ying:** telefon raqam maxfiy ma'lumot emas.
+> Guruhdoshi, o'qituvchisi yoki raqamni bilgan begona odam ham
+> o'sha talabaning baholari, davomati, qarzdorligi va arizalarini
+> ko'ra oladi. Namoyish uchun qulay, haqiqiy talabalar ma'lumoti
+> uchun yetarli emas.
 
-### Holatni ko'rish
+Kimdir kira olishi uchun qilinadigan yagona ish — uning raqamini
+`server/db.json` dagi `phone` maydoniga yozish (2-bo'limga qarang).
+Raqamni o'chirsangiz — o'sha odam kira olmaydi.
 
-```bash
-node tools_parol.js
-```
+Talaba raqamni istalgan shaklda kiritishi mumkin — `+998 90 123 45 67`
+ham, `901234567` ham, `0901234567` ham bir xil hisoblanadi.
 
-Kimda parol bor, kimda yo'q — ro'yxat chiqaradi.
+### Namuna ro'yxati
 
-### Bitta talabaga parol qo'yish
-
-```bash
-node tools_parol.js 998901234567 YangiParol2026
-```
-
-Raqamni istalgan shaklda yozsangiz bo'ladi — `+998 90 123 45 67` ham,
-`901234567` ham ishlaydi.
-
-### Hammasiga birdan
-
-```bash
-node tools_parol.js --hammasi
-```
-
-Parolsizlarning har biriga tasodifiy parol yasaydi va ekranga
-chiqaradi. **Ro'yxatni o'sha zahoti nusxalab oling** — qayta
-ko'rsatilmaydi.
-
-Keyin yuboring:
-
-```bash
-git add server/db.json && git commit -m "Parollar" && git push
-```
-
-### Talaba parolni o'zgartirishi
-
-Kabinet → **Parolni o'zgartirish**. Eski parolni bilishi shart.
+Namuna rejimida (`DEMO` o'chirilmagan bo'lsa) kirish ekranida
+talabalar raqamlari bilan ro'yxat bo'lib chiqadi — bosish kifoya.
+Haqiqiy foydalanishda Render'da `DEMO=off` qo'ying: shunda ro'yxat
+yo'qoladi va raqamni qo'lda yozish kerak bo'ladi.
 
 ### Kod bilan kirishni o'chirish
 
-Eski 4 xonali kod usuli hali ishlaydi — o'tish davri uchun. Hamma
-talaba parol olgach, Render'da `KOD_KIRISH=off` qo'ying. Shunda faqat
-telefon+parol qoladi.
+Eski 4 xonali kod usuli hali ishlaydi. Keraksiz bo'lsa Render'da
+`KOD_KIRISH=off` qo'ying — shunda faqat telefon raqam qoladi.
 
 Dekanat kodi bunga bog'liq emas — u har doim ishlayveradi.
 
-### Himoya
+### Chegara
 
-Bitta raqamdan ketma-ket 5 marta xato parol kiritilsa, o'sha raqam
-15 daqiqaga bloklanadi. Bu parolni taxminlab topishga yo'l qo'ymaydi.
-Boshqa talabalar bundan zarar ko'rmaydi.
+Bitta raqamdan ketma-ket 5 marta ro'yxatda yo'q raqam kiritilsa,
+o'sha raqam 15 daqiqaga bloklanadi. Bu himoya emas — faqat
+raqamlarni ketma-ket terib qidirishni sekinlashtiradi.
 
 ---
 
@@ -302,7 +278,7 @@ Ilova ikki joyda turadi — farqini bilib qo'ying:
 | Backend | bor | **yo'q** |
 | Ariza yuborish | bazaga yoziladi | saqlanmaydi |
 | Dekanat paneli | ishlaydi | **ishlamaydi** |
-| Kirish himoyasi | server tekshiradi | yo'q |
+| Kirish | server tekshiradi | brauzer tekshiradi |
 | Ma'lumot manbai | `server/db.json` | `data/*.json` |
 | Uxlaydimi | 15 daqiqadan keyin | yo'q, doim tez |
 

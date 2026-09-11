@@ -9,10 +9,11 @@
    Ma'lumotlar server/db.json faylida saqlanadi.
 
    Endpointlar:
+     POST /api/login            {telefon}      -> {token, talaba}
      POST /api/login            {kod}          -> {token, talaba}
      GET  /api/men              (token kerak)  -> {talaba}
      GET  /api/talabalar        (token kerak)  -> {talabalar}
-     GET  /api/demo                            -> {demo} (namuna kodlari)
+     GET  /api/demo                            -> {demo} (namuna ro'yxati)
      GET  /api/jadval           (token kerak)  -> {semestrlar, darslar}
      GET  /api/imtihonlar       (token kerak)
      GET  /api/davomat          (token kerak)
@@ -33,8 +34,9 @@
    Muhit o'zgaruvchilari:
      PORT           — port (odatiy 3000)
      DATABASE_URL   — PostgreSQL; bo'lmasa db.json ishlatiladi
-     DEMO           — 'off' bo'lsa kirish kodlari ko'rsatilmaydi
+     DEMO           — 'off' bo'lsa namuna ro'yxati ko'rsatilmaydi
      DEKANAT_KODI   — dekanat kirish kodi (odatiy 9999)
+     KOD_KIRISH     — 'off' bo'lsa 4 xonali kod bilan kirish o'chadi
    ========================================================= */
 'use strict';
 
@@ -44,7 +46,7 @@ const path = require('path');
 const crypto = require('crypto');
 
 const baza  = require('./baza');
-const parol = require('./parol');
+const raqamlar = require('./raqam');
 
 const PORT = process.env.PORT || 3000;
 
@@ -60,24 +62,24 @@ const DEKANAT_KODI = String(process.env.DEKANAT_KODI || '9999');
 
 /* 4 xonali kod bilan kirish yoqilganmi.
 
-   Telefon + parol usuli qo'shilgandan keyin eski kod usuli ortiqcha
-   bo'lib qoladi va xavfsizligi pastroq (kod qisqa, almashtirib
-   bo'lmaydi). Hamma talaba parol o'rnatgach KOD_KIRISH=off qo'ying.
+   Asosiy usul — telefon raqam. Kod usuli eski qurilmalarda
+   saqlanib qolgan sessiyalar uchun qoldirilgan; keraksiz bo'lsa
+   KOD_KIRISH=off qo'ying.
 
    Dekanat kodi bunga bog'liq emas — u har doim ishlaydi. */
 const KOD_BILAN_KIRISH = String(process.env.KOD_KIRISH || 'on').toLowerCase() !== 'off';
 
 /* ---------- kirish urinishlari chegarasi ----------
 
-   Parolni taxminlab topish (brute force) — eng oddiy hujum turi.
-   Dastur soniyasiga minglab parol sinab ko'rishi mumkin.
+   Kirish faqat telefon raqam bilan bo'lgani uchun himoya yo'q:
+   raqamni bilgan odam kabinetga kiradi. Chegara mavjud raqamlarni
+   ketma-ket terib qidirishni sekinlashtiradi, xolos.
 
-   Shuning uchun bitta raqamdan ketma-ket 5 marta xato bo'lsa,
+   Bitta manbadan ketma-ket 5 marta topilmagan raqam kiritilsa,
    o'sha raqam 15 daqiqaga bloklanadi. Muvaffaqiyatli kirishdan
    keyin hisob tozalanadi.
 
-   Xotirada saqlanadi: server qayta ishga tushsa tozalanadi. Bu
-   yetarli — hujumchi serverni qayta ishga tushira olmaydi. */
+   Xotirada saqlanadi: server qayta ishga tushsa tozalanadi. */
 const URINISHLAR = new Map();      /* raqam -> {soni, vaqt} */
 const CHEGARA = 5;
 const BLOK_VAQTI = 15 * 60 * 1000;
@@ -237,15 +239,16 @@ async function api(req, res, yol){
     try{ tana = await tanaOqi(req); }
     catch(e){ return xato(res, 400, 'So\'rov noto\'g\'ri'); }
 
-    /* --- USUL 1: telefon raqam + parol --- */
+    /* --- USUL 1: telefon raqam (asosiy usul) ---
+
+       Parol so'ralmaydi: raqamning o'zi kirish kaliti. Ya'ni
+       raqamni bilgan odam o'sha talabaning kabinetiga kira oladi. */
     if(tana.telefon){
-      const raqam = parol.raqamTozala(tana.telefon);
-      const kiritilgan = String(tana.parol || '');
+      const raqam = raqamlar.raqamTozala(tana.telefon);
 
       if(!raqam) return xato(res, 400, 'Telefon raqam noto\'g\'ri');
-      if(!kiritilgan) return xato(res, 400, 'Parol kiritilmadi');
 
-      /* Urinishlar chegarasi — parolni taxminlab topishga yo'l qo'ymaslik */
+      /* Mavjud raqamlarni ketma-ket terib qidirishni sekinlashtiradi */
       const qoldi = urinishTekshir(raqam);
       if(qoldi === 0){
         return xato(res, 429, 'Juda ko\'p urinish. ' +
@@ -253,27 +256,22 @@ async function api(req, res, yol){
       }
 
       const talaba = d.talabalar.find(function(t){
-        return parol.raqamTeng(t.phone, raqam);
+        return raqamlar.raqamTeng(t.phone, raqam);
       });
 
-      /* Raqam topilmasa ham, parol noto'g'ri bo'lsa ham — bir xil javob.
-         Aks holda qaysi raqamlar ro'yxatda borligini bilib olish mumkin. */
-      if(!talaba || !parol.izTekshir(kiritilgan, talaba.parolIzi)){
+      if(!talaba){
         urinishQoshildi(raqam);
-        return xato(res, 401, 'Telefon raqam yoki parol noto\'g\'ri');
+        return xato(res, 401, 'Bu raqam ro\'yxatda topilmadi');
       }
 
       urinishTozala(raqam);
 
       const ochiq = Object.assign({}, talaba);
       delete ochiq.kod;
-      delete ochiq.parolIzi;
 
       return json(res, 200, {
         token: tokenYarat(talaba.kod),
-        talaba: ochiq,
-        /* parol hali o'rnatilmagan bo'lsa ilova buni biladi */
-        parolYangilansin: !talaba.parolIzi
+        talaba: ochiq
       });
     }
 
@@ -287,10 +285,10 @@ async function api(req, res, yol){
       return json(res, 200, { token: tokenYarat(kod), dekanat: true });
     }
 
-    /* Kod bilan kirish o'chirilgan bo'lsa — faqat telefon+parol qoladi */
+    /* Kod bilan kirish o'chirilgan bo'lsa — faqat telefon qoladi */
     if(!KOD_BILAN_KIRISH){
       return xato(res, 403, 'Kod bilan kirish o\'chirilgan — ' +
-                            'telefon raqam va parol bilan kiring');
+                            'telefon raqam bilan kiring');
     }
 
     const talaba = d.talabalar.find(function(t){ return t.kod === kod; });
@@ -299,55 +297,23 @@ async function api(req, res, yol){
     /* maxfiy maydonlarni javobda qaytarmaymiz */
     const ochiq = Object.assign({}, talaba);
     delete ochiq.kod;
-    delete ochiq.parolIzi;
 
     return json(res, 200, { token: tokenYarat(kod), talaba: ochiq });
   }
 
-  /* --- parolni o'zgartirish (token kerak) --- */
-  if(yol === '/api/parol' && req.method === 'POST'){
-    const kod = tokenTekshir(req);
-    if(!kod) return xato(res, 401, 'Avval tizimga kiring');
+  /* --- namuna ro'yxati (demo ilova uchun) ---
 
-    let tana;
-    try{ tana = await tanaOqi(req); }
-    catch(e){ return xato(res, 400, 'So\'rov noto\'g\'ri'); }
-
-    const talaba = d.talabalar.find(function(t){ return t.kod === kod; });
-    if(!talaba) return xato(res, 401, 'Talaba topilmadi');
-
-    /* Parol allaqachon o'rnatilgan bo'lsa — eskisini so'raymiz.
-       Aks holda birovning ochiq qolgan telefonidan parol
-       almashtirib qo'yish mumkin bo'lardi. */
-    if(talaba.parolIzi){
-      if(!parol.izTekshir(String(tana.eski || ''), talaba.parolIzi)){
-        return xato(res, 401, 'Eski parol noto\'g\'ri');
-      }
-    }
-
-    const yangi = String(tana.yangi || '');
-    const kamchilik = parol.parolTekshir(yangi);
-    if(kamchilik) return xato(res, 400, kamchilik);
-
-    talaba.parolIzi = parol.izYasa(yangi);
-    dbYoz(d);
-
-    return json(res, 200, { ok: true });
-  }
-
-  /* --- namuna kodlari (demo ilova uchun) ---
-
-     Bu endpoint kirish kodlarini ochiq ko'rsatadi — namoyish uchun
-     qulay, haqiqiy tizim uchun xavfli.
+     Bu endpoint kirish raqamlarini va kodlarini ochiq ko'rsatadi —
+     namoyish uchun qulay, haqiqiy tizim uchun xavfli.
 
      O'chirish: hostingda DEMO=off muhit o'zgaruvchisini qo'ying.
-     Shunda ro'yxat ham, ilovadagi "namuna kodlar" oynasi ham
-     yo'qoladi va kirish faqat haqiqiy kod bilan bo'ladi. */
+     Shunda ro'yxat ham, ilovadagi "namuna" oynasi ham yo'qoladi
+     va kirish faqat raqamni bilgan odam uchun qoladi. */
   if(yol === '/api/demo'){
     if(!DEMO_YONIQ) return json(res, 200, { demo: [] });
     return json(res, 200, {
       demo: d.talabalar.map(function(t){
-        return { kod: t.kod, name: t.name, group: t.group };
+        return { kod: t.kod, phone: t.phone, name: t.name, group: t.group };
       })
     });
   }
@@ -428,7 +394,6 @@ async function api(req, res, yol){
   if(yol === '/api/men'){
     const ochiq = Object.assign({}, men);
     delete ochiq.kod;
-    delete ochiq.parolIzi;
     return json(res, 200, { talaba: ochiq });
   }
 
@@ -437,12 +402,11 @@ async function api(req, res, yol){
      Ilova kirgan talabani shu ro'yxatdan topadi, shuning uchun
      kirgan foydalanuvchining o'z yozuvi kod bilan qaytadi.
      Boshqalarniki kodsiz — birovning kodini bilib olish mumkin
-     bo'lmasin. Parol izi hech kimga qaytmaydi. */
+     bo'lmasin. */
   if(yol === '/api/talabalar'){
     return json(res, 200, {
       talabalar: d.talabalar.map(function(t){
         const ochiq = Object.assign({}, t);
-        delete ochiq.parolIzi;
         if(t.kod !== kod) delete ochiq.kod;
         return ochiq;
       })
@@ -550,8 +514,8 @@ server.listen(PORT, '0.0.0.0', function(){
   console.log('  Ilova:  http://localhost:' + PORT);
   console.log('  API:    http://localhost:' + PORT + '/api/');
   console.log('  Namuna rejimi: ' + (DEMO_YONIQ
-    ? 'YONIQ — kirish kodlari ochiq (o\'chirish: DEMO=off)'
-    : 'o\'chiq — kodlar ko\'rsatilmaydi'));
+    ? 'YONIQ — namuna ro\'yxati ochiq (o\'chirish: DEMO=off)'
+    : 'o\'chiq — namuna ro\'yxati ko\'rsatilmaydi'));
   console.log('');
   console.log('  To\'xtatish: Ctrl+C');
   console.log('');

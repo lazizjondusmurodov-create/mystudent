@@ -830,8 +830,7 @@
       "status": "O'qimoqda",
       "phone": "+998 90 123 45 67",
       "email": "j.aliyev@student.uz",
-      "sem": 5,
-      "parolIzi": "scrypt$c573d218073ba902b2242a4d965106c4$917cdee5daeced05a8d11bef70b180af58d3be8232eec0e9eff468a587064fed"
+      "sem": 5
     },
     {
       "kod": "3050",
@@ -844,8 +843,7 @@
       "status": "O'qimoqda",
       "phone": "+998 91 234 56 78",
       "email": "n.yusupova@student.uz",
-      "sem": 3,
-      "parolIzi": "scrypt$f02e010e5638d58a4115d0c1f4be8116$3a5adb082856c3379ba39bb740c316d7ae8e97e1cc82d0033cf8983369780389"
+      "sem": 3
     },
     {
       "kod": "7788",
@@ -858,8 +856,7 @@
       "status": "O'qimoqda",
       "phone": "+998 93 777 88 99",
       "email": "s.rahmonov@student.uz",
-      "sem": 7,
-      "parolIzi": "scrypt$cd74d66513878bf5cf4d0ef843d87d29$be0928a9df435494f326fafcecf919af6457e07dff9cf8d6e527273af2601a37"
+      "sem": 7
     },
     {
       "kod": "1111",
@@ -872,8 +869,7 @@
       "status": "O'qimoqda",
       "phone": "+998 50 581 66 67",
       "email": "lazizjondusmurodov26@gmail.com",
-      "sem": 5,
-      "parolIzi": "scrypt$83ceb0d3681b73930e5232c99fa1cf33$04f6aace9c53ea3cc12b1fe55eb75aacd53c2ed55df91742cac33588729d2194"
+      "sem": 5
     }
   ],
   "yangiliklar": [

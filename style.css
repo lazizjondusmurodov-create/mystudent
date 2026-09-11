@@ -1612,7 +1612,7 @@ button.row:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
 }
 .demo__list{display:flex;flex-direction:column;gap:7px}
 .demo__i{
-  display:flex;align-items:center;gap:10px;width:100%;text-align:left;
+  display:flex;align-items:center;gap:8px;width:100%;text-align:left;
   background:var(--surface);border:1px solid var(--brand-200);border-radius:13px;
   padding:9px 11px;cursor:pointer;font:inherit;color:inherit;
   transition:border-color .15s var(--ease),transform .12s var(--ease);
@@ -1620,16 +1620,18 @@ button.row:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
 .demo__i:hover{border-color:var(--brand)}
 .demo__i:active{transform:scale(.98)}
 .demo__i:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
+/* Telefon raqam 4 xonali koddan uzun — qatorga sig'ishi uchun
+   harflar orasi tor, ism esa qisqarishi mumkin (ellipsis). */
 .demo__k{
-  flex:0 0 auto;font-size:14px;font-weight:750;color:var(--brand);
-  letter-spacing:.08em;font-variant-numeric:tabular-nums;
+  flex:0 0 auto;font-size:12.5px;font-weight:750;color:var(--brand);
+  letter-spacing:.01em;font-variant-numeric:tabular-nums;white-space:nowrap;
 }
 .demo__n{
-  flex:1;min-width:0;font-size:12.5px;font-weight:600;color:var(--ink-2);
+  flex:1;min-width:0;font-size:12px;font-weight:600;color:var(--ink-2);
   overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
 }
 .demo__g{
-  flex:0 0 auto;font-size:10.5px;font-weight:600;color:var(--ink-4);
+  flex:0 0 auto;font-size:10px;font-weight:600;color:var(--ink-4);
   white-space:nowrap;
 }
 
@@ -1663,18 +1665,6 @@ button.row:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
 .field .hint{margin-top:6px;font-size:11.5px;color:var(--ink-4)}
 .field .err{margin-top:6px;font-size:11.5px;color:var(--danger);font-weight:600;display:none}
 .field.is-bad input{border-color:var(--danger)}
-
-/* parol maydoni: o'ng chekkada "ko'rsatish" tugmasi */
-.field--pass{position:relative}
-.field--pass input{padding-right:46px}
-.field__eye{
-  position:absolute;right:6px;bottom:5px;width:36px;height:36px;
-  display:grid;place-items:center;border:0;background:none;cursor:pointer;
-  color:var(--ink-4);border-radius:10px;transition:color .15s var(--ease);
-}
-.field__eye svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.7}
-.field__eye:hover{color:var(--ink-3)}
-.field__eye.is-on{color:var(--brand)}
 
 /* kirish ekrani: usulni almashtirish havolasi */
 .auth__switch{display:block;width:100%;text-align:center;margin-top:12px}
