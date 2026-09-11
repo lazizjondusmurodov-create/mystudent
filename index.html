@@ -30,7 +30,7 @@
 <meta property="og:url" content="https://lazizjondusmurodov-create.github.io/mystudent/">
 <meta name="twitter:card" content="summary_large_image">
 
-<link rel="stylesheet" href="style.css?v=6.8">
+<link rel="stylesheet" href="style.css?v=6.9">
 </head>
 <body>
 
@@ -346,8 +346,8 @@
   </div>
 </aside>
 
-<script src="api.js?v=6.8"></script>
-<script src="app.js?v=6.8"></script>
+<script src="api.js?v=6.9"></script>
+<script src="app.js?v=6.9"></script>
 
 <!-- internetsiz ishlash uchun service worker.
      file:// orqali ochilganda ro'yxatdan o'tkazilmaydi. -->
@@ -362,15 +362,48 @@ if('serviceWorker' in navigator && location.protocol.startsWith('http')){
         /* har ochilishda yangilanish bor-yo'qligini so'raymiz */
         reg.update();
 
-        /* yangi versiya tayyor bo'lsa — sahifani bir marta yangilaymiz,
-           shunda foydalanuvchi qo'lda tozalamasdan yangi kodni oladi */
+        /* Yangi versiya tayyor bo'lsa sahifani yangilaymiz — shunda
+           foydalanuvchi qo'lda tozalamasdan yangi kodni oladi.
+
+           LEKIN darhol emas: odam kirish kodini yozayotgan yoki
+           tugma bosayotgan paytda sahifa yangilansa, yozgani
+           yo'qoladi va u "ishlamayapti" deb o'ylaydi.
+
+           Shuning uchun kutamiz: kirish ekrani ochiq bo'lsa yoki
+           odam biror maydonga yozayotgan bo'lsa, yangilanish
+           keyingi ochilishga qoldiriladi. */
         reg.addEventListener('updatefound', function(){
           var yangi = reg.installing;
           if(!yangi) return;
+
           yangi.addEventListener('statechange', function(){
-            if(yangi.state === 'activated' && navigator.serviceWorker.controller){
+            if(yangi.state !== 'activated' || !navigator.serviceWorker.controller) return;
+
+            function bandmi(){
+              /* kirish ekrani ochiq — odam kirmoqchi */
+              var auth = document.getElementById('auth');
+              if(auth && !auth.classList.contains('is-gone')) return true;
+
+              /* biror maydonga yozayotgan bo'lsa */
+              var a = document.activeElement;
+              if(a && (a.tagName === 'INPUT' || a.tagName === 'TEXTAREA')) return true;
+
+              /* ochiq oyna bo'lsa (ariza, rezyume shakli...) */
+              if(document.querySelector('.modal.is-open')) return true;
+
+              return false;
+            }
+
+            function yangila(){
+              if(bandmi()){
+                /* hozir mumkin emas — keyinroq qayta ko'ramiz */
+                setTimeout(yangila, 3000);
+                return;
+              }
               location.reload();
             }
+
+            yangila();
           });
         });
       })
