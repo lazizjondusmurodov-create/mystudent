@@ -10,6 +10,7 @@
      3) id lar takrorlanmaydimi
      4) yangiliklarda kerakli maydonlar bormi
      5) tarjima maydonlari to'liqmi (ogohlantirish)
+     6) galereya suratlari diskda bormi
 
    Ma'lumotni o'zgartirgandan keyin ishga tushiring —
    xato bo'lsa GitHub'ga yubormasdan oldin bilib olasiz.
@@ -127,7 +128,8 @@ const juftlar = {
   'talabalar.json': 'talabalar',
   'yangiliklar.json': 'yangiliklar',
   'kutubxona.json': 'kitoblar',
-  'ishlar.json': 'ishlar'
+  'ishlar.json': 'ishlar',
+  'fotolar.json': 'fotolar'
 };
 Object.keys(juftlar).forEach(function(fayl){
   const yol = path.join(__dirname, 'data', fayl);
@@ -147,6 +149,48 @@ Object.keys(juftlar).forEach(function(fayl){
   const s2 = statik.map(function(x){ return x.id; }).sort().join(',');
   if(s1 !== s2) OGOH('data/' + fayl + ': id lar boshqacha');
 });
+
+/* ---------- 6) galereya suratlari ----------
+
+   db.json da yozilgan rasm haqiqatan diskda bormi. Rasm o'chib
+   ketsa yoki tools_foto.js ishlamay qolsa, ilovada sindirilgan
+   rasm ko'rinadi — buni chiqarishdan oldin bilgan ma'qul. */
+console.log('Galereya:');
+const albomlar = db.fotolar || [];
+let suratJami = 0, yoqFayl = 0;
+
+albomlar.forEach(function(a){
+  const s = a.suratlar || [];
+  if(!s.length) return;
+
+  s.forEach(function(x){
+    ['kichik', 'katta'].forEach(function(k){
+      if(!x[k]) return XATO(a.t + ': surat yo\'li yo\'q (' + k + ')');
+      const yol = path.join(__dirname, x[k]);
+      if(!fs.existsSync(yol)){
+        XATO(a.t + ': rasm fayli yo\'q — ' + x[k]);
+        yoqFayl++;
+      }
+    });
+  });
+
+  /* ro'yxatdagi son haqiqiy suratlar soniga mos kelsinmi */
+  if(a.soni !== s.length){
+    OGOH(a.t + ': "' + a.soni + ' ta surat" deb yozilgan, aslida ' +
+         s.length + ' ta (tools_foto.js buni o\'zi to\'g\'rilaydi)');
+  }
+
+  suratJami += s.length;
+});
+
+if(!albomlar.length){
+  OGOH('albom yo\'q');
+}else if(!suratJami){
+  console.log('  ' + albomlar.length + ' ta albom, surat qo\'shilmagan');
+}else if(!yoqFayl){
+  console.log('  ' + albomlar.length + ' ta albom, ' + suratJami +
+              ' ta surat — fayllar joyida');
+}
 
 /* ---------- xulosa ---------- */
 console.log('');

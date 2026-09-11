@@ -33,9 +33,13 @@ domen ulash — [QOLLANMA.md](QOLLANMA.md) da.
 |---|---|---|
 | ![Davomat](docs/davomat.png) | ![Imtihonlar](docs/imtihon.png) | ![Kutubxona](docs/kutubxona.png) |
 
-| Karyera | Rezyume | Kabinet |
+| Karyera | Rezyume | Fotogalereya |
 |---|---|---|
-| ![Karyera](docs/karyera.png) | ![Rezyume](docs/rezyume.png) | ![Kabinet](docs/kabinet.png) |
+| ![Karyera](docs/karyera.png) | ![Rezyume](docs/rezyume.png) | ![Fotogalereya](docs/foto.png) |
+
+| Kabinet | | |
+|---|---|---|
+| ![Kabinet](docs/kabinet.png) | | |
 
 ## Imkoniyatlar
 
@@ -48,7 +52,8 @@ domen ulash — [QOLLANMA.md](QOLLANMA.md) da.
 - **Dekanat paneli** — kelgan arizalarni ko'rish, qabul qilish yoki rad etish
 - **Yotoqxona** — joy holati va ariza
 - **Kutubxona** — kitoblar ro'yxati va qidiruv
-- **Karyera** — rezyume, ish takliflari, yutuqlar, mahorat darslari, maqolalar, bloglar, fotogalereya
+- **Karyera** — rezyume, ish takliflari, yutuqlar, mahorat darslari, maqolalar, bloglar
+- **Fotogalereya** — tadbirlar albomlari; surat to'liq ekranda ochiladi, barmoq bilan suriladi
 - **Uch til** — o'zbek, rus, ingliz (yuqori o'ngdagi tugmadan almashtiriladi)
 - **Qorong'i rejim** — Sozlamalar → Ko'rinish: tizim bo'yicha, yorug' yoki qorong'i
 - **Internetsiz ishlaydi** — telefon ekraniga o'rnatiladi (PWA)
@@ -121,11 +126,15 @@ robots.txt      — qidiruv tizimlari uchun
 sitemap.xml     — sayt xaritasi
 render.yaml     — hosting sozlamasi (Render)
 docs/           — README uchun skrinshotlar
+  foto/         — galereya suratlari (tools_foto.js yasaydi)
+rasmlar/        — galereyaning asl rasmlari (GitHub'ga yuborilmaydi)
 
 tools_check.js  — versiya, kesh, manifest, tarjima kalitlarini tekshiradi
 tools_sinov.js  — ma'lumotni tekshiradi: takroriy kodlar, yetishmayotgan
                   maydonlar, db.json va data/ orasidagi farq
 tools_shot.js   — skrinshotlarni avtomatik yangilash
+tools_foto.js   — galereya rasmlarini tayyorlaydi (kichraytiradi va
+                  ro'yxatga yozadi); qo'llanma: rasmlar/OQING.md
 ```
 
 **Ikki hujjat:** [README.md](README.md) — texnik tavsif (shu fayl),

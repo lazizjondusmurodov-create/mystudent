@@ -961,6 +961,108 @@ button{font-family:inherit}
   .pcard__img{height:110px}
 }
 
+/* muqova rasmi (albomda surat bo'lsa ikonka o'rniga shu turadi) */
+.pcard__img--foto{padding:0;background:var(--surface-2)}
+.pcard__img--foto img{
+  width:100%;height:100%;object-fit:cover;display:block;
+}
+
+/* rasm qo'shilmagan albom uchun izoh */
+.pmod__bosh{
+  margin:0 0 16px;text-align:center;font-size:13px;color:var(--ink-4);
+}
+
+/* ---------- ALBOM ICHI: suratlar to'ri ---------- */
+.agrid{
+  display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:16px;
+}
+.acell{
+  position:relative;aspect-ratio:1;padding:0;border:0;border-radius:10px;
+  overflow:hidden;cursor:pointer;background:var(--surface-2);
+  transition:transform .12s var(--ease),opacity .15s var(--ease);
+}
+.acell img{width:100%;height:100%;object-fit:cover;display:block}
+.acell:hover{opacity:.88}
+.acell:active{transform:scale(.96)}
+.acell:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
+
+@media (max-width:340px){
+  .agrid{grid-template-columns:1fr 1fr}
+}
+
+/* ---------- TO'LIQ EKRAN KO'RUVCHI (lupa) ----------
+
+   Modal oynadan ham tepada turadi (z-index), chunki u modal
+   ichidan ochiladi. Fon qorong'i — rasm o'zi ko'rinsin. */
+.lupa{
+  position:fixed;inset:0;z-index:60;display:none;
+  background:#0a0a0c;
+  animation:lupaKir .18s var(--ease);
+}
+.lupa.is-on{display:block}
+
+@keyframes lupaKir{from{opacity:0}to{opacity:1}}
+
+.lupa__rasm{
+  position:absolute;inset:0;display:grid;place-items:center;
+  padding:56px 16px 72px;
+}
+.lupa__rasm img{
+  max-width:100%;max-height:100%;object-fit:contain;display:block;
+  border-radius:6px;
+}
+
+/* yopish tugmasi */
+.lupa__x{
+  position:absolute;top:calc(12px + env(safe-area-inset-top,0px));right:12px;
+  width:42px;height:42px;display:grid;place-items:center;z-index:2;
+  border:0;border-radius:50%;cursor:pointer;
+  background:rgba(255,255,255,.12);color:#fff;
+  transition:background .15s var(--ease);
+}
+.lupa__x:hover{background:rgba(255,255,255,.2)}
+.lupa__x svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;
+  stroke-linecap:round;stroke-linejoin:round}
+
+/* chap/o'ng strelkalar */
+.lupa__nav{
+  position:absolute;top:50%;transform:translateY(-50%);
+  width:44px;height:44px;display:grid;place-items:center;z-index:2;
+  border:0;border-radius:50%;cursor:pointer;
+  background:rgba(255,255,255,.12);color:#fff;
+  transition:background .15s var(--ease);
+}
+.lupa__nav:hover{background:rgba(255,255,255,.2)}
+.lupa__nav:active{transform:translateY(-50%) scale(.94)}
+.lupa__nav--chap{left:10px}
+.lupa__nav--ong{right:10px}
+.lupa__nav svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2;
+  stroke-linecap:round;stroke-linejoin:round}
+
+/* pastdagi izoh: albom nomi va "3 dan 12" */
+.lupa__pas{
+  position:absolute;left:0;right:0;
+  bottom:calc(16px + env(safe-area-inset-bottom,0px));
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding:0 20px;color:rgba(255,255,255,.82);
+  font-size:12.5px;font-weight:600;
+}
+.lupa__pas span:last-child{
+  flex:0 0 auto;font-variant-numeric:tabular-nums;color:rgba(255,255,255,.6);
+}
+
+/* tor ekranda strelkalar rasmni to'smasin — pastga tushadi */
+@media (max-width:420px){
+  .lupa__nav{top:auto;bottom:calc(52px + env(safe-area-inset-bottom,0px));transform:none}
+  .lupa__nav:active{transform:scale(.94)}
+  .lupa__rasm{padding:56px 12px 112px}
+  .lupa__pas{bottom:calc(108px + env(safe-area-inset-bottom,0px))}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .lupa{animation:none}
+}
+
 /* ---------- YOTOQXONA ---------- */
 .dsum{
   position:relative;margin:0 18px 16px;padding:18px;border-radius:var(--r);

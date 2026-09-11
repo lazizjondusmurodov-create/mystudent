@@ -1,2 +1,8 @@
 zaxira/
 node_modules/
+
+# Fotogalereyaning asl rasmlari — og'ir (telefondan 3-5 MB).
+# Ilovaga tools_foto.js kichraytirib docs/foto/ ga chiqaradi,
+# GitHub'ga faqat o'sha kichik nusxa ketadi.
+rasmlar/*/
+!rasmlar/OQING.md

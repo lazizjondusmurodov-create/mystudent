@@ -210,6 +210,9 @@ const I18N = {
     /* fotogalereya */
     photoTitle:"Fotogalereya", photoCount:"ta surat", photoNo:"Surat yo'q",
     photoNoX:"Tadbirlar suratlari shu yerda ko'rinadi.", photoAll:"Barchasi",
+    photoEmpty:"Bu albomga hali surat qo'shilmagan",
+    photoOf:"dan", photoPrev:"Oldingi surat", photoNext:"Keyingi surat",
+    photoClose:"Yopish", photoOpen:"Suratni ochish",
     weekLessons:"ta dars", freeDay:"Dam olish kuni",
     noLessons:"Tanlangan hafta uchun dars jadvali kiritilmagan.",
     noToday:"Bugun dars yo'q",
@@ -462,6 +465,9 @@ const I18N = {
     /* фотогалерея */
     photoTitle:"Фотогалерея", photoCount:"фото", photoNo:"Фотографий нет",
     photoNoX:"Здесь появятся фотографии с мероприятий.", photoAll:"Все",
+    photoEmpty:"В этот альбом ещё не добавлены фотографии",
+    photoOf:"из", photoPrev:"Предыдущее фото", photoNext:"Следующее фото",
+    photoClose:"Закрыть", photoOpen:"Открыть фото",
     weekLessons:"занятий", freeDay:"Выходной",
     noLessons:"На выбранную неделю расписание не загружено.",
     noToday:"Сегодня занятий нет",
@@ -704,6 +710,9 @@ const I18N = {
     /* photo gallery */
     photoTitle:"Photo gallery", photoCount:"photos", photoNo:"No photos",
     photoNoX:"Event photos will appear here.", photoAll:"All",
+    photoEmpty:"No photos have been added to this album yet",
+    photoOf:"of", photoPrev:"Previous photo", photoNext:"Next photo",
+    photoClose:"Close", photoOpen:"Open photo",
     weekLessons:"classes", freeDay:"Day off",
     noLessons:"No schedule has been published for the selected week.",
     noToday:"No classes today",
@@ -3093,14 +3102,28 @@ function renderCv(){
 /* =========================================================
    11.65) FOTOGALEREYA SAHIFASI
    ========================================================= */
+/* Albomlar ro'yxati.
+
+   Rasmi bor albomda muqova rasmi ko'rsatiladi, yo'q bo'lsa —
+   eski uslubda ikonka. Shunda rasm qo'shilmagan albom ham
+   bo'sh ko'rinmaydi. */
 function photoHTML(){
   if(!PHOTOS.length) return noResultHTML(t('photoNo'), t('photoNoX'));
 
   return '<div class="pgrid">' + PHOTOS.map(function(x){
+    const suratlar = x.suratlar || [];
+    const soni = suratlar.length || x.soni || 0;
+
+    const muqova = suratlar.length
+      ? '<span class="pcard__img pcard__img--foto">'+
+          '<img src="'+esc(suratlar[0].kichik)+'" alt="" loading="lazy">'+
+        '</span>'
+      : '<span class="pcard__img"><svg viewBox="0 0 24 24">'+x.ic+'</svg></span>';
+
     return '<button class="pcard pcard--'+esc(x.ton)+'" data-photo="'+esc(x.id)+'">'+
-      '<span class="pcard__img"><svg viewBox="0 0 24 24">'+x.ic+'</svg></span>'+
+      muqova+
       '<span class="pcard__t">'+esc(x.t)+'</span>'+
-      '<span class="pcard__m">'+esc(x.sana)+' · '+x.soni+' '+esc(t('photoCount'))+'</span>'+
+      '<span class="pcard__m">'+esc(x.sana)+' · '+soni+' '+esc(t('photoCount'))+'</span>'+
     '</button>';
   }).join('') + '</div>';
 }
@@ -3130,15 +3153,173 @@ function renderPhoto(){
       const x = PHOTOS.filter(function(y){ return y.id === b.dataset.photo; })[0];
       if(!x) return;
       haptic();
-      openModal(x.t, x.sana + ' · ' + x.soni + ' ' + t('photoCount'),
-        '<div class="pmod pmod--'+esc(x.ton)+'">'+
-          '<svg viewBox="0 0 24 24">'+x.ic+'</svg>'+
-        '</div>'+
-        '<button class="btn btn--ghost" id="phClose">'+esc(t('close'))+'</button>');
-      const c = $('phClose');
-      if(c) c.addEventListener('click', closeModal);
+      albomOch(x);
     });
   });
+}
+
+/* ---------- ALBOM ICHI ----------
+
+   Albom bosilganda suratlar to'ri chiqadi. Surat bosilsa to'liq
+   ekranda ochiladi (pastdagi lupaOch). */
+function albomOch(albom){
+  const suratlar = albom.suratlar || [];
+
+  if(!suratlar.length){
+    /* rasm hali qo'shilmagan — ochiq aytamiz, aks holda "24 ta
+       surat" deb yozib turib bo'sh oyna ko'rsatgandek bo'lardi */
+    openModal(albom.t, albom.sana,
+      '<div class="pmod pmod--'+esc(albom.ton)+'">'+
+        '<svg viewBox="0 0 24 24">'+albom.ic+'</svg>'+
+      '</div>'+
+      '<p class="pmod__bosh">'+esc(t('photoEmpty'))+'</p>'+
+      '<button class="btn btn--ghost" id="phClose">'+esc(t('close'))+'</button>');
+    const c = $('phClose');
+    if(c) c.addEventListener('click', closeModal);
+    return;
+  }
+
+  openModal(albom.t, albom.sana + ' · ' + suratlar.length + ' ' + t('photoCount'),
+    '<div class="agrid">' + suratlar.map(function(s, i){
+      return '<button class="acell" data-surat="'+i+'" aria-label="'+esc(t('photoOpen'))+'">'+
+        '<img src="'+esc(s.kichik)+'" alt="'+esc(s.alt || '')+'" loading="lazy">'+
+      '</button>';
+    }).join('') + '</div>');
+
+  /* surat bosilsa — to'liq ekran */
+  const karta = document.querySelector('.modal__card');
+  if(karta){
+    karta.querySelectorAll('[data-surat]').forEach(function(b){
+      b.addEventListener('click', function(){
+        haptic();
+        lupaOch(albom, +b.dataset.surat);
+      });
+    });
+  }
+}
+
+/* ---------- TO'LIQ EKRAN KO'RUVCHI (lupa) ----------
+
+   Bitta surat butun ekranni egallaydi. O'tish yo'llari:
+   chap/o'ng tugmalar, klaviaturada strelkalar, barmoq bilan surish.
+
+   Ilovadagi swipe (tab almashtirish) bu yerda ishlamasligi kerak,
+   shuning uchun hodisalarni to'xtatamiz. */
+let LUPA = null;      /* {albom, i} — ochiq bo'lmasa null */
+
+function lupaOch(albom, i){
+  const suratlar = albom.suratlar || [];
+  if(!suratlar.length) return;
+
+  LUPA = { albom: albom, i: Math.max(0, Math.min(i, suratlar.length - 1)) };
+
+  let el = $('lupa');
+  if(!el){
+    el = document.createElement('div');
+    el.id = 'lupa';
+    el.className = 'lupa';
+    el.setAttribute('role', 'dialog');
+    el.setAttribute('aria-modal', 'true');
+    el.innerHTML =
+      '<button class="lupa__x" id="lupaX" aria-label="'+esc(t('photoClose'))+'">'+
+        '<svg viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg></button>'+
+      '<button class="lupa__nav lupa__nav--chap" id="lupaChap" aria-label="'+esc(t('photoPrev'))+'">'+
+        '<svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></button>'+
+      '<button class="lupa__nav lupa__nav--ong" id="lupaOng" aria-label="'+esc(t('photoNext'))+'">'+
+        '<svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg></button>'+
+      '<div class="lupa__rasm"><img id="lupaImg" alt=""></div>'+
+      '<div class="lupa__pas"><span id="lupaMatn"></span><span id="lupaSon"></span></div>';
+    document.body.appendChild(el);
+
+    $('lupaX').addEventListener('click', lupaYop);
+    $('lupaChap').addEventListener('click', function(){ lupaSil(-1); });
+    $('lupaOng').addEventListener('click', function(){ lupaSil(1); });
+
+    /* fon bosilsa yopiladi (rasm yoki tugma bosilsa — yo'q) */
+    el.addEventListener('click', function(e){
+      if(e.target === el || e.target.classList.contains('lupa__rasm')) lupaYop();
+    });
+
+    /* barmoq bilan surish */
+    let x0 = null, y0 = null;
+    el.addEventListener('touchstart', function(e){
+      const t0 = e.touches[0];
+      x0 = t0.clientX; y0 = t0.clientY;
+    }, { passive: true });
+
+    el.addEventListener('touchend', function(e){
+      if(x0 === null) return;
+      const t1 = e.changedTouches[0];
+      const dx = t1.clientX - x0, dy = t1.clientY - y0;
+      x0 = null;
+      /* gorizontal harakat vertikaldan sezilarli katta bo'lsa — o'tkazamiz */
+      if(Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy) * 1.5) lupaSil(dx < 0 ? 1 : -1);
+    }, { passive: true });
+
+    /* ilovaning o'z swipe'i (tab almashtirish) bu yerda ishlamasin */
+    ['touchstart','touchmove','touchend'].forEach(function(h){
+      el.addEventListener(h, function(e){ e.stopPropagation(); });
+    });
+  }
+
+  lupaChiz();
+  el.classList.add('is-on');
+  document.body.style.overflow = 'hidden';
+  document.addEventListener('keydown', lupaTugma);
+
+  const x = $('lupaX');
+  if(x) x.focus();
+}
+
+function lupaChiz(){
+  if(!LUPA) return;
+  const s = LUPA.albom.suratlar[LUPA.i];
+  if(!s) return;
+
+  const img = $('lupaImg');
+  if(img){
+    img.src = s.katta || s.kichik;
+    img.alt = s.alt || LUPA.albom.t;
+  }
+
+  const matn = $('lupaMatn');
+  if(matn) matn.textContent = LUPA.albom.t;
+
+  const son = $('lupaSon');
+  if(son) son.textContent = (LUPA.i + 1) + ' ' + t('photoOf') + ' ' + LUPA.albom.suratlar.length;
+
+  /* bitta surat bo'lsa strelkalar keraksiz */
+  const bitta = LUPA.albom.suratlar.length < 2;
+  const c = $('lupaChap'), o = $('lupaOng');
+  if(c) c.hidden = bitta;
+  if(o) o.hidden = bitta;
+}
+
+/* Keyingi/oldingi suratga o'tish. Oxiridan boshiga aylanadi. */
+function lupaSil(yon){
+  if(!LUPA) return;
+  const n = LUPA.albom.suratlar.length;
+  if(n < 2) return;
+  LUPA.i = (LUPA.i + yon + n) % n;
+  haptic(6);
+  lupaChiz();
+}
+
+function lupaYop(){
+  const el = $('lupa');
+  if(el) el.classList.remove('is-on');
+  LUPA = null;
+  document.removeEventListener('keydown', lupaTugma);
+  /* modal hali ochiq bo'lsa scroll qulfi o'sha yerga qoladi */
+  if(!document.querySelector('.modal.is-open')) document.body.style.overflow = '';
+}
+
+/* Strelkalar bilan o'tish. Escape yuqoridagi umumiy ishlovchida —
+   u yopilish tartibini biladi. */
+function lupaTugma(e){
+  if(!LUPA) return;
+  if(e.key === 'ArrowLeft')       lupaSil(-1);
+  else if(e.key === 'ArrowRight') lupaSil(1);
 }
 
 /* =========================================================
@@ -3815,9 +3996,13 @@ $('btnExit').addEventListener('click', function(){
   });
 });
 
-/* Escape — modal, detail, menyu */
+/* Escape — lupa, modal, detail, menyu (shu tartibda: eng tepadagisi
+   birinchi yopiladi). Lupa modal ichidan ochiladi, shuning uchun u
+   bu yerda tekshiriladi — aks holda bitta Escape ikkalasini ham
+   yopib yuborardi. */
 document.addEventListener('keydown', function(e){
   if(e.key !== 'Escape') return;
+  if(LUPA){ lupaYop(); return; }
   if(modal.classList.contains('is-open')){ closeModal(); return; }
   if(detailOpen) history.back();
   closeMenu();

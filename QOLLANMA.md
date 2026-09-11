@@ -94,7 +94,7 @@ ikki manba orasidagi farqni topadi. `XATO` chiqsa — tuzatish shart;
 
 **`phone`** — talaba shu raqam bilan kiradi, shuning uchun majburiy va
 **har talabada boshqacha** bo'lishi shart. `kod` esa eski usul uchun
-(3-bo'limga qarang) — u ham takrorlanmasin.
+(4-bo'limga qarang) — u ham takrorlanmasin.
 
 Raqamni yozib qo'ysangiz — talaba shu bilan kiradi, boshqa hech nima
 kerak emas.
@@ -129,7 +129,73 @@ inglizcha rejimda ham o'zbekcha matn ko'rinadi — ilova baribir ishlaydi.
 
 ---
 
-## 3. Kirish
+## 3. Fotogalereya
+
+Tadbirlar suratlari **Karyera → Fotogalereya** da. Albom bosilsa
+suratlar to'ri chiqadi, surat bosilsa to'liq ekranda ochiladi —
+barmoq bilan surib keyingisiga o'tiladi.
+
+### Rasm qo'shish
+
+Rasmlarni albom jildiga tashlang:
+
+```
+rasmlar/
+  bilimlar-kuni/      → "Bilimlar kuni"
+  it-olimpiada/       → "IT-olimpiada"
+  talabalar-bahori/   → "Talabalar bahori"
+  hackathon/          → "Hackathon Smart City"
+  kutubxona/          → "Kutubxona ochilishi"
+  sport/              → "Sport musobaqalari"
+```
+
+Fayl nomi muhim emas (`IMG_2034.jpg` ham bo'laveradi) — tartib nom
+bo'yicha chiqadi. `.jpg`, `.png`, `.webp` qabul qilinadi.
+
+Keyin bitta buyruq:
+
+```bash
+node tools_foto.js
+```
+
+Bu har rasmni ikki o'lchamda tayyorlaydi (ro'yxat uchun kichik,
+to'liq ekran uchun katta), `docs/foto/` ga yozadi va albomdagi
+suratlar sonini o'zi hisoblab qo'yadi.
+
+So'ng odatdagidek:
+
+```bash
+git add -A && git commit -m "Galereyaga yangi suratlar" && git push
+```
+
+### Nega kichraytiriladi
+
+Telefondan olingan rasm 3-5 MB bo'ladi. Bir albomga 20 ta shunday
+rasm qo'ysangiz, ilova 100 MB yuklashga urinadi va sekin ochiladi.
+Vosita ularni ~30 KB gacha kichraytiradi — ko'z bilan farqi
+bilinmaydi, lekin ilova tez ishlaydi va internetsiz ham ochiladi.
+
+Asl rasmlar `rasmlar/` jildida qoladi va GitHub'ga **yuborilmaydi**
+(`.gitignore` da). Ular sizning kompyuteringizda saqlanadi — kerak
+bo'lsa qayta ishlatasiz.
+
+### Yangi albom qo'shish
+
+1. `server/db.json` dagi `fotolar` ro'yxatiga yangi yozuv qo'shing
+   (`id`, `t` — nomi, `sana`, `ton`, `ic` — ikonka)
+2. `data/fotolar.json` ga ham xuddi shunday (2-bo'limga qarang)
+3. `rasmlar/` da shu nomda jild yasang
+4. `tools_foto.js` ichidagi `ALBOMLAR` ro'yxatiga bitta qator:
+   `{ id: 'ph7', jild: 'yangi-albom' }`
+
+### Rasm qo'shilmagan albom
+
+Ro'yxatda ikonka bilan turadi, ochilganda "Bu albomga hali surat
+qo'shilmagan" deb yozadi. Ya'ni bo'sh albom ham ilovani buzmaydi.
+
+---
+
+## 4. Kirish
 
 Talabalar **telefon raqam** bilan kiradi. Parol so'ralmaydi —
 raqamning o'zi kirish kaliti.
@@ -169,7 +235,7 @@ raqamlarni ketma-ket terib qidirishni sekinlashtiradi.
 
 ---
 
-## 4. Dekanat paneli
+## 5. Dekanat paneli
 
 **Kirish:** kirish ekraniga `DEKANAT_KODI` ni kiriting.
 
@@ -179,7 +245,7 @@ arizani yuborgan talaba uni o'z telefonida ko'radi.
 
 ---
 
-## 5. Baza (Neon)
+## 6. Baza (Neon)
 
 Arizalar **Neon** dagi PostgreSQL bazasida. Panel: [neon.tech](https://neon.tech)
 
@@ -211,7 +277,7 @@ FROM arizalar WHERE data->>'holat' = 'kutilmoqda';
 
 ---
 
-## 6. Server uxlab qolishi
+## 7. Server uxlab qolishi
 
 Bepul rejada server 15 daqiqa harakatsizlikdan keyin uxlaydi. Keyingi
 tashrifchi ~50 soniya kutadi.
@@ -230,7 +296,7 @@ Bu manzil ataylab yengil qilingan — bazaga ham, diskka ham tegmaydi.
 
 ---
 
-## 7. O'z domenini ulash
+## 8. O'z domenini ulash
 
 Masalan `mystudent.uz`:
 
@@ -253,7 +319,7 @@ havola ulashilganda eski manzil ko'rinadi:
 
 ---
 
-## 8. Kesh (foydalanuvchida eski nusxa qolsa)
+## 9. Kesh (foydalanuvchida eski nusxa qolsa)
 
 Ilova PWA — fayllar telefonda saqlanadi. `app.js`, `style.css` yoki
 `index.html` ni o'zgartirsangiz, **ikkala joyda** versiyani ko'taring:
@@ -268,7 +334,7 @@ shart emas.
 
 ---
 
-## 9. Ikkita manzil
+## 10. Ikkita manzil
 
 Ilova ikki joyda turadi — farqini bilib qo'ying:
 
@@ -294,7 +360,7 @@ Pages kerak bo'lmasa: GitHub → repo → **Settings** → **Pages** →
 
 ---
 
-## 10. Muammo bo'lsa
+## 11. Muammo bo'lsa
 
 **Render → Logs** birinchi qaraladigan joy. Ishga tushishda quyidagi
 satrlar chiqadi:

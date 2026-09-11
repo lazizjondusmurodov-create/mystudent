@@ -25,6 +25,7 @@ const SAHIFALAR = [
   { fayl:'kutubxona', tab:'kutubxona'              },
   { fayl:'karyera',   tab:'karyera'                },
   { fayl:'rezyume',   tab:'karyera', key:'rezyume' },
+  { fayl:'foto',      tab:'karyera', key:'foto'    },
   { fayl:'kabinet',   tab:'kabinet'                }
 ];
 

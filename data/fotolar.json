@@ -4,17 +4,57 @@
       "id": "ph1",
       "t": "Bilimlar kuni",
       "sana": "02.09.2026",
-      "soni": 24,
+      "soni": 5,
       "ton": "brand",
-      "ic": "<path d=\"M22 10 12 5 2 10l10 5 10-5z\"/><path d=\"M6 12v5c0 1 3 3 6 3s6-2 6-3v-5\"/>"
+      "ic": "<path d=\"M22 10 12 5 2 10l10 5 10-5z\"/><path d=\"M6 12v5c0 1 3 3 6 3s6-2 6-3v-5\"/>",
+      "suratlar": [
+        {
+          "kichik": "docs/foto/bilimlar-kuni/001-k.jpg",
+          "katta": "docs/foto/bilimlar-kuni/001.jpg"
+        },
+        {
+          "kichik": "docs/foto/bilimlar-kuni/002-k.jpg",
+          "katta": "docs/foto/bilimlar-kuni/002.jpg"
+        },
+        {
+          "kichik": "docs/foto/bilimlar-kuni/003-k.jpg",
+          "katta": "docs/foto/bilimlar-kuni/003.jpg"
+        },
+        {
+          "kichik": "docs/foto/bilimlar-kuni/004-k.jpg",
+          "katta": "docs/foto/bilimlar-kuni/004.jpg"
+        },
+        {
+          "kichik": "docs/foto/bilimlar-kuni/005-k.jpg",
+          "katta": "docs/foto/bilimlar-kuni/005.jpg"
+        }
+      ]
     },
     {
       "id": "ph2",
       "t": "IT-olimpiada",
       "sana": "15.03.2026",
-      "soni": 38,
+      "soni": 4,
       "ton": "warn",
-      "ic": "<path d=\"M12 2 4 5v6c0 5 3.4 9.2 8 10.5 4.6-1.3 8-5.5 8-10.5V5z\"/><path d=\"m12 8 1.2 2.4 2.6.4-1.9 1.8.5 2.6L12 14l-2.4 1.2.5-2.6-1.9-1.8 2.6-.4z\"/>"
+      "ic": "<path d=\"M12 2 4 5v6c0 5 3.4 9.2 8 10.5 4.6-1.3 8-5.5 8-10.5V5z\"/><path d=\"m12 8 1.2 2.4 2.6.4-1.9 1.8.5 2.6L12 14l-2.4 1.2.5-2.6-1.9-1.8 2.6-.4z\"/>",
+      "suratlar": [
+        {
+          "kichik": "docs/foto/it-olimpiada/001-k.jpg",
+          "katta": "docs/foto/it-olimpiada/001.jpg"
+        },
+        {
+          "kichik": "docs/foto/it-olimpiada/002-k.jpg",
+          "katta": "docs/foto/it-olimpiada/002.jpg"
+        },
+        {
+          "kichik": "docs/foto/it-olimpiada/003-k.jpg",
+          "katta": "docs/foto/it-olimpiada/003.jpg"
+        },
+        {
+          "kichik": "docs/foto/it-olimpiada/004-k.jpg",
+          "katta": "docs/foto/it-olimpiada/004.jpg"
+        }
+      ]
     },
     {
       "id": "ph3",
@@ -44,9 +84,23 @@
       "id": "ph6",
       "t": "Sport musobaqalari",
       "sana": "25.09.2025",
-      "soni": 45,
+      "soni": 3,
       "ton": "warn",
-      "ic": "<circle cx=\"12\" cy=\"12\" r=\"10\"/><path d=\"M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20M2 12h20\"/>"
+      "ic": "<circle cx=\"12\" cy=\"12\" r=\"10\"/><path d=\"M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20M2 12h20\"/>",
+      "suratlar": [
+        {
+          "kichik": "docs/foto/sport/001-k.jpg",
+          "katta": "docs/foto/sport/001.jpg"
+        },
+        {
+          "kichik": "docs/foto/sport/002-k.jpg",
+          "katta": "docs/foto/sport/002.jpg"
+        },
+        {
+          "kichik": "docs/foto/sport/003-k.jpg",
+          "katta": "docs/foto/sport/003.jpg"
+        }
+      ]
     }
   ]
 }

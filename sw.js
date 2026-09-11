@@ -10,16 +10,16 @@
 
    Versiyani o'zgartirsangiz — eski kesh o'chiriladi.
    ========================================================= */
-const VERSIYA = 'mystudent-v15';
+const VERSIYA = 'mystudent-v16';
 /* index.html qanday so'rasa — shunday keshlaymiz.
    ?v= raqami index.html dagi bilan bir xil bo'lishi shart,
    aks holda brauzer boshqa URL deb biladi va kesh ishlamaydi. */
 const ASOSIY = [
   './',
   './index.html',
-  './style.css?v=6.4',
-  './api.js?v=6.4',
-  './app.js?v=6.4',
+  './style.css?v=6.5',
+  './api.js?v=6.5',
+  './app.js?v=6.5',
   './data/talabalar.json',
   './data/jadval.json',
   './data/imtihonlar.json',
@@ -116,7 +116,12 @@ self.addEventListener('fetch', function(e){
     return;
   }
 
-  /* qolgani: keshdan tez, fonda yangilanadi */
+  /* Qolgani: keshdan tez, fonda yangilanadi.
+
+     Galereya rasmlari ham shu yerda. Ular ro'yxatga ataylab
+     qo'shilmagan (o'rnatishda hammasini yuklab olish shart emas,
+     hajm o'sib boraveradi) — ko'rilgan rasm keshga tushadi va
+     keyin internetsiz ham ochiladi. */
   e.respondWith(
     caches.match(req).then(function(kesh){
       const tarmoq = fetch(req).then(function(res){
