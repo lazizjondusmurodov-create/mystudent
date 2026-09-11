@@ -126,7 +126,20 @@ const I18N = {
     fApps:"Arizalar", fRetake:"Qayta o'qish", fFinal:"Yakuniy imtihon",
     subjects2:"Fanlar", credits:"Kredit",
     dlApp:"Arizani yuklash", dlContract:"Shartnomani yuklash", dlReceipt:"Kvitansiya",
-    dlSoon:"Yuklash tez orada ishga tushadi",
+    /* ariza hujjatlari (PDF) */
+    hjUni:"O'zbekiston Milliy universiteti",
+    hjAriza:"Ariza", hjShartnoma:"Shartnoma", hjKvitansiya:"To'lov kvitansiyasi",
+    hjFio:"F.I.Sh.", hjGroup:"Guruh", hjFaculty:"Fakultet",
+    hjForm:"Ta'lim shakli", hjSid:"Talaba ID",
+    hjSubject2:"Ariza mazmuni", hjStatus:"Holati", hjDate:"Yuborilgan vaqti",
+    hjSubjects:"Fanlar ro'yxati", hjSubject:"Fan", hjInfo:"Ma'lumot",
+    hjAnswer:"Dekanat javobi",
+    hjPay:"To'lov", hjPerCredit:"1 kredit narxi", hjTotal:"Jami to'lov",
+    hjSum:"so'm",
+    hjPayNote:"To'lov universitet hisob raqamiga amalga oshiriladi. "+
+              "To'lovdan keyin kvitansiya dekanatga taqdim etiladi.",
+    hjStudent:"Talaba imzosi", hjDean:"Dekan imzosi",
+    hjFooter:"Hujjat MyStudent tizimida shakllantirildi.",
     noApps:"Tanlangan bo'lim bo'yicha ariza topilmadi.",
 
     /* ariza yuborish */
@@ -195,7 +208,19 @@ const I18N = {
     cvNative:"ona tili", cvFluent:"erkin", cvBasic:"boshlang'ich",
     cvNone:"Rezyume yaratilmagan",
     cvNoneX:"Rezyume yaratsangiz, ish beruvchilar sizni topa oladi. Kabinetdagi ma'lumotlar avtomatik qo'shiladi.",
-    cvCreate:"Rezyume yaratish",
+    cvCreate:"Rezyume yaratish", cvEdit:"Tahrirlash",
+    cvFormSub:"Kabinetdagi ma'lumotlar (ism, aloqa, fakultet, o'rtacha ball) "+
+              "avtomatik qo'shiladi.",
+    cvRole:"Yo'nalish", cvRolePh:"Masalan: Frontend Developer",
+    cvCity:"Shahar", cvCityPh:"Masalan: Samarqand, O'zbekiston",
+    cvLink:"Havola (GitHub, portfolio)",
+    cvAboutPh:"O'zingiz haqingizda qisqacha: nima bilan shug'ullanasiz, "+
+              "qanday tajribangiz bor.",
+    cvAboutHint:"2-4 gap kifoya",
+    cvSkillsPh:"Dasturlash tillari: JavaScript, Python\nVositalar: Git, VS Code",
+    cvSkillsHint:"Har qatorda bittadan. \"Guruh: qiymat\" ko'rinishida",
+    cvSaved:"Rezyume saqlandi", checkFields:"Maydonlarni tekshiring",
+    saveFail:"Saqlab bo'lmadi",
     cvAbout2:"Frontend yo'nalishidagi talaba. React va TypeScript bilan interfeys yaratish bo'yicha "+
              "amaliy tajribaga ega. Moslashuvchan dizayn va REST API integratsiyasi bilan ishlaydi.",
     cvAutoNote:"Rezyume kabinetdagi ma'lumotlaringizdan avtomatik tuzildi.",
@@ -385,7 +410,20 @@ const I18N = {
     fApps:"Заявления", fRetake:"Повторное обучение", fFinal:"Итоговый экзамен",
     subjects2:"Предметы", credits:"Кредит",
     dlApp:"Скачать заявление", dlContract:"Скачать договор", dlReceipt:"Квитанция",
-    dlSoon:"Скачивание скоро заработает",
+    /* документы заявления (PDF) */
+    hjUni:"Национальный университет Узбекистана",
+    hjAriza:"Заявление", hjShartnoma:"Договор", hjKvitansiya:"Квитанция об оплате",
+    hjFio:"Ф.И.О.", hjGroup:"Группа", hjFaculty:"Факультет",
+    hjForm:"Форма обучения", hjSid:"ID студента",
+    hjSubject2:"Содержание заявления", hjStatus:"Статус", hjDate:"Дата подачи",
+    hjSubjects:"Список предметов", hjSubject:"Предмет", hjInfo:"Сведения",
+    hjAnswer:"Ответ деканата",
+    hjPay:"Оплата", hjPerCredit:"Стоимость 1 кредита", hjTotal:"Итого к оплате",
+    hjSum:"сум",
+    hjPayNote:"Оплата производится на расчётный счёт университета. "+
+              "После оплаты квитанция предоставляется в деканат.",
+    hjStudent:"Подпись студента", hjDean:"Подпись декана",
+    hjFooter:"Документ сформирован в системе MyStudent.",
     noApps:"По выбранному разделу заявлений нет.",
 
     newApp:"Новое заявление", sendApp:"Отправить заявление", appType:"Тип заявления",
@@ -451,7 +489,18 @@ const I18N = {
     cvNative:"родной", cvFluent:"свободно", cvBasic:"базовый",
     cvNone:"Резюме не создано",
     cvNoneX:"Создайте резюме, чтобы работодатели могли вас найти. Данные из кабинета добавятся автоматически.",
-    cvCreate:"Создать резюме",
+    cvCreate:"Создать резюме", cvEdit:"Редактировать",
+    cvFormSub:"Данные из кабинета (имя, контакты, факультет, средний балл) "+
+              "добавятся автоматически.",
+    cvRole:"Направление", cvRolePh:"Например: Frontend Developer",
+    cvCity:"Город", cvCityPh:"Например: Самарканд, Узбекистан",
+    cvLink:"Ссылка (GitHub, портфолио)",
+    cvAboutPh:"Коротко о себе: чем занимаетесь, какой у вас опыт.",
+    cvAboutHint:"Достаточно 2-4 предложений",
+    cvSkillsPh:"Языки программирования: JavaScript, Python\nИнструменты: Git, VS Code",
+    cvSkillsHint:"По одному в строке, в виде \"Группа: значение\"",
+    cvSaved:"Резюме сохранено", checkFields:"Проверьте поля",
+    saveFail:"Не удалось сохранить",
     cvAbout2:"Студентка направления frontend-разработки. Практический опыт создания интерфейсов "+
              "на React и TypeScript. Работает с адаптивной вёрсткой и интеграцией REST API.",
     cvAutoNote:"Резюме сформировано автоматически из данных вашего кабинета.",
@@ -632,7 +681,20 @@ const I18N = {
     fApps:"Applications", fRetake:"Repeat course", fFinal:"Final exam",
     subjects2:"Subjects", credits:"Credits",
     dlApp:"Download application", dlContract:"Download contract", dlReceipt:"Receipt",
-    dlSoon:"Downloading will be available soon",
+    /* application documents (PDF) */
+    hjUni:"National University of Uzbekistan",
+    hjAriza:"Application", hjShartnoma:"Contract", hjKvitansiya:"Payment receipt",
+    hjFio:"Full name", hjGroup:"Group", hjFaculty:"Faculty",
+    hjForm:"Study form", hjSid:"Student ID",
+    hjSubject2:"Application details", hjStatus:"Status", hjDate:"Submitted",
+    hjSubjects:"Subjects", hjSubject:"Subject", hjInfo:"Details",
+    hjAnswer:"Dean's office response",
+    hjPay:"Payment", hjPerCredit:"Price per credit", hjTotal:"Total",
+    hjSum:"UZS",
+    hjPayNote:"Payment is made to the university bank account. "+
+              "After payment, the receipt is submitted to the dean's office.",
+    hjStudent:"Student signature", hjDean:"Dean signature",
+    hjFooter:"This document was generated by MyStudent.",
     noApps:"No applications found in this section.",
 
     newApp:"New application", sendApp:"Submit application", appType:"Application type",
@@ -698,7 +760,18 @@ const I18N = {
     cvNative:"native", cvFluent:"fluent", cvBasic:"basic",
     cvNone:"No resume yet",
     cvNoneX:"Create a resume so employers can find you. Your profile data will be added automatically.",
-    cvCreate:"Create resume",
+    cvCreate:"Create resume", cvEdit:"Edit",
+    cvFormSub:"Your profile data (name, contacts, faculty, GPA) will be "+
+              "added automatically.",
+    cvRole:"Role", cvRolePh:"For example: Frontend Developer",
+    cvCity:"City", cvCityPh:"For example: Samarkand, Uzbekistan",
+    cvLink:"Link (GitHub, portfolio)",
+    cvAboutPh:"A short summary: what you do and what experience you have.",
+    cvAboutHint:"2-4 sentences is enough",
+    cvSkillsPh:"Languages: JavaScript, Python\nTools: Git, VS Code",
+    cvSkillsHint:"One per line, as \"Group: value\"",
+    cvSaved:"Resume saved", checkFields:"Please check the fields",
+    saveFail:"Could not save",
     cvAbout2:"Frontend development student with hands-on experience building interfaces in React "+
              "and TypeScript. Works with responsive layouts and REST API integration.",
     cvAutoNote:"This resume was generated automatically from your profile data.",
@@ -2420,7 +2493,14 @@ function renderDebt(){
   detailBody.querySelectorAll('[data-dl]').forEach(function(b){
     b.addEventListener('click', function(){
       haptic(12);
-      toast(t('dlSoon'));
+      /* qaysi arizaga tegishli — kartadan topamiz */
+      const karta = b.closest('.appc');
+      const id = karta && karta.querySelector('[data-appsub]');
+      const a = hammaArizalar().filter(function(x){
+        return id && x.id === id.dataset.appsub;
+      })[0];
+      if(a) hujjatOch(b.dataset.dl, a);
+      else toast(t('printFail'));
     });
   });
 
@@ -2911,9 +2991,119 @@ const CV_BAZA = {
   /* "7788" — Rahmonov Sardor rezyume yaratmagan (bo'sh holat namunasi) */
 };
 
+/* ---------- TALABA YARATGAN REZYUME ----------
+
+   CV_BAZA — ilova bilan birga keladigan namuna rezyumelar.
+   Talaba o'zi yaratsa, u shu qurilmada saqlanadi: serverda
+   rezyume uchun joy yo'q, ariza kabi jo'natilmaydi ham.
+
+   Saqlangan rezyume CV_BAZA dagisidan ustun turadi — talaba
+   o'zinikini tahrirlasa, o'zgarishi ko'rinsin. */
+function cvSaqlangan(){
+  try{
+    const x = localStorage.getItem('ms.cv.' + USER.kod);
+    return x ? JSON.parse(x) : null;
+  }catch(e){ return null; }
+}
+
+function cvSaqla(cv){
+  try{
+    localStorage.setItem('ms.cv.' + USER.kod, JSON.stringify(cv));
+    return true;
+  }catch(e){ return false; }
+}
+
 /* joriy talabaning rezyumesi (bo'lmasa null) */
 function cvOf(){
-  return CV_BAZA[USER.kod] || null;
+  return cvSaqlangan() || CV_BAZA[USER.kod] || null;
+}
+
+/* Rezyume yaratish/tahrirlash oynasi.
+
+   Kabinetdagi ma'lumot (ism, telefon, e-pochta, fakultet, GPA)
+   avtomatik qo'shiladi — bu yerda faqat rezyumega xos narsalar
+   so'raladi. */
+function cvShakl(){
+  const bor = cvOf();
+
+  openModal(
+    t(bor ? 'cvEdit' : 'cvCreate'),
+    t('cvFormSub'),
+    fieldHTML('cvRol', t('cvRole'), bor ? bor.rol : '',
+              {placeholder: t('cvRolePh'), err: t('required')}) +
+    fieldHTML('cvShahar', t('cvCity'), bor ? bor.shahar : '',
+              {placeholder: t('cvCityPh')}) +
+    fieldHTML('cvGithub', t('cvLink'), bor ? bor.github : '',
+              {placeholder: 'github.com/...'}) +
+
+    '<div class="field" id="f_cvHaqida">'+
+      '<label for="cvHaqida">'+esc(t('cvAbout'))+'</label>'+
+      '<textarea id="cvHaqida" rows="4" placeholder="'+esc(t('cvAboutPh'))+'">'+
+        esc(bor ? (bor.haqidaMatn || t(bor.haqida) || '') : '')+
+      '</textarea>'+
+      '<div class="hint">'+esc(t('cvAboutHint'))+'</div>'+
+      '<div class="err">'+esc(t('required'))+'</div>'+
+    '</div>'+
+
+    '<div class="field" id="f_cvSkills">'+
+      '<label for="cvSkills">'+esc(t('cvSkills'))+'</label>'+
+      '<textarea id="cvSkills" rows="3" placeholder="'+esc(t('cvSkillsPh'))+'">'+
+        esc(bor ? (bor.skills || []).map(function(k){
+          return t(k.g) + ': ' + k.v;
+        }).join('\n') : '')+
+      '</textarea>'+
+      '<div class="hint">'+esc(t('cvSkillsHint'))+'</div>'+
+    '</div>'+
+
+    '<button class="btn btn--primary" id="cvSave">'+esc(t('save'))+'</button>'+
+    '<button class="btn btn--ghost" id="cvCancel">'+esc(t('cancel'))+'</button>'
+  );
+
+  const bekor = $('cvCancel');
+  if(bekor) bekor.addEventListener('click', closeModal);
+
+  const saqla = $('cvSave');
+  if(saqla) saqla.addEventListener('click', function(){
+    const rol    = $('cvRol').value.trim();
+    const haqida = $('cvHaqida').value.trim();
+
+    let ok = true;
+    if(!rol){ markBad('cvRol', true); ok = false; } else markBad('cvRol', false);
+    if(!haqida){ markBad('cvHaqida', true); ok = false; } else markBad('cvHaqida', false);
+    if(!ok){ toast(t('checkFields')); haptic(20); return; }
+
+    /* "Dasturlash tillari: Python, SQL" qatorlarini ajratamiz.
+       Ikki nuqta bo'lmasa — butun qator qiymat bo'ladi. */
+    const skills = $('cvSkills').value.split('\n')
+      .map(function(q){ return q.trim(); })
+      .filter(Boolean)
+      .map(function(q){
+        const i = q.indexOf(':');
+        return i > 0
+          ? { gMatn: q.slice(0, i).trim(), v: q.slice(i + 1).trim() }
+          : { gMatn: '', v: q };
+      });
+
+    const cv = {
+      rol: rol,
+      shahar: $('cvShahar').value.trim(),
+      github: $('cvGithub').value.trim(),
+      /* haqidaMatn — talaba yozgani; haqida — tarjima kaliti
+         (namuna rezyumelarda ishlatiladi) */
+      haqidaMatn: haqida,
+      skills: skills,
+      ish: bor ? (bor.ish || []) : [],
+      loyiha: bor ? (bor.loyiha || []) : [],
+      tillar: bor ? (bor.tillar || []) : []
+    };
+
+    if(!cvSaqla(cv)){ toast(t('saveFail')); haptic(20); return; }
+
+    closeModal();
+    haptic(14);
+    toast(t('cvSaved'));
+    renderCv();
+  });
 }
 
 
@@ -2960,13 +3150,13 @@ function cvHTML(){
 
   /* qisqacha */
   h += '<h2 class="eyebrow">'+esc(t('cvAbout'))+'</h2>'+
-    '<div class="cvsec"><p class="cvsec__p">'+esc(t(CV.haqida))+'</p></div>';
+    '<div class="cvsec"><p class="cvsec__p">'+esc(CV.haqidaMatn || t(CV.haqida))+'</p></div>';
 
   /* ko'nikmalar — guruhlar bo'yicha */
   h += '<h2 class="eyebrow">'+esc(t('cvSkills'))+'</h2>'+
     '<div class="cvsec">' + CV.skills.map(function(k){
       return '<div class="cvsk">'+
-        '<span class="cvsk__g">'+esc(t(k.g))+'</span>'+
+        '<span class="cvsk__g">'+esc(k.gMatn || t(k.g))+'</span>'+
         '<span class="cvsk__v">'+esc(k.v)+'</span>'+
       '</div>';
     }).join('') + '</div>';
@@ -3056,6 +3246,7 @@ function cvHTML(){
   h += '<div class="cvbtns">'+
     '<button class="btn btn--primary" id="cvDl">'+esc(t('cvDownload'))+'</button>'+
     '<button class="btn btn--ghost" id="cvShare">'+esc(t('cvShare'))+'</button>'+
+    '<button class="btn btn--ghost" id="cvEdit">'+esc(t('cvEdit'))+'</button>'+
   '</div>'+
   '<p class="cvnote">'+esc(t('cvAutoNote'))+'</p>';
 
@@ -3085,20 +3276,35 @@ function renderCv(){
   const nw = $('cvNew');
   if(nw) nw.addEventListener('click', function(){
     haptic(12);
-    toast(t('dlSoon'));
+    cvShakl();
   });
 
   const d = $('cvDl');
   if(d) d.addEventListener('click', function(){ haptic(12); cvChop(); });
 
+  const ed = $('cvEdit');
+  if(ed) ed.addEventListener('click', function(){ haptic(12); cvShakl(); });
+
   const sh = $('cvShare');
   if(sh) sh.addEventListener('click', function(){
     haptic(12);
+
     if(navigator.share){
-      navigator.share({title:USER.name, text:t('cvTitle')}).catch(function(){});
-    } else {
-      toast(t('dlSoon'));
+      navigator.share({title:USER.name, text:t('cvTitle'), url:location.href})
+        .catch(function(){});
+      return;
     }
+
+    /* Ulashish oynasi yo'q (odatda kompyuter brauzeri) —
+       havolani nusxalab beramiz. */
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(location.href)
+        .then(function(){ toast(t('linkCopied')); })
+        .catch(function(){ toast(t('shareFail')); });
+      return;
+    }
+
+    toast(t('shareFail'));
   });
 }
 
@@ -3139,6 +3345,174 @@ function cvChop(){
 
   /* Chop etish oynasi sahifani muzlatadi. Brauzerga avval
      yangi holatni chizishga ulgurishi uchun kichik kechikish. */
+  setTimeout(function(){
+    try{
+      window.print();
+    }catch(e){
+      tikla();
+      toast(t('printFail'));
+    }
+  }, 60);
+}
+
+/* =========================================================
+   ARIZA HUJJATLARI (ariza, shartnoma, kvitansiya)
+
+   Ariza kartasidagi "Arizani yuklash" / "Shartnomani yuklash"
+   tugmalari shu yerga keladi. Hujjat arizaning o'z ma'lumotidan
+   yig'iladi va rezyume kabi brauzerning chop etish oynasi orqali
+   PDF qilib saqlanadi.
+
+   Hujjat sahifasi vaqtincha yaratiladi (#hujjat), chop etilgach
+   olib tashlanadi — ilovaning o'z ekraniga tegmaydi.
+   ========================================================= */
+
+/* Bugungi sana: "11.09.2026" */
+function hujjatSana(){
+  const d = new Date();
+  const ik = function(n){ return String(n).padStart(2, '0'); };
+  return ik(d.getDate()) + '.' + ik(d.getMonth() + 1) + '.' + d.getFullYear();
+}
+
+/* Hujjat sarlavhasi ostidagi "kim haqida" bloki — uchala
+   hujjatda ham bir xil. */
+function hujjatTalaba(){
+  return '<table class="hj__jadval">'+
+    '<tr><td>'+esc(t('hjFio'))+'</td><td><b>'+esc(USER.name)+'</b></td></tr>'+
+    '<tr><td>'+esc(t('hjGroup'))+'</td><td>'+esc(USER.group)+'</td></tr>'+
+    '<tr><td>'+esc(t('hjFaculty'))+'</td><td>'+esc(td(USER.faculty))+'</td></tr>'+
+    '<tr><td>'+esc(t('hjForm'))+'</td><td>'+esc(td(USER.form))+' · '+esc(td(USER.course))+'</td></tr>'+
+    '<tr><td>'+esc(t('hjSid'))+'</td><td>'+esc(USER.studentId)+'</td></tr>'+
+  '</table>';
+}
+
+/* Fanlar ro'yxati — ariza va shartnomada keladi */
+function hujjatFanlar(a){
+  const royxat = a.fanlarRoyxat || [];
+  if(!royxat.length) return '';
+
+  return '<h2>'+esc(t('hjSubjects'))+'</h2>'+
+    '<table class="hj__jadval hj__jadval--chiz">'+
+      '<tr><th>#</th><th>'+esc(t('hjSubject'))+'</th><th>'+esc(t('hjInfo'))+'</th></tr>'+
+      royxat.map(function(f, i){
+        return '<tr><td>'+(i + 1)+'</td><td><b>'+esc(f.t)+'</b></td><td>'+esc(f.m)+'</td></tr>';
+      }).join('')+
+    '</table>';
+}
+
+/* Imzo joyi — har hujjat oxirida */
+function hujjatImzo(){
+  return '<div class="hj__imzo">'+
+    '<div><span class="hj__chiziq"></span>'+esc(t('hjStudent'))+'</div>'+
+    '<div><span class="hj__chiziq"></span>'+esc(t('hjDean'))+'</div>'+
+  '</div>';
+}
+
+/* Bitta hujjatning to'liq HTML'i.
+   turi: 'ariza' | 'shartnoma' | 'kvitansiya' */
+function hujjatHTML(turi, a){
+  const nom = { ariza: t('hjAriza'), shartnoma: t('hjShartnoma'),
+                kvitansiya: t('hjKvitansiya') }[turi] || turi;
+
+  let h = '<div class="hj">'+
+    '<div class="hj__bosh">'+
+      '<div class="hj__logo">MS</div>'+
+      '<div>'+
+        '<div class="hj__uni">'+esc(t('hjUni'))+'</div>'+
+        '<div class="hj__turi">'+esc(nom)+'</div>'+
+      '</div>'+
+      '<div class="hj__raqam">'+
+        '<div>№ '+esc(a.id.toUpperCase())+'</div>'+
+        '<div>'+esc(hujjatSana())+'</div>'+
+      '</div>'+
+    '</div>';
+
+  h += hujjatTalaba();
+
+  /* arizaning mazmuni */
+  h += '<h2>'+esc(t('hjSubject2'))+'</h2>'+
+    '<p class="hj__p"><b>'+esc(a.t)+'</b></p>'+
+    '<table class="hj__jadval">'+
+      '<tr><td>'+esc(t('subjects2'))+'</td><td>'+a.fanlar+'</td></tr>'+
+      '<tr><td>'+esc(t('credits'))+'</td><td>'+a.kredit+'</td></tr>'+
+      '<tr><td>'+esc(t('hjStatus'))+'</td><td>'+esc(a.holatT)+'</td></tr>'+
+      '<tr><td>'+esc(t('hjDate'))+'</td><td>'+esc(a.vaqt)+'</td></tr>'+
+    '</table>';
+
+  h += hujjatFanlar(a);
+
+  /* talaba yozgan izoh */
+  if(a.izoh){
+    h += '<h2>'+esc(t('appNote'))+'</h2><p class="hj__p">'+esc(a.izoh)+'</p>';
+  }
+
+  /* dekanat javobi */
+  if(a.x){
+    h += '<h2>'+esc(t('hjAnswer'))+'</h2><p class="hj__p">'+esc(a.x)+'</p>';
+  }
+
+  /* shartnoma va kvitansiyada to'lov bloki */
+  if(turi === 'shartnoma' || turi === 'kvitansiya'){
+    const summa = (a.kredit || 0) * NARX_KREDIT;
+    h += '<h2>'+esc(t('hjPay'))+'</h2>'+
+      '<table class="hj__jadval hj__jadval--chiz">'+
+        '<tr><td>'+esc(t('credits'))+'</td><td>'+a.kredit+'</td></tr>'+
+        '<tr><td>'+esc(t('hjPerCredit'))+'</td><td>'+pul(NARX_KREDIT)+'</td></tr>'+
+        '<tr><td><b>'+esc(t('hjTotal'))+'</b></td><td><b>'+pul(summa)+'</b></td></tr>'+
+      '</table>'+
+      '<p class="hj__kichik">'+esc(t('hjPayNote'))+'</p>';
+  }
+
+  h += hujjatImzo();
+  h += '<p class="hj__kichik hj__kichik--past">'+esc(t('hjFooter'))+'</p>';
+  h += '</div>';
+  return h;
+}
+
+/* Kredit narxi — shartnoma summasi shundan hisoblanadi.
+   Haqiqiy tizimda bu bazadan kelishi kerak. */
+const NARX_KREDIT = 450000;
+
+/* Pul ko'rinishi: 4 500 000 so'm */
+function pul(n){
+  return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ' ') + ' ' + t('hjSum');
+}
+
+/* Hujjatni yasab, chop etish oynasini ochadi. */
+function hujjatOch(turi, ariza){
+  if(!ariza) return;
+
+  /* eski nusxa qolib ketmasin */
+  const eski = $('hujjat');
+  if(eski) eski.remove();
+
+  const el = document.createElement('div');
+  el.id = 'hujjat';
+  el.className = 'hujjat';
+  el.innerHTML = hujjatHTML(turi, ariza);
+  document.body.appendChild(el);
+
+  const eskiSarlavha = document.title;
+  const nom = { ariza: t('hjAriza'), shartnoma: t('hjShartnoma'),
+                kvitansiya: t('hjKvitansiya') }[turi] || turi;
+  document.title = nom + ' — ' + USER.name;
+
+  document.body.classList.add('is-hujjat');
+
+  let tiklandi = false;
+  function tikla(){
+    if(tiklandi) return;
+    tiklandi = true;
+    document.body.classList.remove('is-hujjat');
+    document.title = eskiSarlavha;
+    const x = $('hujjat');
+    if(x) x.remove();
+    window.removeEventListener('afterprint', tikla);
+  }
+
+  window.addEventListener('afterprint', tikla);
+  setTimeout(tikla, 60000);
+
   setTimeout(function(){
     try{
       window.print();
@@ -3456,7 +3830,14 @@ function renderApps(){
   detailBody.querySelectorAll('[data-dl]').forEach(function(b){
     b.addEventListener('click', function(){
       haptic(12);
-      toast(t('dlSoon'));
+      /* qaysi arizaga tegishli — kartadan topamiz */
+      const karta = b.closest('.appc');
+      const id = karta && karta.querySelector('[data-appsub]');
+      const a = hammaArizalar().filter(function(x){
+        return id && x.id === id.dataset.appsub;
+      })[0];
+      if(a) hujjatOch(b.dataset.dl, a);
+      else toast(t('printFail'));
     });
   });
 }
@@ -4648,13 +5029,6 @@ $('shareBtn').addEventListener('click', function(){
   }
   closeMenu();
   toast(t('shareFail'));
-});
-
-/* --- PROMO --- */
-$('promoBtn').addEventListener('click', function(){
-  haptic();
-  closeMenu();
-  toast(t('promoSoon'));
 });
 
 /* =========================================================

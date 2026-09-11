@@ -54,6 +54,8 @@ domen ulash — [QOLLANMA.md](QOLLANMA.md) da.
 - **Kutubxona** — kitoblar ro'yxati va qidiruv
 - **Karyera** — rezyume, ish takliflari, yutuqlar, mahorat darslari, maqolalar, bloglar
 - **Rezyume PDF** — bir bosishda A4 da, bir sahifaga; matn qidiriladigan (rasm emas)
+- **Rezyume yaratish** — talaba o'zi to'ldiradi, qurilmada saqlanadi va tahrirlanadi
+- **Ariza hujjatlari** — ariza va shartnoma PDF qilib olinadi (imzo joylari, to'lov hisobi)
 - **Fotogalereya** — tadbirlar albomlari; surat to'liq ekranda ochiladi, barmoq bilan suriladi
 - **Uch til** — o'zbek, rus, ingliz (yuqori o'ngdagi tugmadan almashtiriladi)
 - **Qorong'i rejim** — Sozlamalar → Ko'rinish: tizim bo'yicha, yorug' yoki qorong'i

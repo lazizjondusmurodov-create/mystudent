@@ -635,17 +635,6 @@ button{font-family:inherit}
 .item__arrow{flex:0 0 auto;width:7px;height:13px;stroke:var(--ink-4);stroke-width:2.2;fill:none;stroke-linecap:round;stroke-linejoin:round}
 .divider{height:1px;background:var(--line);margin:10px 12px}
 .version{padding:12px;display:flex;justify-content:space-between;align-items:center;color:var(--ink-4);font-weight:550;font-size:12.5px}
-.promo{
-  margin-top:8px;background:linear-gradient(145deg,var(--brand),var(--brand-600));
-  border-radius:var(--r-lg);padding:16px;color:var(--on-brand);text-decoration:none;display:block;
-  position:relative;overflow:hidden;width:100%;border:0;cursor:pointer;
-  text-align:left;font-family:var(--font);
-}
-.promo:active{opacity:.92}
-.promo::after{content:"";position:absolute;right:-40px;top:-50px;width:140px;height:140px;border-radius:50%;background:var(--sheen)}
-.promo__title{font-size:15px;font-weight:700;letter-spacing:-.02em;position:relative;z-index:1}
-.promo__text{margin-top:5px;font-size:12px;line-height:1.4;opacity:.85;position:relative;z-index:1}
-
 /* ---------- SEGMENT TUGMALARI ---------- */
 .seg{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:0 18px 12px}
 .seg button{
@@ -2296,4 +2285,86 @@ button.row:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
 
   /* havolalar qog'ozda ko'k va tagi chizilgan bo'lmasin */
   a{ color:#111 !important; text-decoration:none !important; }
+}
+
+/* ---------- ARIZA HUJJATLARI (chop etish uchun) ----------
+
+   Hujjat ekranda ko'rinmaydi — u faqat chop etish oynasida
+   (va PDF da) chiqadi. Shuning uchun ekranda yashirin turadi. */
+.hujjat{ display:none; }
+
+@media print{
+
+  /* hujjat chop etilayotganda ilovaning o'zi ko'rinmaydi */
+  body.is-hujjat > *:not(.hujjat){ display:none !important; }
+
+  body.is-hujjat .hujjat{
+    display:block !important;
+    color:#111;
+    font-size:10pt;
+    line-height:1.45;
+  }
+
+  .hj{ max-width:100%; }
+
+  /* sarlavha: logotip, muassasa nomi, hujjat raqami */
+  .hj__bosh{
+    display:flex; align-items:center; gap:12px;
+    padding-bottom:10px; margin-bottom:14px;
+    border-bottom:2px solid #b03a2e;
+  }
+  .hj__logo{
+    flex:0 0 42px; width:42px; height:42px; border-radius:10px;
+    background:#b03a2e !important; color:#fff !important;
+    display:grid; place-items:center;
+    font-size:13pt; font-weight:750; letter-spacing:-.02em;
+  }
+  .hj__uni{ font-size:11pt; font-weight:700; }
+  .hj__turi{ font-size:9pt; color:#b03a2e !important; font-weight:650; margin-top:2px; }
+  .hj__raqam{
+    margin-left:auto; text-align:right;
+    font-size:8.5pt; color:#555; font-variant-numeric:tabular-nums;
+  }
+
+  .hujjat h2{
+    font-size:10pt; font-weight:700; color:#b03a2e !important;
+    margin:14px 0 5px;
+    break-after:avoid; page-break-after:avoid;
+  }
+
+  .hj__p{ margin:0 0 4px; font-size:9.5pt; }
+
+  /* ma'lumot jadvallari */
+  .hj__jadval{
+    width:100%; border-collapse:collapse; font-size:9.5pt;
+    break-inside:avoid; page-break-inside:avoid;
+  }
+  .hj__jadval td, .hj__jadval th{
+    padding:4px 6px; text-align:left; vertical-align:top;
+    border-bottom:1px solid #eee;
+  }
+  .hj__jadval td:first-child{ color:#555; width:38%; }
+  .hj__jadval th{
+    font-size:8.5pt; font-weight:650; color:#555;
+    background:#fafafa !important; border-bottom:1px solid #ddd;
+  }
+
+  /* chiziqli jadval — fanlar va to'lov uchun */
+  .hj__jadval--chiz td, .hj__jadval--chiz th{ border:1px solid #ddd; }
+  .hj__jadval--chiz td:first-child{ width:auto; }
+
+  /* imzo joylari */
+  .hj__imzo{
+    display:flex; gap:40px; margin-top:26px;
+    font-size:8.5pt; color:#555;
+    break-inside:avoid; page-break-inside:avoid;
+  }
+  .hj__imzo > div{ flex:1; }
+  .hj__chiziq{
+    display:block; height:1px; background:#999;
+    margin-bottom:4px; margin-top:22px;
+  }
+
+  .hj__kichik{ margin:6px 0 0; font-size:8pt; color:#666; line-height:1.4; }
+  .hj__kichik--past{ margin-top:18px; text-align:center; color:#888; }
 }

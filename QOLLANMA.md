@@ -99,6 +99,18 @@ ikki manba orasidagi farqni topadi. `XATO` chiqsa — tuzatish shart;
 Raqamni yozib qo'ysangiz — talaba shu bilan kiradi, boshqa hech nima
 kerak emas.
 
+### Kredit narxi
+
+Shartnoma va kvitansiya hujjatlaridagi summa kredit sonidan
+hisoblanadi. Narx [app.js](app.js) da:
+
+```js
+const NARX_KREDIT = 450000;
+```
+
+Narx o'zgarsa shu raqamni almashtiring. Hisob o'zi qayta
+chiqadi — hujjat har safar yangidan yig'iladi.
+
 ### Yangilik (e'lon) qo'shish
 
 `yangiliklar` ro'yxatining **boshiga** qo'ying — eng yangisi tepada
