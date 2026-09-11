@@ -188,6 +188,7 @@ const I18N = {
     cvAwards:"Yutuqlar", cvCourses:"Kurslar", cvPapers:"Maqolalar",
     cvContact:"Aloqa", cvAbout:"Qisqacha", cvGpa:"O'rtacha ball",
     cvDownload:"PDF yuklab olish", cvShare:"Havolani ulashish",
+    printFail:"Chop etish oynasi ochilmadi",
     cvExp:"Ish tajribasi", cvProjects:"Loyihalar", cvLangs:"Tillar",
     cvLang:"Dasturlash tillari", cvFw:"Freymvorklar", cvDb:"Ma'lumotlar bazasi",
     cvTools:"Vositalar", cvOther:"Boshqa",
@@ -443,6 +444,7 @@ const I18N = {
     cvAwards:"Достижения", cvCourses:"Курсы", cvPapers:"Публикации",
     cvContact:"Контакты", cvAbout:"О себе", cvGpa:"Средний балл",
     cvDownload:"Скачать PDF", cvShare:"Поделиться ссылкой",
+    printFail:"Окно печати не открылось",
     cvExp:"Опыт работы", cvProjects:"Проекты", cvLangs:"Языки",
     cvLang:"Языки программирования", cvFw:"Фреймворки", cvDb:"Базы данных",
     cvTools:"Инструменты", cvOther:"Прочее",
@@ -689,6 +691,7 @@ const I18N = {
     cvAwards:"Achievements", cvCourses:"Courses", cvPapers:"Publications",
     cvContact:"Contact", cvAbout:"About", cvGpa:"Average score",
     cvDownload:"Download PDF", cvShare:"Share link",
+    printFail:"The print dialog did not open",
     cvExp:"Experience", cvProjects:"Projects", cvLangs:"Languages",
     cvLang:"Languages", cvFw:"Frameworks", cvDb:"Databases",
     cvTools:"Tools", cvOther:"Other",
@@ -3086,7 +3089,7 @@ function renderCv(){
   });
 
   const d = $('cvDl');
-  if(d) d.addEventListener('click', function(){ haptic(12); toast(t('dlSoon')); });
+  if(d) d.addEventListener('click', function(){ haptic(12); cvChop(); });
 
   const sh = $('cvShare');
   if(sh) sh.addEventListener('click', function(){
@@ -3097,6 +3100,53 @@ function renderCv(){
       toast(t('dlSoon'));
     }
   });
+}
+
+/* ---------- REZYUMENI PDF QILISH ----------
+
+   Brauzerning o'z chop etish oynasi ishlatiladi: u yerda
+   "Saqlash: PDF" tanlanadi. Shuning uchun ilovaga tashqi
+   kutubxona (jsPDF, html2canvas) qo'shilmadi — ular og'ir,
+   natijasi esa yomonroq: matn rasmga aylanib, nusxa olib
+   bo'lmaydigan va qidirib bo'lmaydigan PDF chiqadi.
+
+   Qog'ozga faqat rezyume tushishi uchun style.css oxiridagi
+   @media print bloki ekran bezagini yashiradi.
+
+   Fayl nomini brauzer document.title dan oladi, shuning uchun
+   chop etishdan oldin uni talabaning ismiga almashtiramiz. */
+function cvChop(){
+  const eskiSarlavha = document.title;
+
+  /* "Dusmurodov Lazizjon — Rezyume" ko'rinishida */
+  document.title = USER.name + ' — ' + t('cvTitle');
+  document.body.classList.add('is-print');
+
+  /* Chop etish oynasi yopilgach hammasini joyiga qaytaramiz.
+     afterprint ba'zi brauzerlarda kechikadi yoki umuman
+     kelmaydi, shuning uchun taymer ham qo'yamiz. */
+  let tiklandi = false;
+  function tikla(){
+    if(tiklandi) return;
+    tiklandi = true;
+    document.body.classList.remove('is-print');
+    document.title = eskiSarlavha;
+    window.removeEventListener('afterprint', tikla);
+  }
+
+  window.addEventListener('afterprint', tikla);
+  setTimeout(tikla, 60000);
+
+  /* Chop etish oynasi sahifani muzlatadi. Brauzerga avval
+     yangi holatni chizishga ulgurishi uchun kichik kechikish. */
+  setTimeout(function(){
+    try{
+      window.print();
+    }catch(e){
+      tikla();
+      toast(t('printFail'));
+    }
+  }, 60);
 }
 
 /* =========================================================

@@ -53,6 +53,7 @@ domen ulash — [QOLLANMA.md](QOLLANMA.md) da.
 - **Yotoqxona** — joy holati va ariza
 - **Kutubxona** — kitoblar ro'yxati va qidiruv
 - **Karyera** — rezyume, ish takliflari, yutuqlar, mahorat darslari, maqolalar, bloglar
+- **Rezyume PDF** — bir bosishda A4 da, bir sahifaga; matn qidiriladigan (rasm emas)
 - **Fotogalereya** — tadbirlar albomlari; surat to'liq ekranda ochiladi, barmoq bilan suriladi
 - **Uch til** — o'zbek, rus, ingliz (yuqori o'ngdagi tugmadan almashtiriladi)
 - **Qorong'i rejim** — Sozlamalar → Ko'rinish: tizim bo'yicha, yorug' yoki qorong'i

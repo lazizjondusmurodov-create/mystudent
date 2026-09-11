@@ -2112,3 +2112,188 @@ button.row:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
 .boot__t{font-size:19px;font-weight:750;letter-spacing:-.03em;color:var(--ink)}
 .boot__s{margin-top:8px;font-size:13.5px;color:var(--ink-3);line-height:1.5}
 .boot__box .btn{margin-top:20px}
+
+/* =========================================================
+   CHOP ETISH (va PDF saqlash)
+
+   Rezyume "PDF yuklab olish" bosilganda brauzerning o'z chop
+   etish oynasi ochiladi — u yerdan "PDF saqlash" tanlanadi.
+   Shuning uchun tashqi kutubxona kerak emas.
+
+   Bu yerda ekranning hamma bezagi olib tashlanadi: menyu,
+   tablar, tugmalar, fon. Qog'ozga faqat rezyume tushadi.
+
+   body.is-print sinfi chop etishdan oldin qo'yiladi (app.js).
+   ========================================================= */
+@media print{
+
+  /* A4, qulay chekka */
+  @page{ size:A4; margin:12mm 13mm; }
+
+  /* rang qog'ozda ham chiqsin (brauzer odatda o'chiradi) */
+  *{ -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+
+  html,body{
+    background:#fff !important;
+    color:#111;
+    /* ekran uchun qo'yilgan qulf qog'ozni kesib qo'ymasin */
+    overflow:visible !important;
+    height:auto !important;
+    /* Keng ekranda ilova telefon kengligida markazlashadi
+       (max-width:560px). Qog'ozda bu keraksiz — kenglikni
+       @page chekkasi belgilaydi, aks holda matn o'ng
+       tomondan chiqib ketadi. */
+    max-width:none !important;
+    width:auto !important;
+    margin:0 !important;
+    padding:0 !important;
+    box-shadow:none !important;
+    /* Ekranda body 100dvh — qog'ozda bu bo'sh ikkinchi sahifani
+       ochib yuboradi. Balandlikni mazmun belgilasin. */
+    min-height:0 !important;
+  }
+
+  /* ekran bezagi — qog'ozga kerak emas */
+  .appbar, .tabbar, .drawer, .scrim, .auth, .toast,
+  .modal, .lupa, .cvbtns, .cvnote, .detail__bar,
+  #boot, .pull, .skel{
+    display:none !important;
+  }
+
+  /* Ichki sahifa butun qog'ozni egallaydi. Keng ekranda u yon
+     tomonga surilgan va telefon kengligida turadi (transform,
+     left, width) — qog'ozda hammasi bekor qilinadi. */
+  .detail{
+    position:static !important;
+    transform:none !important;
+    opacity:1 !important;
+    visibility:visible !important;
+    inset:auto !important;
+    left:auto !important;
+    right:auto !important;
+    width:auto !important;
+    max-width:none !important;
+    height:auto !important;
+    max-height:none !important;
+    overflow:visible !important;
+    background:#fff !important;
+    /* ekranda pastki tab paneli uchun 104px joy qoldirilgan —
+       qog'ozda u bo'sh ikkinchi sahifani ochib yuboradi */
+    padding:0 !important;
+    margin:0 !important;
+    min-height:0 !important;
+  }
+  .detail__body{
+    padding:0 !important;
+    margin:0 !important;
+    overflow:visible !important;
+    height:auto !important;
+    max-height:none !important;
+  }
+
+  /* oxirgi blokdan keyin bo'sh joy qolmasin */
+  .detail__body > *:last-child{ margin-bottom:0 !important; }
+
+  /* asosiy sahifa chop etilmaydi (faqat rezyume) */
+  body.is-print > main,
+  body.is-print > header,
+  body.is-print > nav{
+    display:none !important;
+  }
+
+  /* ---- rezyume ---- */
+
+  /* Ekranda kartalarning yon chekkasi 18px — qog'ozda @page
+     chekkasi bor, shuning uchun ularni nolga tushiramiz.
+     Aks holda matn o'ng tomondan chiqib ketadi. */
+  .cv{
+    border:0 !important;
+    box-shadow:none !important;
+    padding:0 0 9px !important;
+    margin:0 0 4px !important;
+    border-bottom:1.5px solid #ddd !important;
+    border-radius:0 !important;
+    background:#fff !important;
+  }
+
+  .cv__name{ font-size:20pt !important; color:#111 !important; }
+  .cv__role{ font-size:11pt !important; color:#b03a2e !important; }
+  .cv__sub,
+  .cv__link{ font-size:9pt !important; color:#444 !important; }
+  .cv__gpav{ color:#b03a2e !important; }
+
+  .cv__ava{
+    flex:0 0 48px !important;
+    width:48px !important; height:48px !important;
+    font-size:15pt !important;
+    background:#b03a2e !important; color:#fff !important;
+  }
+
+  /* Sarlavha bloki ekran uchun keng bo'shliqli — qog'ozda
+     ixchamlashtiramiz, shunda rezyume bir sahifaga sig'adi. */
+  .cv__links{
+    margin-top:8px !important;
+    padding-top:8px !important;
+    gap:3px !important;
+    border-top:1px solid #eee !important;
+  }
+  .cv__link svg{ width:11px !important; height:11px !important; }
+  .cv__gpa{
+    margin-top:8px !important;
+    padding-top:8px !important;
+    border-top:1px solid #eee !important;
+  }
+  .cv__gpav{ font-size:15pt !important; }
+  .cv__gpal{ font-size:8.5pt !important; }
+
+  .eyebrow{
+    font-size:10pt !important;
+    font-weight:700 !important;
+    color:#b03a2e !important;
+    margin:6px 0 2px !important;
+    padding:0 !important;
+    letter-spacing:.02em !important;
+    /* sarlavha sahifa oxirida yolg'iz qolmasin */
+    break-after:avoid; page-break-after:avoid;
+  }
+
+  .cvsec{
+    border:0 !important;
+    box-shadow:none !important;
+    border-radius:0 !important;
+    padding:0 !important;
+    margin:0 !important;
+    background:#fff !important;
+  }
+
+  .cvrow{
+    padding:5px 0 !important;
+    border-bottom:1px solid #eee !important;
+    /* bitta yozuv ikki sahifaga bo'linmasin */
+    break-inside:avoid; page-break-inside:avoid;
+  }
+  .cvrow__t{ font-size:10.5pt !important; color:#111 !important; }
+  .cvrow__m,
+  .cvrow__d{ font-size:9pt !important; color:#555 !important; }
+  .cvrow__x{ font-size:9.5pt !important; color:#333 !important; line-height:1.45 !important; }
+  .cvsec__p{ font-size:9.5pt !important; color:#333 !important; line-height:1.45 !important;
+             margin:6px 0 !important; }
+  .cvrow__stek{ font-size:8.5pt !important; color:#666 !important; }
+
+  .cvlist{ margin:4px 0 0 !important; padding-left:16px !important; }
+  .cvlist li{ font-size:9.5pt !important; color:#333 !important; line-height:1.4 !important; }
+
+  .cvsk{ padding:3px 0 !important; border-bottom:1px solid #f0f0f0 !important; }
+  .cvsk__g{ font-size:9pt !important; color:#555 !important; }
+  .cvsk__v{ font-size:9.5pt !important; color:#111 !important; }
+
+  .cvtag{
+    font-size:9pt !important;
+    border:1px solid #ddd !important;
+    background:#fafafa !important;
+    color:#333 !important;
+  }
+
+  /* havolalar qog'ozda ko'k va tagi chizilgan bo'lmasin */
+  a{ color:#111 !important; text-decoration:none !important; }
+}
