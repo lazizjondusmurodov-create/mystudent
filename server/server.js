@@ -442,7 +442,10 @@ async function api(req, res, yol){
       kod: kod,
       fan: String(tana.fan).slice(0, 120),
       turi: String(tana.turi).slice(0, 40),
-      holat: 'kutilmoqda',
+      /* 'wait' — ilova shu nomni kutadi (app.js: holat === 'wait').
+         Ilgari bu yerda 'kutilmoqda' yozilardi: yangi ariza dekanat
+         panelida qabul/rad tugmasisiz chiqib qolardi. */
+      holat: 'wait',
       sana: new Date().toISOString().slice(0, 10)
     };
     if(baza.BAZA_BOR){

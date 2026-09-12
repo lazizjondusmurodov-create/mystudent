@@ -237,7 +237,12 @@ yo'qoladi va raqamni qo'lda yozish kerak bo'ladi.
 Eski 4 xonali kod usuli hali ishlaydi. Keraksiz bo'lsa Render'da
 `KOD_KIRISH=off` qo'ying — shunda faqat telefon raqam qoladi.
 
-Dekanat kodi bunga bog'liq emas — u har doim ishlayveradi.
+Dekanat kodi `KOD_KIRISH` ga bog'liq emas — u har doim ishlayveradi.
+
+Lekin dekanat paneli **faqat server versiyasida** ochiladi. Statik
+demoda (GitHub Pages) server yo'q, demak huquqni hech kim tekshira
+olmaydi — u yerda dekanat kodi qabul qilinmaydi va sababi ekranda
+yoziladi.
 
 ### Chegara
 
