@@ -255,6 +255,7 @@ const I18N = {
     enter:"Kirish", checking:"Tekshirilmoqda...",
     badCode:"4 xonali kodni kiriting",
     wrongCode:"Kod noto'g'ri", welcome:"Xush kelibsiz!",
+    adminNoServer:"Dekanat paneli faqat server versiyasida ishlaydi",
     authFoot:"Kirish orqali siz ommaviy oferta shartlariga rozilik bildirasiz",
     demoYourCode:"Namuna rejimi — kirish kodi:", demoFill:"Qo'yish",
     demoCodes:"Namuna rejimi — talabani tanlang:",
@@ -534,6 +535,7 @@ const I18N = {
     enter:"Войти", checking:"Проверка...",
     badCode:"Введите 4-значный код",
     wrongCode:"Неверный код", welcome:"Добро пожаловать!",
+    adminNoServer:"Панель деканата работает только в серверной версии",
     authFoot:"Входя, вы соглашаетесь с условиями публичной оферты",
     demoYourCode:"Демо-режим — код доступа:", demoFill:"Вставить",
     demoCodes:"Демо-режим — выберите студента:",
@@ -804,6 +806,7 @@ const I18N = {
     enter:"Log in", checking:"Checking...",
     badCode:"Enter the 4-digit code",
     wrongCode:"Wrong code", welcome:"Welcome!",
+    adminNoServer:"The dean's office panel works only in the server version",
     authFoot:"By logging in you accept the terms of the public offer",
     demoYourCode:"Demo mode — access code:", demoFill:"Fill in",
     demoCodes:"Demo mode — pick a student:",
@@ -1060,6 +1063,8 @@ function tdm(obj, maydon){
 
 /* qavat matni: uz "4-qavat", ru "этаж 4", en "floor 4" */
 function qavatText(n){
+  /* qavat raqami kelmagan bo'lsa "undefined-qavat" yozilib qolmasin */
+  if(n == null || n === '') return '—';
   if(LANG === 'uz') return n + '-' + t('dormFloor').toLowerCase();
   return t('dormFloor').toLowerCase() + ' ' + n;
 }
@@ -1445,7 +1450,11 @@ function hozirVaqt(){
 /* shartnoma bo'yicha qarzdorlik — pul */
 let SHARTNOMA_QARZ = [];   /* data/*.json dan yuklanadi */
 
-function money(n){ return n.toLocaleString('ru-RU').replace(/ /g, ' '); }
+function money(n){
+  /* ma'lumot hali kelmagan bo'lsa n = undefined bo'lishi mumkin —
+     toLocaleString unda uzilib qolardi va butun sahifa chizilmasdi */
+  return Number(n || 0).toLocaleString('ru-RU').replace(/ /g, ' ');
+}
 
 /* ---------- FOTOGALEREYA ----------
    Suratlar o'rniga rangli gradient va ikonka ishlatiladi (rasm fayllari yo'q).
@@ -1459,7 +1468,7 @@ let DORM = {};   /* data/*.json dan yuklanadi */
 
 /* yotoqxona to'lov qoldig'i */
 function dormLeft(){
-  return Math.max(0, DORM.oylik - DORM.tolangan);
+  return Math.max(0, (DORM.oylik || 0) - (DORM.tolangan || 0));
 }
 
 /* ---------- KARYERA MARKAZI ---------- */
@@ -2235,8 +2244,12 @@ function yuborArizani(){
    Kirish: login ekranida DEKANAT_KODI kiritiladi.
    Bu yerda kelgan arizalar ko'riladi va qabul/rad qilinadi.
    ========================================================= */
+/* Dekanat rejimi.
+
+   Bu yerda faqat e'lon qilinadi. Haqiqiy qiymat checkAuth() da
+   beriladi — o'sha paytda server rejimi allaqachon aniqlangan
+   bo'ladi (bu yerda hali emas, skript endi yuklanyapti). */
 let adminMode = false;
-try{ adminMode = localStorage.getItem('ms.admin') === '1'; }catch(e){}
 
 function adminHTML(){
   const list = arizaOqi();
@@ -3866,20 +3879,20 @@ function dormHTML(){
   /* joy ajratilgan */
   let h = '<div class="dsum">'+
     '<div class="dsum__label">'+esc(t('dormPlace'))+'</div>'+
-    '<div class="dsum__val">'+esc(DORM.xona)+'<small>'+esc(t('dormRoom')).toLowerCase()+'</small></div>'+
-    '<div class="dsum__note">'+esc(td(DORM.bino))+' · '+esc(qavatText(DORM.qavat))+
-      ' · '+esc(t('dormBed'))+' '+esc(DORM.orin)+'</div>'+
+    '<div class="dsum__val">'+esc(DORM.xona || '—')+'<small>'+esc(t('dormRoom')).toLowerCase()+'</small></div>'+
+    '<div class="dsum__note">'+esc(td(DORM.bino || '—'))+' · '+esc(qavatText(DORM.qavat))+
+      ' · '+esc(t('dormBed'))+' '+esc(DORM.orin || '—')+'</div>'+
     '<span class="dsum__chip">'+esc(t('dormActive'))+'</span>'+
   '</div>';
 
   h += '<h2 class="eyebrow">'+esc(t('infoTitle'))+'</h2>'+
     '<div class="info" style="margin:0 18px 4px">'+
-      [[t('dormBuilding'), td(DORM.bino)],
-       [t('dormRoom'),     DORM.xona],
-       [t('dormBed'),      DORM.orin],
-       [t('dormFloor'),    DORM.qavat],
-       [t('dormType'),     td(DORM.kishi + ' kishilik')],
-       [t('dormFrom'),     DORM.sana]
+      [[t('dormBuilding'), td(DORM.bino || '—')],
+       [t('dormRoom'),     DORM.xona  || '—'],
+       [t('dormBed'),      DORM.orin  || '—'],
+       [t('dormFloor'),    DORM.qavat || '—'],
+       [t('dormType'),     DORM.kishi ? td(DORM.kishi + ' kishilik') : '—'],
+       [t('dormFrom'),     DORM.sana  || '—']
       ].map(function(r){
         return '<div class="info__row"><span>'+esc(r[0])+'</span><b>'+esc(String(r[1]))+'</b></div>';
       }).join('')+
@@ -3894,7 +3907,7 @@ function dormHTML(){
     '</div>';
 
   h += '<h2 class="eyebrow">'+esc(t('dormRules'))+'</h2>'+
-    '<div class="drules">' + DORM.qoidalar.map(function(q){
+    '<div class="drules">' + (DORM.qoidalar || []).map(function(q){
       return '<div class="drules__i">'+
         '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m8.5 12 2.5 2.5 4.5-5"/></svg>'+
         '<span>'+esc(q)+'</span>'+
@@ -3903,8 +3916,8 @@ function dormHTML(){
 
   h += '<h2 class="eyebrow">'+esc(t('dormContact'))+'</h2>'+
     '<div class="info" style="margin:0 18px 4px">'+
-      '<div class="info__row"><span>'+esc(t('fullName'))+'</span><b>'+esc(DORM.komendant)+'</b></div>'+
-      '<div class="info__row"><span>'+esc(t('phone'))+'</span><b>'+esc(DORM.tel)+'</b></div>'+
+      '<div class="info__row"><span>'+esc(t('fullName'))+'</span><b>'+esc(DORM.komendant || '—')+'</b></div>'+
+      '<div class="info__row"><span>'+esc(t('phone'))+'</span><b>'+esc(DORM.tel || '—')+'</b></div>'+
     '</div>';
 
   return h;
@@ -5370,7 +5383,13 @@ $('doLogin').addEventListener('click', function(){
         talaba = null;
       }
     }else{
-      talaba = dekanat ? TALABALAR[0] : talabaTop(code);
+      /* Statik rejim (GitHub Pages demo): server yo'q, demak huquqni
+         hech kim tekshira olmaydi — dekanat paneli bu yerda ochilmaydi.
+
+         Ilgari dekanat kodi TALABALAR[0] ni ochardi: panel serversiz
+         baribir ishlamasdi, lekin birinchi talabaning kabineti
+         ochilib qolardi. */
+      talaba = dekanat ? null : talabaTop(code);
     }
 
     loginBusy = false;
@@ -5380,7 +5399,10 @@ $('doLogin').addEventListener('click', function(){
     /* kod hech qaysi talabaga mos kelmasa */
     if(!talaba){
       codeBox.classList.add('is-bad');
-      $('err2').textContent = t('wrongCode');
+      /* Dekanat kodi to'g'ri, faqat statik demoda panel yo'q —
+         "kod noto'g'ri" deyish adashtiradi, sababini aytamiz. */
+      $('err2').textContent = (dekanat && !API_SERVER_BOR)
+        ? t('adminNoServer') : t('wrongCode');
       codeInps.forEach(function(x){ x.value = ''; });
       codeInps[0].focus();
       haptic(20);
@@ -5502,10 +5524,38 @@ function checkAuth(){
 
       if(eskirgan){
         localStorage.removeItem('ms.auth');
-      }else{
-        const talaba = talabaTop(saqlangan.kod) || TALABALAR[0];
-        userYukla(talaba);
+      }else if(saqlangan.kod === DEKANAT_KODI && API_SERVER_BOR){
+        /* Dekanat talaba emas — TALABALAR ro'yxatidan topilmaydi.
+           Server unga talabalarga oid bo'limlarni bermaydi (403),
+           shuning uchun ro'yxat bo'sh bo'lishi ham mumkin.
+
+           Ilgari bu yerda TALABALAR[0] olinardi: ro'yxat bo'sh
+           bo'lsa undefined chiqib, userYukla() uzilardi va
+           dekanat kirish ekranida qolib ketardi.
+
+           API_SERVER_BOR sharti muhim: statik demoda (GitHub Pages)
+           serverda tekshiruv yo'q, shuning uchun u yerda dekanat
+           rejimi umuman tiklanmaydi — localStorage ga qo'lda
+           yozib panelga kirib bo'lmasin. */
+        adminMode = true;
+        userYukla({ kod: saqlangan.kod, name: t('adminMode'), group: '' });
         kirgan = true;
+      }else{
+        const talaba = talabaTop(saqlangan.kod);
+        if(talaba){
+          /* oddiy talaba — dekanat belgisi qolgan bo'lsa o'chiramiz */
+          adminMode = false;
+          try{ localStorage.removeItem('ms.admin'); }catch(x){}
+          userYukla(talaba);
+          kirgan = true;
+        }else{
+          /* Kod hech kimga mos kelmadi — sessiya yaroqsiz.
+             Statik rejimdagi dekanat kodi ham shu yerga tushadi:
+             u yerda panel ochilmaydi, sessiya tozalanadi. */
+          adminMode = false;
+          try{ localStorage.removeItem('ms.admin'); }catch(x){}
+          localStorage.removeItem('ms.auth');
+        }
       }
     }
   }catch(e){}

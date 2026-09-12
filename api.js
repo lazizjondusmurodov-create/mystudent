@@ -100,6 +100,17 @@ async function apiGet(yol){
     e.qaytaKirish = true;
     throw e;
   }
+  /* 403 — bu bo'lim shu foydalanuvchiga tegishli emas.
+
+     Dekanat kodi bilan kirilganda shunday bo'ladi: dekanat talaba
+     emas, shuning uchun server /api/yotoqxona, /api/baholar kabi
+     talabaga oid bo'limlarga 403 qaytaradi.
+
+     Bu xato emas — shunchaki ma'lumot yo'q. Xato deb tashlasak,
+     Promise.all butun yuklashni uzadi va ilova "Ma'lumotlar
+     yuklanmadi" ekranida qotib qoladi. Bo'sh javob qaytaramiz. */
+  if(res.status === 403) return {};
+
   if(!res.ok) throw new Error('Server xatosi (' + res.status + '): ' + yol);
   try{
     return await res.json();
